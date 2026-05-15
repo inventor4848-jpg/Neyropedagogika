@@ -41,6 +41,16 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         }
     }
+
+    // Handle topic query param
+    if (pageName === 'topics.html') {
+        const urlParams = new URLSearchParams(window.location.search);
+        const topicId = urlParams.get('t');
+        if (topicId) {
+            const btn = document.querySelector(`.topic-btn[onclick*="'t${topicId}'"]`);
+            if (btn) showTopic('t' + topicId, btn);
+        }
+    }
 });
 
 function logout() {
