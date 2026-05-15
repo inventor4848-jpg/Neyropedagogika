@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NeuroPed — Neyropedagogika Elektron Darsligi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --primary:#1A3A5C;
+  --accent:#2FB8AC;
+  --accent2:#F4A261;
+  --bg:#F7F4EF;
+  --card:#FFFFFF;
+  --text:#1C1C2E;
+  --muted:#6B7280;
+  --border:#E5E0D8;
+  --nav-h:68px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(247,244,239,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:var(--nav-h)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 2rem;height:100%;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-icon{width:38px;height:38px;background:var(--primary);border-radius:10px;display:flex;align-items:center;justify-content:center}
+.logo-icon svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round}
+.logo-text{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--primary);font-weight:700;letter-spacing:-0.02em}
+.logo-sub{font-size:0.65rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-top:-2px}
+.nav-links{display:flex;gap:0.25rem;list-style:none}
+.nav-links a{display:block;padding:0.45rem 0.9rem;border-radius:8px;text-decoration:none;color:var(--muted);font-size:0.88rem;font-weight:500;transition:all 0.2s}
+.nav-links a:hover,.nav-links a.active{color:var(--primary);background:rgba(26,58,92,0.07)}
+.nav-cta{padding:0.5rem 1.2rem;background:var(--primary);color:#fff !important;border-radius:8px;font-size:0.88rem;font-weight:600;text-decoration:none;transition:all 0.2s}
+.nav-cta:hover{background:#0F2A45;color:#fff !important}
+.nav-mobile-btn{display:none;background:none;border:none;cursor:pointer;padding:8px;color:var(--primary)}
+.hamburger{display:flex;flex-direction:column;gap:5px}
+.hamburger span{display:block;width:22px;height:2px;background:currentColor;border-radius:2px;transition:all 0.3s}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;padding-top:var(--nav-h);overflow:hidden;position:relative}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.18}
+.hero-blob-1{width:600px;height:600px;background:var(--accent);top:-100px;right:-100px}
+.hero-blob-2{width:400px;height:400px;background:var(--accent2);bottom:-50px;left:5%}
+.hero-dots{position:absolute;inset:0;background-image:radial-gradient(var(--border) 1.5px, transparent 1.5px);background-size:32px 32px;opacity:0.6}
+.hero-inner{max-width:1200px;margin:0 auto;padding:5rem 2rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative;z-index:1}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(47,184,172,0.12);border:1px solid rgba(47,184,172,0.3);color:#1a7a72;padding:0.4rem 1rem;border-radius:100px;font-size:0.78rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:1.5rem}
+.hero-tag::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+h1.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3.4rem);line-height:1.15;color:var(--primary);margin-bottom:1.2rem;font-weight:700}
+h1.hero-title em{font-style:italic;color:var(--accent)}
+.hero-desc{font-size:1.05rem;color:var(--muted);max-width:480px;margin-bottom:2.2rem;line-height:1.75}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-primary{padding:0.85rem 2rem;background:var(--primary);color:#fff;border:none;border-radius:10px;font-size:0.95rem;font-weight:600;cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-flex;align-items:center;gap:8px;font-family:'DM Sans',sans-serif}
+.btn-primary:hover{background:#0F2A45;transform:translateY(-2px)}
+.btn-outline{padding:0.85rem 2rem;background:transparent;color:var(--primary);border:1.5px solid var(--primary);border-radius:10px;font-size:0.95rem;font-weight:600;cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-flex;align-items:center;gap:8px;font-family:'DM Sans',sans-serif}
+.btn-outline:hover{background:var(--primary);color:#fff;transform:translateY(-2px)}
+.hero-stats{display:flex;gap:2rem;margin-top:2.5rem}
+.stat{text-align:left}
+.stat-num{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--primary)}
+.stat-label{font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em}
+
+/* BRAIN VISUAL */
+.hero-visual{position:relative}
+.brain-card{background:var(--card);border-radius:24px;padding:2rem;border:1px solid var(--border);box-shadow:0 20px 60px rgba(26,58,92,0.1);position:relative;overflow:hidden}
+.brain-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+.brain-card-title{font-weight:600;color:var(--primary);font-size:0.95rem}
+.brain-card-dots{display:flex;gap:6px}
+.brain-card-dots span{width:10px;height:10px;border-radius:50%}
+.brain-card-dots span:nth-child(1){background:#FF6B6B}
+.brain-card-dots span:nth-child(2){background:#FFD93D}
+.brain-card-dots span:nth-child(3){background:#6BCB77}
+.brain-svg{width:100%;height:200px}
+.brain-areas{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:1rem}
+.area-chip{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:0.7rem 1rem;display:flex;align-items:center;gap:8px;cursor:pointer;transition:all 0.2s}
+.area-chip:hover{border-color:var(--accent);background:rgba(47,184,172,0.07)}
+.area-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.area-name{font-size:0.82rem;font-weight:500;color:var(--text)}
+
+/* SECTIONS */
+section{padding:5rem 2rem}
+.section-inner{max-width:1200px;margin:0 auto}
+.section-tag{font-size:0.78rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.75rem}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.6rem);color:var(--primary);margin-bottom:1rem;line-height:1.2}
+.section-desc{color:var(--muted);max-width:560px;font-size:1rem;line-height:1.75}
+
+/* MODULES */
+#modules{background:#fff}
+.modules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-top:3rem}
+.module-card{background:var(--bg);border-radius:16px;padding:1.75rem;border:1.5px solid var(--border);transition:all 0.3s;cursor:pointer;position:relative;overflow:hidden}
+.module-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:16px 16px 0 0;transition:opacity 0.3s}
+.module-card:hover{border-color:transparent;box-shadow:0 12px 40px rgba(26,58,92,0.12);transform:translateY(-4px)}
+.module-card:nth-child(1)::before{background:var(--accent)}
+.module-card:nth-child(2)::before{background:var(--accent2)}
+.module-card:nth-child(3)::before{background:#9B59B6}
+.module-card:nth-child(4)::before{background:#E74C3C}
+.module-card:nth-child(5)::before{background:#3498DB}
+.module-card:nth-child(6)::before{background:#27AE60}
+.module-num{font-size:0.75rem;font-weight:700;letter-spacing:0.1em;color:var(--muted);text-transform:uppercase;margin-bottom:1rem}
+.module-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;font-size:1.5rem}
+.module-title{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--primary);margin-bottom:0.6rem}
+.module-desc{font-size:0.88rem;color:var(--muted);line-height:1.65;margin-bottom:1.2rem}
+.module-meta{display:flex;align-items:center;gap:1rem}
+.module-lessons{font-size:0.78rem;color:var(--muted);display:flex;align-items:center;gap:4px}
+.module-badge{font-size:0.72rem;font-weight:600;padding:0.25rem 0.6rem;border-radius:6px}
+.badge-basic{background:#EBF5FB;color:#2471A3}
+.badge-inter{background:#EAFAF1;color:#1E8449}
+.badge-adv{background:#F4ECF7;color:#7D3C98}
+.module-arrow{margin-left:auto;color:var(--muted);transition:transform 0.2s}
+.module-card:hover .module-arrow{transform:translateX(4px);color:var(--accent)}
+
+/* TOPICS */
+#topics{background:var(--bg)}
+.topics-layout{display:grid;grid-template-columns:1fr 2fr;gap:3rem;margin-top:3rem;align-items:start}
+.topics-nav{background:#fff;border-radius:16px;padding:1.25rem;border:1px solid var(--border);position:sticky;top:calc(var(--nav-h) + 1.5rem)}
+.topic-btn{width:100%;text-align:left;padding:0.85rem 1rem;border:none;background:none;border-radius:10px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;color:var(--muted);transition:all 0.2s;display:flex;align-items:center;gap:10px}
+.topic-btn:hover{background:var(--bg);color:var(--text)}
+.topic-btn.active{background:var(--primary);color:#fff}
+.topic-btn .topic-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.95rem}
+.topic-content{display:none}
+.topic-content.active{display:block}
+.topic-header{background:#fff;border-radius:16px;padding:2rem;border:1px solid var(--border);margin-bottom:1.5rem}
+.topic-title{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--primary);margin-bottom:0.75rem}
+.topic-intro{color:var(--muted);line-height:1.75}
+.lessons-list{display:flex;flex-direction:column;gap:1rem}
+.lesson-item{background:#fff;border-radius:12px;padding:1.25rem 1.5rem;border:1px solid var(--border);display:flex;align-items:center;gap:1rem;cursor:pointer;transition:all 0.2s}
+.lesson-item:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(47,184,172,0.1)}
+.lesson-num{width:36px;height:36px;border-radius:50%;background:var(--bg);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:700;color:var(--primary);flex-shrink:0}
+.lesson-info{flex:1}
+.lesson-name{font-weight:600;font-size:0.95rem;color:var(--text);margin-bottom:2px}
+.lesson-meta{font-size:0.78rem;color:var(--muted)}
+.lesson-play{width:36px;height:36px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.2s}
+.lesson-play svg{width:14px;height:14px;fill:#fff;margin-left:2px}
+.lesson-item:hover .lesson-play{background:var(--accent);transform:scale(1.1)}
+
+/* INTERACTIVE DEMO */
+#demo{background:#fff}
+.demo-layout{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:3rem;align-items:center}
+.neuron-demo{background:var(--bg);border-radius:20px;padding:2rem;border:1px solid var(--border)}
+.demo-canvas-wrap{background:#fff;border-radius:14px;overflow:hidden;border:1px solid var(--border);margin-bottom:1.5rem}
+canvas#neuronCanvas{display:block;width:100%;height:280px}
+.demo-controls{display:flex;flex-direction:column;gap:0.75rem}
+.ctrl-row{display:flex;align-items:center;gap:1rem}
+.ctrl-label{font-size:0.82rem;font-weight:500;color:var(--text);min-width:130px}
+.ctrl-slider{flex:1;height:4px;border-radius:4px;accent-color:var(--accent)}
+.ctrl-val{font-size:0.82rem;font-weight:700;color:var(--primary);min-width:36px;text-align:right}
+.fire-btn{width:100%;padding:0.85rem;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.92rem;font-weight:600;cursor:pointer;margin-top:0.5rem;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.fire-btn:hover{background:#25a59a;transform:translateY(-1px)}
+.fire-btn:active{transform:scale(0.98)}
+.demo-info h3{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--primary);margin-bottom:1rem}
+.demo-info p{color:var(--muted);line-height:1.75;margin-bottom:1.2rem;font-size:0.95rem}
+.fact-cards{display:flex;flex-direction:column;gap:0.75rem;margin-top:1.5rem}
+.fact-card{background:var(--bg);border-radius:12px;padding:1rem 1.25rem;border:1px solid var(--border);display:flex;gap:0.75rem;align-items:flex-start}
+.fact-icon{font-size:1.2rem;margin-top:2px}
+.fact-text{font-size:0.85rem;color:var(--text);line-height:1.5}
+.fact-text strong{color:var(--primary)}
+
+/* QUIZ */
+#quiz{background:var(--bg)}
+.quiz-card{background:#fff;border-radius:20px;padding:2.5rem;border:1px solid var(--border);max-width:700px;margin:3rem auto 0}
+.quiz-progress{background:var(--border);border-radius:100px;height:6px;margin-bottom:2rem;overflow:hidden}
+.quiz-bar{height:100%;background:var(--accent);border-radius:100px;transition:width 0.4s ease}
+.quiz-q-num{font-size:0.78rem;font-weight:600;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem}
+.quiz-question{font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--primary);margin-bottom:1.75rem;line-height:1.4}
+.quiz-options{display:flex;flex-direction:column;gap:0.75rem}
+.quiz-option{padding:1rem 1.25rem;border:1.5px solid var(--border);border-radius:12px;cursor:pointer;font-size:0.92rem;font-weight:500;color:var(--text);transition:all 0.2s;background:#fff;text-align:left;font-family:'DM Sans',sans-serif}
+.quiz-option:hover{border-color:var(--accent);background:rgba(47,184,172,0.05)}
+.quiz-option.correct{border-color:#27AE60;background:#EAFAF1;color:#1E8449}
+.quiz-option.wrong{border-color:#E74C3C;background:#FDEDEC;color:#A93226}
+.quiz-option.selected{border-color:var(--primary);background:rgba(26,58,92,0.05)}
+.quiz-feedback{margin-top:1.25rem;padding:1rem 1.25rem;border-radius:10px;font-size:0.88rem;line-height:1.5;display:none}
+.quiz-feedback.show{display:block}
+.quiz-feedback.correct{background:#EAFAF1;border:1px solid #ABEBC6;color:#1E8449}
+.quiz-feedback.wrong{background:#FDEDEC;border:1px solid #F1948A;color:#A93226}
+.quiz-nav{display:flex;justify-content:space-between;align-items:center;margin-top:1.75rem}
+.quiz-score{font-weight:600;font-size:0.9rem;color:var(--muted)}
+.btn-quiz{padding:0.7rem 1.6rem;background:var(--primary);color:#fff;border:none;border-radius:10px;font-size:0.88rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.btn-quiz:hover{background:#0F2A45}
+.btn-quiz:disabled{opacity:0.4;cursor:not-allowed}
+
+/* GLOSSARY */
+#glossary{background:#fff}
+.glossary-search{position:relative;margin:2rem 0}
+.glossary-search input{width:100%;max-width:500px;padding:0.85rem 1.2rem 0.85rem 3rem;border:1.5px solid var(--border);border-radius:12px;font-size:0.95rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s;color:var(--text);background:#fff}
+.glossary-search input:focus{border-color:var(--accent)}
+.search-icon{position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:var(--muted)}
+.search-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.glossary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem}
+.glossary-item{background:var(--bg);border-radius:12px;padding:1.25rem;border:1px solid var(--border);transition:all 0.2s}
+.glossary-item:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(47,184,172,0.08)}
+.glossary-term{font-weight:700;font-size:1rem;color:var(--primary);margin-bottom:0.4rem;display:flex;align-items:center;gap:8px}
+.glossary-term span.letter-badge{background:var(--primary);color:#fff;width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;flex-shrink:0}
+.glossary-def{font-size:0.85rem;color:var(--muted);line-height:1.6}
+.glossary-hidden{display:none}
+
+/* FOOTER */
+footer{background:var(--primary);color:#fff;padding:3rem 2rem}
+.footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem}
+.footer-brand h3{font-family:'Playfair Display',serif;font-size:1.3rem;margin-bottom:0.75rem}
+.footer-brand p{font-size:0.85rem;opacity:0.65;line-height:1.65}
+.footer-col h4{font-size:0.78rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;opacity:0.5;margin-bottom:1rem}
+.footer-col a{display:block;font-size:0.88rem;opacity:0.75;text-decoration:none;color:#fff;margin-bottom:0.5rem;transition:opacity 0.2s}
+.footer-col a:hover{opacity:1}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding-top:1.5rem;margin-top:2rem;max-width:1200px;margin-left:auto;margin-right:auto;display:flex;justify-content:space-between;align-items:center}
+.footer-bottom p{font-size:0.82rem;opacity:0.5}
+
+/* MOBILE NAV */
+.mobile-nav-menu{display:none;position:fixed;top:var(--nav-h);left:0;right:0;background:rgba(247,244,239,0.98);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);z-index:99;padding:1rem;flex-direction:column;gap:0.25rem}
+.mobile-nav-menu.open{display:flex}
+.mobile-nav-menu a{display:block;padding:0.75rem 1rem;border-radius:10px;text-decoration:none;color:var(--text);font-weight:500;font-size:0.95rem;transition:all 0.2s}
+.mobile-nav-menu a:hover{background:rgba(26,58,92,0.07);color:var(--primary)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr;text-align:center}
+  .hero-desc{margin:0 auto 2.2rem}
+  .hero-actions{justify-content:center}
+  .hero-stats{justify-content:center}
+  .hero-visual{order:-1}
+  .topics-layout{grid-template-columns:1fr}
+  .topics-nav{position:relative;top:0;display:flex;flex-wrap:wrap;gap:0.5rem;padding:0.75rem}
+  .topic-btn{width:auto;font-size:0.8rem;padding:0.5rem 0.75rem}
+  .demo-layout{grid-template-columns:1fr}
+  .footer-inner{grid-template-columns:1fr 1fr}
+  .nav-links{display:none}
+  .nav-cta{display:none}
+  .nav-mobile-btn{display:block}
+}
+@media(max-width:600px){
+  .footer-inner{grid-template-columns:1fr}
+  .hero-stats{flex-wrap:wrap;gap:1.5rem}
+  .brain-areas{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="#">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2C8 2 5 5 5 9c0 2.5 1.2 4.7 3 6l1 5h6l1-5c1.8-1.3 3-3.5 3-6 0-4-3-7-7-7z"/><line x1="9" y1="17" x2="15" y2="17"/><line x1="12" y1="2" x2="12" y2="9"/></svg>
+      </div>
+      <div>
+        <div class="logo-text">NeuroPed</div>
+        <div class="logo-sub">Elektron Darslik</div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#modules" class="active">Modullar</a></li>
+      <li><a href="#topics">Mavzular</a></li>
+      <li><a href="#demo">Interaktiv</a></li>
+      <li><a href="#quiz">Test</a></li>
+      <li><a href="#glossary">Lug'at</a></li>
+    </ul>
+    <a href="#modules" class="nav-cta">Boshlash →</a>
+    <button class="nav-mobile-btn" onclick="toggleMobileMenu()" aria-label="Menyu">
+      <div class="hamburger"><span></span><span></span><span></span></div>
+    </button>
+  </div>
+</nav>
+<div class="mobile-nav-menu" id="mobileMenu">
+  <a href="#modules" onclick="closeMobileMenu()">Modullar</a>
+  <a href="#topics" onclick="closeMobileMenu()">Mavzular</a>
+  <a href="#demo" onclick="closeMobileMenu()">Interaktiv</a>
+  <a href="#quiz" onclick="closeMobileMenu()">Test</a>
+  <a href="#glossary" onclick="closeMobileMenu()">Lug'at</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-blob hero-blob-1"></div>
+    <div class="hero-blob hero-blob-2"></div>
+    <div class="hero-dots"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-tag">🧠 2024/2025 o'quv yili</div>
+      <h1 class="hero-title">Miya va ta'lim:<br/><em>Neyropedagogika</em></h1>
+      <p class="hero-desc">Zamonaviy neyrofan asosida qurilgan interaktiv elektron darslik — miya ishlash mexanizmlari, xotira, e'tibor va ta'lim samaradorligini ilmiy yondashuv bilan o'rganing.</p>
+      <div class="hero-actions">
+        <a href="#modules" class="btn-primary">📚 Kursni Boshlash</a>
+        <a href="#demo" class="btn-outline">🔬 Demo Ko'rish</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-num">6</div><div class="stat-label">Modul</div></div>
+        <div class="stat"><div class="stat-num">48</div><div class="stat-label">Dars</div></div>
+        <div class="stat"><div class="stat-num">120+</div><div class="stat-label">Savol</div></div>
+        <div class="stat"><div class="stat-num">∞</div><div class="stat-label">Kirish</div></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="brain-card">
+        <div class="brain-card-header">
+          <span class="brain-card-title">🧠 Miya hududlari</span>
+          <div class="brain-card-dots"><span></span><span></span><span></span></div>
+        </div>
+        <svg class="brain-svg" viewBox="0 0 360 180" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="bg-g" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#EAF6F6"/>
+              <stop offset="100%" stop-color="#F7F4EF"/>
+            </radialGradient>
+          </defs>
+          <ellipse cx="180" cy="95" rx="160" ry="80" fill="url(#bg-g)" stroke="#E5E0D8" stroke-width="1.5"/>
+          <!-- Prefrontal -->
+          <ellipse cx="80" cy="70" rx="50" ry="38" fill="#2FB8AC" opacity="0.25" stroke="#2FB8AC" stroke-width="1.5"/>
+          <text x="80" y="65" text-anchor="middle" font-size="9" fill="#0F6E56" font-family="DM Sans,sans-serif" font-weight="600">Prefrontal</text>
+          <text x="80" y="77" text-anchor="middle" font-size="8" fill="#0F6E56" font-family="DM Sans,sans-serif">korteks</text>
+          <!-- Temporal -->
+          <ellipse cx="285" cy="80" rx="55" ry="35" fill="#F4A261" opacity="0.25" stroke="#F4A261" stroke-width="1.5"/>
+          <text x="285" y="75" text-anchor="middle" font-size="9" fill="#7a4a10" font-family="DM Sans,sans-serif" font-weight="600">Temporal</text>
+          <text x="285" y="87" text-anchor="middle" font-size="8" fill="#7a4a10" font-family="DM Sans,sans-serif">lob</text>
+          <!-- Hippocampus -->
+          <ellipse cx="180" cy="130" rx="45" ry="28" fill="#9B59B6" opacity="0.2" stroke="#9B59B6" stroke-width="1.5"/>
+          <text x="180" y="127" text-anchor="middle" font-size="9" fill="#6C3483" font-family="DM Sans,sans-serif" font-weight="600">Gippokamp</text>
+          <text x="180" y="139" text-anchor="middle" font-size="8" fill="#6C3483" font-family="DM Sans,sans-serif">xotira markazi</text>
+          <!-- Amygdala -->
+          <ellipse cx="145" cy="90" rx="28" ry="20" fill="#E74C3C" opacity="0.2" stroke="#E74C3C" stroke-width="1.5"/>
+          <text x="145" y="86" text-anchor="middle" font-size="8" fill="#922B21" font-family="DM Sans,sans-serif" font-weight="600">Amigdala</text>
+          <text x="145" y="96" text-anchor="middle" font-size="7.5" fill="#922B21" font-family="DM Sans,sans-serif">his-tuyg'u</text>
+          <!-- Parietal -->
+          <ellipse cx="222" cy="60" rx="38" ry="28" fill="#3498DB" opacity="0.2" stroke="#3498DB" stroke-width="1.5"/>
+          <text x="222" y="57" text-anchor="middle" font-size="9" fill="#1A5276" font-family="DM Sans,sans-serif" font-weight="600">Parietal</text>
+          <text x="222" y="68" text-anchor="middle" font-size="8" fill="#1A5276" font-family="DM Sans,sans-serif">lob</text>
+        </svg>
+        <div class="brain-areas">
+          <div class="area-chip"><div class="area-dot" style="background:#2FB8AC"></div><span class="area-name">Prefrontal korteks</span></div>
+          <div class="area-chip"><div class="area-dot" style="background:#F4A261"></div><span class="area-name">Temporal lob</span></div>
+          <div class="area-chip"><div class="area-dot" style="background:#9B59B6"></div><span class="area-name">Gippokamp</span></div>
+          <div class="area-chip"><div class="area-dot" style="background:#E74C3C"></div><span class="area-name">Amigdala</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULES -->
+<section id="modules">
+  <div class="section-inner">
+    <div class="section-tag">📖 O'quv dasturi</div>
+    <h2 class="section-title">Kurs modullari</h2>
+    <p class="section-desc">Har bir modul neyrofanning asosiy tushunchalarini pedagogik amaliyot bilan bog'laydi.</p>
+    <div class="modules-grid">
+      <div class="module-card" onclick="document.querySelector('#topics').scrollIntoView({behavior:'smooth'})">
+        <div class="module-num">Modul 01</div>
+        <div class="module-icon" style="background:#E0F5F3">🧬</div>
+        <div class="module-title">Neyrofan asoslari</div>
+        <div class="module-desc">Neyron tuzilishi, sinaptik aloqa, miya hududlari va ularning ta'limdagi roli.</div>
+        <div class="module-meta">
+          <span class="module-lessons">📚 8 dars</span>
+          <span class="module-badge badge-basic">Boshlang'ich</span>
+          <span class="module-arrow">→</span>
+        </div>
+      </div>
+      <div class="module-card" onclick="document.querySelector('#topics').scrollIntoView({behavior:'smooth'})">
+        <div class="module-num">Modul 02</div>
+        <div class="module-icon" style="background:#FEF0E6">🧩</div>
+        <div class="module-title">Xotira va o'rganish</div>
+        <div class="module-desc">Qisqa va uzoq muddatli xotira, konsolidatsiya jarayoni, mnemonika texnikasi.</div>
+        <div class="module-meta">
+          <span class="module-lessons">📚 9 dars</span>
+          <span class="module-badge badge-inter">O'rta</span>
+          <span class="module-arrow">→</span>
+        </div>
+      </div>
+      <div class="module-card" onclick="document.querySelector('#topics').scrollIntoView({behavior:'smooth'})">
+        <div class="module-num">Modul 03</div>
+        <div class="module-icon" style="background:#F3E8FF">🎯</div>
+        <div class="module-title">E'tibor va konsentratsiya</div>
+        <div class="module-desc">Selektiv e'tibor, kognitiv yuklanish, e'tiborni boshqarish strategiyalari.</div>
+        <div class="module-meta">
+          <span class="module-lessons">📚 7 dars</span>
+          <span class="module-badge badge-inter">O'rta</span>
+          <span class="module-arrow">→</span>
+        </div>
+      </div>
+      <div class="module-card" onclick="document.querySelector('#topics').scrollIntoView({behavior:'smooth'})">
+        <div class="module-num">Modul 04</div>
+        <div class="module-icon" style="background:#FDEEEE">💭</div>
+        <div class="module-title">His-tuyg'u va motivatsiya</div>
+        <div class="module-desc">Amigdala roli, dopaminergik tizim, motivatsiya va ta'lim samaradorligi.</div>
+        <div class="module-meta">
+          <span class="module-lessons">📚 8 dars</span>
+          <span class="module-badge badge-inter">O'rta</span>
+          <span class="module-arrow">→</span>
+        </div>
+      </div>
+      <div class="module-card" onclick="document.querySelector('#topics').scrollIntoView({behavior:'smooth'})">
+        <div class="module-num">Modul 05</div>
+        <div class="module-icon" style="background:#E8F4FD">🔄</div>
+        <div class="module-title">Neyroплacticlik</div>
+        <div class="module-desc">Miyaning o'zgaruvchanlik xususiyati, yangi ko'nikmalar, miya salomatligi.</div>
+        <div class="module-meta">
+          <span class="module-lessons">📚 8 dars</span>
+          <span class="module-badge badge-adv">Yuqori</span>
+          <span class="module-arrow">→</span>
+        </div>
+      </div>
+      <div class="module-card" onclick="document.querySelector('#topics').scrollIntoView({behavior:'smooth'})">
+        <div class="module-num">Modul 06</div>
+        <div class="module-icon" style="background:#E8FDF0">🏫</div>
+        <div class="module-title">Pedagogik amaliyot</div>
+        <div class="module-desc">Neyrofan asosida dars dizayni, differentsial ta'lim, o'quvchi xulq-atvori.</div>
+        <div class="module-meta">
+          <span class="module-lessons">📚 8 dars</span>
+          <span class="module-badge badge-adv">Yuqori</span>
+          <span class="module-arrow">→</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOPICS -->
+<section id="topics">
+  <div class="section-inner">
+    <div class="section-tag">📋 Tafsilotlar</div>
+    <h2 class="section-title">Mavzular bo'yicha darslar</h2>
+    <p class="section-desc">Har bir mavzu bo'yicha video darslar, maqolalar va amaliy topshiriqlar.</p>
+    <div class="topics-layout">
+      <div class="topics-nav">
+        <button class="topic-btn active" onclick="showTopic('t1',this)">
+          <span class="topic-icon" style="background:#E0F5F3">🧬</span>Neyrofan asoslari
+        </button>
+        <button class="topic-btn" onclick="showTopic('t2',this)">
+          <span class="topic-icon" style="background:#FEF0E6">🧩</span>Xotira
+        </button>
+        <button class="topic-btn" onclick="showTopic('t3',this)">
+          <span class="topic-icon" style="background:#F3E8FF">🎯</span>E'tibor
+        </button>
+        <button class="topic-btn" onclick="showTopic('t4',this)">
+          <span class="topic-icon" style="background:#FDEEEE">💭</span>His-tuyg'u
+        </button>
+        <button class="topic-btn" onclick="showTopic('t5',this)">
+          <span class="topic-icon" style="background:#E8F4FD">🔄</span>Neyroплasticlik
+        </button>
+        <button class="topic-btn" onclick="showTopic('t6',this)">
+          <span class="topic-icon" style="background:#E8FDF0">🏫</span>Amaliyot
+        </button>
+      </div>
+      <div>
+        <div id="t1" class="topic-content active">
+          <div class="topic-header">
+            <h3 class="topic-title">Neyrofan asoslari</h3>
+            <p class="topic-intro">Neyronlar, sinapslar va miya hududlarini o'rganib, ular ta'lim jarayonida qanday rol o'ynashini tushuning.</p>
+          </div>
+          <div class="lessons-list">
+            <div class="lesson-item"><div class="lesson-num">01</div><div class="lesson-info"><div class="lesson-name">Neyron tuzilishi va funksiyasi</div><div class="lesson-meta">⏱ 18 daqiqa · Video + Matn</div></div><div class="lesson-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+            <div class="lesson-item"><div class="lesson-num">02</div><div class="lesson-info"><div class="lesson-name">Sinaptik uzatish mexanizmi</div><div class="lesson-meta">⏱ 22 daqiqa · Video + Interaktiv</div></div><div class="lesson-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+            <div class="lesson-item"><div class="lesson-num">03</div><div class="lesson-info"><div class="lesson-name">Miya po'stlog'i va hududlari</div><div class="lesson-meta">⏱ 25 daqiqa · Video</div></div><div class="lesson-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+            <div class="lesson-item"><div class="lesson-num">04</div><div class="lesson-info"><div class="lesson-name">Neyrotransmitterlar roli</div><div class="lesson-meta">⏱ 20 daqiqa · Matn + Test</div></div><div class="lesson-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+            <div class="lesson-item"><div class="lesson-num">05</div><div class="lesson-info"><div class="lesson-name">Prefrontal korteks va qaror qabul qilish</div><div class="lesson-meta">⏱ 28 daqiqa · Video + Amaliyot</div></div><div class="lesson-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+          </div>
+        </div>
+        <div id="t2" class="topic-content">
+          <div class="topic-header">
+            <h3 class="topic-title">Xotira va o'rganish</h3>
+            <p class="topic-intro">Qisqa muddatli, uzoq muddatli va ishchi xotira mexanizmlari hamda samarali o'rganish strategiyalari.</p>
+          </div>
+          <div class="lessons-list">
+            <div class="lesson-item"><div class="lesson-num">01</div><div class="lesson-info"><div class="lesson-name">Xotira turlari va modellari</div><div class="lesson-meta">⏱ 20 daqiqa · Video</div></div><div class="lesson-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+            <div class="lesson-item"><div class="lesson-num">02</div><div class="lesson-info"><div class="lesson-name">Gippokamp va makon xotirasi</div><div class="lesson-meta">⏱ 24 daqiqa · Video + Interaktiv</div></div><div class="lesson-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+            <div class="lesson-item"><div class="lesson-num">03</div><div class="lesson-info"><div class="lesson-name">Xotirani mustahkamlash texnikasi</div><div class="lesson-meta">⏱ 18 daqiqa · Amaliyot</div></div><div class="lesson-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+            <div class="lesson-item"><div class="lesson-num">04</div><div class="lesson-info"><div class="lesson-name">Mnemonika va vizualizatsiya</div><div class="lesson-meta">⏱ 30 daqiqa · Video + Test</div></div><div class="lesson-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+          </div>
+        </div>
+        <div id="t3" class="topic-content">
+          <div class="topic-header">
+            <h3 class="topic-title">E'tibor va konsentratsiya</h3>
+            <p class="topic-intro">E'tiborni boshqarish, distraksiyalardan himoya va o'quv muhitini optimallashtirish.</p>
+          </div>
+          <div class="lessons-list">
+            <div class="lesson-item"><div class="lesson-num">01</div><div class="lesson-info"><div class="lesson-name">Selektiv e'tibor mexanizmi</div><div class="lesson-meta">⏱ 22 daqiqa · Video</div></div><div class="lesson-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+            <div class="lesson-item"><div class="lesson-num">02</div><div class="lesson-info"><div class="lesson-name">Kognitiv yuklanish nazariyasi</div><div class="lesson-meta">⏱ 26 daqiqa · Video + Matn</div></div><div class="lesson-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+            <div class="lesson-item"><div class="lesson-num">03</div><div class="lesson-info"><div class="lesson-name">Sinfda e'tiborni ushlab turish</div><div class="lesson-meta">⏱ 20 daqiqa · Amaliyot</div></div><div class="lesson-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+          </div>
+        </div>
+        <div id="t4" class="topic-content">
+          <div class="topic-header">
+            <h3 class="topic-title">His-tuyg'u va motivatsiya</h3>
+            <p class="topic-intro">Amigdala, dopamin va serotonin ta'sir mexanizmlari va motivatsiya strategiyalari.</p>
+          </div>
+          <div class="lessons-list">
+            <div class="lesson-item"><div class="lesson-num">01</div><div class="lesson-info"><div class="lesson-name">Amigdala va xavf reaktsiyasi</div><div class="lesson-meta">⏱ 24 daqiqa · Video</div></div><div class="lesson-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+            <div class="lesson-item"><div class="lesson-num">02</div><div class="lesson-info"><div class="lesson-name">Dopamin tizimi va mukofot</div><div class="lesson-meta">⏱ 28 daqiqa · Video + Interaktiv</div></div><div class="lesson-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+            <div class="lesson-item"><div class="lesson-num">03</div><div class="lesson-info"><div class="lesson-name">Ichki motivatsiyani oshirish</div><div class="lesson-meta">⏱ 22 daqiqa · Amaliyot</div></div><div class="lesson-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+          </div>
+        </div>
+        <div id="t5" class="topic-content">
+          <div class="topic-header">
+            <h3 class="topic-title">Neyroплasticlik</h3>
+            <p class="topic-intro">Miyaning o'zgarish va moslashish qobiliyati — yangi neyron ulanishlarini shakllantirish.</p>
+          </div>
+          <div class="lessons-list">
+            <div class="lesson-item"><div class="lesson-num">01</div><div class="lesson-info"><div class="lesson-name">Sinaptik plastiklik asoslari</div><div class="lesson-meta">⏱ 26 daqiqa · Video</div></div><div class="lesson-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+            <div class="lesson-item"><div class="lesson-num">02</div><div class="lesson-info"><div class="lesson-name">O'rganish va miya o'zgarishi</div><div class="lesson-meta">⏱ 30 daqiqa · Video + Test</div></div><div class="lesson-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+            <div class="lesson-item"><div class="lesson-num">03</div><div class="lesson-info"><div class="lesson-name">Muhit va neyroплasticlik</div><div class="lesson-meta">⏱ 20 daqiqa · Matn</div></div><div class="lesson-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+          </div>
+        </div>
+        <div id="t6" class="topic-content">
+          <div class="topic-header">
+            <h3 class="topic-title">Pedagogik amaliyot</h3>
+            <p class="topic-intro">Neyrofan natijalarini sinfxona amaliyotiga tatbiq etish — samarali dars metodologiyasi.</p>
+          </div>
+          <div class="lessons-list">
+            <div class="lesson-item"><div class="lesson-num">01</div><div class="lesson-info"><div class="lesson-name">Neyrofan asosida dars dizayni</div><div class="lesson-meta">⏱ 35 daqiqa · Video + Amaliyot</div></div><div class="lesson-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+            <div class="lesson-item"><div class="lesson-num">02</div><div class="lesson-info"><div class="lesson-name">Differentsial ta'lim</div><div class="lesson-meta">⏱ 28 daqiqa · Video</div></div><div class="lesson-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+            <div class="lesson-item"><div class="lesson-num">03</div><div class="lesson-info"><div class="lesson-name">Formativ baholash va xatolar</div><div class="lesson-meta">⏱ 24 daqiqa · Matn + Test</div></div><div class="lesson-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERACTIVE DEMO -->
+<section id="demo">
+  <div class="section-inner">
+    <div class="section-tag">🔬 Interaktiv laboratoriya</div>
+    <h2 class="section-title">Neyron impulsini simulyatsiya qiling</h2>
+    <p class="section-desc">Real vaqtda neyron ishini kuzating va parametrlarni o'zgartiring.</p>
+    <div class="demo-layout">
+      <div class="neuron-demo">
+        <div class="demo-canvas-wrap">
+          <canvas id="neuronCanvas" width="500" height="280"></canvas>
+        </div>
+        <div class="demo-controls">
+          <div class="ctrl-row">
+            <span class="ctrl-label">Impuls kuchi</span>
+            <input type="range" class="ctrl-slider" id="strength" min="1" max="10" value="5" oninput="updateSlider()"/>
+            <span class="ctrl-val" id="strengthVal">5</span>
+          </div>
+          <div class="ctrl-row">
+            <span class="ctrl-label">Tezlik</span>
+            <input type="range" class="ctrl-slider" id="speed" min="1" max="10" value="5" oninput="updateSlider()"/>
+            <span class="ctrl-val" id="speedVal">5</span>
+          </div>
+          <div class="ctrl-row">
+            <span class="ctrl-label">Sinaps soni</span>
+            <input type="range" class="ctrl-slider" id="synapses" min="1" max="8" value="4" oninput="updateSlider()"/>
+            <span class="ctrl-val" id="synapsesVal">4</span>
+          </div>
+          <button class="fire-btn" onclick="fireNeuron()">⚡ Neyronni Faollashtirish</button>
+        </div>
+      </div>
+      <div class="demo-info">
+        <h3>Neyron qanday ishlaydi?</h3>
+        <p>Har bir neyron dendritlar orqali signal qabul qiladi, soma (tanasi) da ishlaydi va akson orqali keyingi neyronlarga uzatadi. Bu jarayon elektrokimyoviy impulse asosida amalga oshadi.</p>
+        <p>Sinaptik aloqalar qanchalik ko'p va kuchli bo'lsa, xotira va o'rganish shunchalik samarali bo'ladi — bu Hebb qonunining asosi.</p>
+        <div class="fact-cards">
+          <div class="fact-card">
+            <span class="fact-icon">⚡</span>
+            <div class="fact-text"><strong>Impuls tezligi:</strong> Neyron signali 1–120 m/s tezlikda uzatiladi — miyelin qobig'i bu tezlikni oshiradi.</div>
+          </div>
+          <div class="fact-card">
+            <span class="fact-icon">🔗</span>
+            <div class="fact-text"><strong>Hebb qonuni:</strong> "Birga otatgan neyronlar birga birikadilar" — takrorlash orqali ulanishlar kuchayadi.</div>
+          </div>
+          <div class="fact-card">
+            <span class="fact-icon">🧠</span>
+            <div class="fact-text"><strong>Neyron soni:</strong> Inson miyasida ~86 milliard neyron, ular o'rtasida yuz trillion sinaptik aloqa mavjud.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz">
+  <div class="section-inner">
+    <div class="section-tag">📝 Bilimni tekshiring</div>
+    <h2 class="section-title">Interaktiv test</h2>
+    <p class="section-desc">Neyropedagogika bo'yicha bilimlaringizni tekshiring.</p>
+    <div class="quiz-card">
+      <div class="quiz-progress"><div class="quiz-bar" id="quizBar" style="width:14%"></div></div>
+      <div class="quiz-q-num" id="quizNum">Savol 1 / 7</div>
+      <div class="quiz-question" id="quizQ">Miyaning qaysi hududi xotira jarayonida asosiy rol o'ynaydi?</div>
+      <div class="quiz-options" id="quizOpts"></div>
+      <div class="quiz-feedback" id="quizFeedback"></div>
+      <div class="quiz-nav">
+        <span class="quiz-score" id="quizScore">To'g'ri: 0</span>
+        <button class="btn-quiz" id="nextBtn" onclick="nextQuestion()" disabled>Keyingi →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GLOSSARY -->
+<section id="glossary">
+  <div class="section-inner">
+    <div class="section-tag">📚 Atamalar lug'ati</div>
+    <h2 class="section-title">Neyropedagogika lug'ati</h2>
+    <p class="section-desc">Asosiy atamalar va tushunchalar.</p>
+    <div class="glossary-search">
+      <div class="search-icon">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </div>
+      <input type="text" placeholder="Atama qidiring..." id="glossarySearch" oninput="filterGlossary()"/>
+    </div>
+    <div class="glossary-grid" id="glossaryGrid">
+      <div class="glossary-item" data-term="neyron"><div class="glossary-term"><span class="letter-badge">N</span>Neyron</div><div class="glossary-def">Asab tizimining asosiy funktsional birligi; elektr va kimyoviy signallarni qabul qiladi va uzatadi.</div></div>
+      <div class="glossary-item" data-term="sinaps"><div class="glossary-term"><span class="letter-badge">S</span>Sinaps</div><div class="glossary-def">Ikki neyron o'rtasidagi aloqa nuqtasi; neyrotransmitterlar orqali signal uzatiladi.</div></div>
+      <div class="glossary-item" data-term="gippokamp"><div class="glossary-term"><span class="letter-badge">G</span>Gippokamp</div><div class="glossary-def">Miyaning temporal lobida joylashgan xotira va makon orientatsiyasi uchun mas'ul hudud.</div></div>
+      <div class="glossary-item" data-term="amigdala"><div class="glossary-term"><span class="letter-badge">A</span>Amigdala</div><div class="glossary-def">His-tuyg'ularni, ayniqsa qo'rquv va xavotirni qayta ishlovchi bodom shaklidagi miya tuzilishi.</div></div>
+      <div class="glossary-item" data-term="neyroплasticlik"><div class="glossary-term"><span class="letter-badge">N</span>Нейропластиклик</div><div class="glossary-def">Miyaning o'zgaruvchi sharoitlarga moslashib, yangi neyron ulanishlarini shakllantirish qobiliyati.</div></div>
+      <div class="glossary-item" data-term="dopamin"><div class="glossary-term"><span class="letter-badge">D</span>Dopamin</div><div class="glossary-def">Mukofot, motivatsiya va harakatlantiruvchi xulq-atvorda ishtirok etuvchi neyrotransmitter.</div></div>
+      <div class="glossary-item" data-term="korteks"><div class="glossary-term"><span class="letter-badge">K</span>Korteks</div><div class="glossary-def">Miya po'stlog'i; fikrlash, til, sezgi va harakat kabi yuqori kognitiv funksiyalar markazi.</div></div>
+      <div class="glossary-item" data-term="mielinizatsiya"><div class="glossary-term"><span class="letter-badge">M</span>Mielinizatsiya</div><div class="glossary-def">Akson atrofida miya qobig'i hosil bo'lish jarayoni; neyron impulsini tezlashtiradi.</div></div>
+      <div class="glossary-item" data-term="konsolidatsiya"><div class="glossary-term"><span class="letter-badge">K</span>Konsolidatsiya</div><div class="glossary-def">Qisqa muddatli xotirani uzoq muddatli xotiraga aylantirish biologik jarayoni.</div></div>
+      <div class="glossary-item" data-term="kognitiv"><div class="glossary-term"><span class="letter-badge">K</span>Kognitiv yuklanish</div><div class="glossary-def">Ishchi xotiraning ishlash quvvati chegarasi; haddan ortiq ma'lumot o'rganishga xalal beradi.</div></div>
+      <div class="glossary-item" data-term="neyrotransmitter"><div class="glossary-term"><span class="letter-badge">N</span>Neyrotransmitter</div><div class="glossary-def">Sinaptik yoriqdan signal uzatuvchi kimyoviy moddalar: dopamin, serotonin, GABA va boshqalar.</div></div>
+      <div class="glossary-item" data-term="serotonin"><div class="glossary-term"><span class="letter-badge">S</span>Serotonin</div><div class="glossary-def">Kayfiyat, uyqu, ishtaha va kognitiv funksiyalarga ta'sir etuvchi neyrotransmitter.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h3>NeuroPed</h3>
+      <p>Neyropedagogika fanidan zamonaviy elektron darslik. Miya va ta'lim ilmini birlashtirgan ilmiy platforma.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Kurs</h4>
+      <a href="#modules">Modullar</a>
+      <a href="#topics">Darslar</a>
+      <a href="#demo">Laboratoriya</a>
+      <a href="#quiz">Test</a>
+    </div>
+    <div class="footer-col">
+      <h4>Ma'lumot</h4>
+      <a href="#glossary">Lug'at</a>
+      <a href="#">Adabiyotlar</a>
+      <a href="#">Mualliflar</a>
+    </div>
+    <div class="footer-col">
+      <h4>Aloqa</h4>
+      <a href="#">Yordam markazi</a>
+      <a href="#">Bog'lanish</a>
+      <a href="#">Fikr-mulohaza</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 NeuroPed Elektron Darslik. Barcha huquqlar himoyalangan.</p>
+    <p>Neyrofan • Pedagogika • Ta'lim</p>
+  </div>
+</footer>
+
+<script>
+// Mobile menu
+function toggleMobileMenu(){var m=document.getElementById('mobileMenu');m.classList.toggle('open')}
+function closeMobileMenu(){document.getElementById('mobileMenu').classList.remove('open')}
+
+// Topics
+function showTopic(id,btn){
+  document.querySelectorAll('.topic-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.topic-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// Slider
+function updateSlider(){
+  document.getElementById('strengthVal').textContent=document.getElementById('strength').value;
+  document.getElementById('speedVal').textContent=document.getElementById('speed').value;
+  document.getElementById('synapsesVal').textContent=document.getElementById('synapses').value;
+}
+
+// Neuron canvas
+var canvas=document.getElementById('neuronCanvas');
+var ctx=canvas.getContext('2d');
+var animId=null;
+var particles=[];
+var synapseNodes=[];
+
+function drawNeuron(){
+  var W=canvas.width,H=canvas.height;
+  ctx.clearRect(0,0,W,H);
+  var numSyn=parseInt(document.getElementById('synapses').value);
+  // Background
+  ctx.fillStyle='#FAFAF8';
+  ctx.fillRect(0,0,W,H);
+  // Draw dendrites
+  ctx.strokeStyle='#2FB8AC';
+  ctx.lineWidth=2;
+  synapseNodes=[];
+  for(var i=0;i<numSyn;i++){
+    var angle=-Math.PI/2+((i/(numSyn-1||1))*Math.PI);
+    var ex=100+Math.cos(angle)*70,ey=H/2+Math.sin(angle)*70;
+    synapseNodes.push({x:ex,y:ey});
+    ctx.beginPath();ctx.moveTo(160,H/2);ctx.lineTo(ex,ey);ctx.stroke();
+    ctx.beginPath();ctx.arc(ex,ey,6,0,Math.PI*2);ctx.fillStyle='#2FB8AC';ctx.fill();
+  }
+  // Soma
+  var grad=ctx.createRadialGradient(160,H/2,5,160,H/2,35);
+  grad.addColorStop(0,'#2FB8AC');grad.addColorStop(1,'#1A3A5C');
+  ctx.beginPath();ctx.arc(160,H/2,35,0,Math.PI*2);ctx.fillStyle=grad;ctx.fill();
+  ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle='#fff';ctx.font='bold 11px DM Sans,sans-serif';ctx.textAlign='center';
+  ctx.fillText('Soma',160,H/2+4);
+  // Axon
+  ctx.strokeStyle='#1A3A5C';ctx.lineWidth=3;
+  ctx.beginPath();ctx.moveTo(195,H/2);ctx.lineTo(380,H/2);ctx.stroke();
+  // Myelin sheaths
+  for(var m=0;m<4;m++){
+    var mx=220+m*42;
+    ctx.fillStyle='rgba(47,184,172,0.15)';ctx.strokeStyle='rgba(47,184,172,0.4)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.ellipse(mx,H/2,14,10,0,0,Math.PI*2);ctx.fill();ctx.stroke();
+  }
+  // Terminal
+  ctx.beginPath();ctx.arc(395,H/2,12,0,Math.PI*2);ctx.fillStyle='#F4A261';ctx.fill();
+  ctx.fillStyle='#fff';ctx.font='7px DM Sans,sans-serif';ctx.textAlign='center';
+  ctx.fillText('Terminal',395,H/2+2);
+  // Labels
+  ctx.fillStyle='#6B7280';ctx.font='10px DM Sans,sans-serif';
+  ctx.textAlign='center';ctx.fillText('Dendritlar',80,H-10);
+  ctx.fillText('Akson',290,H/2-18);
+  ctx.fillStyle='#F4A261';ctx.font='10px DM Sans,sans-serif';
+  ctx.fillText('Keyingi neyron →',395,H-10);
+  // Particles
+  particles.forEach(function(p){
+    var alpha=p.life>0.7?1:(p.life/0.7);
+    ctx.beginPath();ctx.arc(p.x,p.y,5*p.size,0,Math.PI*2);
+    ctx.fillStyle='rgba(244,162,97,'+alpha+')';ctx.fill();
+    ctx.beginPath();ctx.arc(p.x,p.y,2,0,Math.PI*2);
+    ctx.fillStyle='rgba(255,255,255,'+alpha+')';ctx.fill();
+  });
+}
+
+function fireNeuron(){
+  if(animId) cancelAnimationFrame(animId);
+  particles=[];
+  var speed=parseInt(document.getElementById('speed').value);
+  var strength=parseInt(document.getElementById('strength').value);
+  var numSyn=parseInt(document.getElementById('synapses').value);
+  var start=null;
+  var duration=2000-speed*150;
+  var H=canvas.height;
+  // Dendrite particles
+  for(var i=0;i<numSyn;i++){
+    var angle=-Math.PI/2+((i/(numSyn-1||1))*Math.PI);
+    var ex=100+Math.cos(angle)*70,ey=H/2+Math.sin(angle)*70;
+    particles.push({sx:ex,sy:ey,ex:160,ey:H/2,x:ex,y:ey,life:1,size:0.6+strength*0.05,phase:'dendrite',delay:i*80,done:false});
+  }
+  particles.push({sx:160,sy:H/2,ex:395,ey:H/2,x:160,y:H/2,life:1,size:1+strength*0.06,phase:'axon',delay:400,done:false});
+  function animate(ts){
+    if(!start)start=ts;
+    var elapsed=ts-start;
+    particles.forEach(function(p){
+      if(elapsed<p.delay){p.x=p.sx;p.y=p.sy;return;}
+      var t=Math.min((elapsed-p.delay)/duration,1);
+    p.x=p.sx+(p.ex-p.sx)*t;p.y=p.sy+(p.ey-p.sy)*t;p.life=1-t;
+    });
+    drawNeuron();
+    if(elapsed<duration+600) animId=requestAnimationFrame(animate);
+  }
+  requestAnimationFrame(animate);
+}
+
+drawNeuron();
+
+// QUIZ
+var questions=[
+  {q:"Miyaning qaysi hududi xotira jarayonida asosiy rol o'ynaydi?",opts:["Amigdala","Gippokamp","Prefrontal korteks","Serebellyum"],ans:1,exp:"Gippokamp yangi xotiralarni shakllantirish va ularni uzoq muddatli xotiraga o'tkazishda asosiy rol o'ynaydi."},
+  {q:"Hebb qonuni nima deydi?",opts:["Neyronlar mustaqil ishlaydi","Birga otatgan neyronlar birga birikadilar","Ko'proq neyron = ko'proq xotira","Stres xotirani yaxshilaydi"],ans:1,exp:"Hebb qonuniga ko'ra, bir vaqtda faollashgan neyronlar o'rtasidagi sinaptik aloqa kuchayadi — bu o'rganishning asosi."},
+  {q:"Qaysi neyrotransmitter mukofot va motivatsiya bilan bog'liq?",opts:["Serotonin","GABA","Dopamin","Asetilxolin"],ans:2,exp:"Dopamin asab tizimining mukofot tizimida markaziy rol o'ynaydi va motivatsiya, qoniqish hissi bilan chambarchas bog'liq."},
+  {q:"Kognitiv yuklanish nazariyasi kimga tegishli?",opts:["Erik Kandel","John Sweller","Michael Merzenich","David Sousa"],ans:1,exp:"John Sweller 1988-yilda kognitiv yuklanish nazariyasini ishlab chiqdi — bu ta'lim dizaynida muhim nazariy asos."},
+  {q:"Neyroплasticlik deganda nima tushuniladi?",opts:["Miyaning o'lchami katta bo'lishi","Miyaning yangi neyron ulanishlarini shakllantirish qobiliyati","Neyronlar soni ko'payishi","Miya charchashi"],ans:1,exp:"Нейропластиклик miyaning tajriba va o'rganish asosida o'zini qayta tashkil etish qobiliyati — u umr bo'yi davom etadi."},
+  {q:"Qaysi uyqu fazasi xotira konsolidatsiyasida muhimroq?",opts:["NREM (sekin to'lqinli uyqu)","REM uyqu","Ikkalasi ham muhim","Uyqu ahamiyatsiz"],ans:2,exp:"Ilmiy tadqiqotlar shuni ko'rsatadiki, ham NREM, ham REM uyqu bosqichlari turli xotira turlarini konsolidatsiya qilishda muhim rol o'ynaydi."},
+  {q:"Amigdala asosan qaysi vazifani bajaradi?",opts:["Harakat koordinatsiyasi","His-tuyg'ularni qayta ishlash","Til ishlab chiqarish","Ko'ruv ma'lumotlarini qayta ishlash"],ans:1,exp:"Amigdala his-tuyg'ularni, ayniqsa qo'rquv va xavotir sezgilarini qayta ishlashda markaziy rol o'ynaydi va emotsional xotira bilan bog'liq."}
+];
+var qi=0,correct=0,answered=false;
+
+function renderQuiz(){
+  var q=questions[qi];
+  document.getElementById('quizNum').textContent='Savol '+(qi+1)+' / '+questions.length;
+  document.getElementById('quizQ').textContent=q.q;
+  document.getElementById('quizBar').style.width=((qi+1)/questions.length*100)+'%';
+  document.getElementById('quizScore').textContent='To\'g\'ri: '+correct;
+  document.getElementById('quizFeedback').className='quiz-feedback';
+  document.getElementById('quizFeedback').textContent='';
+  document.getElementById('nextBtn').disabled=true;
+  answered=false;
+  var opts=document.getElementById('quizOpts');
+  opts.innerHTML='';
+  q.opts.forEach(function(o,i){
+    var btn=document.createElement('button');
+    btn.className='quiz-option';
+    btn.textContent=o;
+    btn.onclick=function(){selectAnswer(i,btn)};
+    opts.appendChild(btn);
+  });
+}
+
+function selectAnswer(i,btn){
+  if(answered)return;
+  answered=true;
+  var q=questions[qi];
+  var allBtns=document.querySelectorAll('.quiz-option');
+  allBtns[q.ans].classList.add('correct');
+  var fb=document.getElementById('quizFeedback');
+  if(i===q.ans){
+    correct++;
+    btn.classList.add('correct');
+    fb.textContent='✅ To\'g\'ri! '+q.exp;
+    fb.className='quiz-feedback correct show';
+  } else {
+    btn.classList.add('wrong');
+    fb.textContent='❌ Noto\'g\'ri. '+q.exp;
+    fb.className='quiz-feedback wrong show';
+  }
+  document.getElementById('quizScore').textContent='To\'g\'ri: '+correct;
+  document.getElementById('nextBtn').disabled=false;
+  if(qi===questions.length-1)document.getElementById('nextBtn').textContent='Natija';
+}
+
+function nextQuestion(){
+  qi++;
+  if(qi>=questions.length){
+    var pct=Math.round(correct/questions.length*100);
+    var card=document.querySelector('.quiz-card');
+    card.innerHTML='<div style="text-align:center;padding:2rem"><div style="font-size:4rem;margin-bottom:1rem">'+(pct>=70?'🎉':'📚')+'</div><h3 style="font-family:Playfair Display,serif;font-size:1.8rem;color:var(--primary);margin-bottom:0.5rem">Test yakunlandi!</h3><p style="color:var(--muted);margin-bottom:1.5rem">Siz '+correct+' ta to\'g\'ri javob berdingiz ('+pct+'%)</p><div style="background:var(--bg);border-radius:12px;padding:1.5rem;border:1px solid var(--border);margin-bottom:1.5rem"><div style="font-size:2.5rem;font-weight:700;color:var(--primary);font-family:Playfair Display,serif">'+pct+'%</div><div style="color:var(--muted);font-size:0.9rem">'+(pct>=90?'A\'lo natija! Mukammal bilim!':pct>=70?'Yaxshi natija! Davom eting.':'Ko\'proq o\'qish tavsiya etiladi.')+'</div></div><button class="btn-primary" onclick="restartQuiz()" style="margin:0 auto">🔄 Qayta Boshlash</button></div>';
+    return;
+  }
+  renderQuiz();
+}
+
+function restartQuiz(){
+  qi=0;correct=0;
+  document.querySelector('.quiz-card').innerHTML='<div class="quiz-progress"><div class="quiz-bar" id="quizBar" style="width:14%"></div></div><div class="quiz-q-num" id="quizNum"></div><div class="quiz-question" id="quizQ"></div><div class="quiz-options" id="quizOpts"></div><div class="quiz-feedback" id="quizFeedback"></div><div class="quiz-nav"><span class="quiz-score" id="quizScore">To\'g\'ri: 0</span><button class="btn-quiz" id="nextBtn" onclick="nextQuestion()" disabled>Keyingi →</button></div>';
+  renderQuiz();
+}
+
+renderQuiz();
+
+// Glossary filter
+function filterGlossary(){
+  var val=document.getElementById('glossarySearch').value.toLowerCase();
+  document.querySelectorAll('.glossary-item').forEach(function(el){
+    var term=el.dataset.term;
+    var def=el.querySelector('.glossary-def').textContent.toLowerCase();
+    var title=el.querySelector('.glossary-term').textContent.toLowerCase();
+    el.style.display=(term.includes(val)||def.includes(val)||title.includes(val))?'':'none';
+  });
+}
+
+// Active nav on scroll
+window.addEventListener('scroll',function(){
+  var sections=['modules','topics','demo','quiz','glossary'];
+  var scrollY=window.scrollY+100;
+  sections.forEach(function(id){
+    var el=document.getElementById(id);
+    if(el&&scrollY>=el.offsetTop&&scrollY<el.offsetTop+el.offsetHeight){
+      document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+      var link=document.querySelector('.nav-links a[href="#'+id+'"]');
+      if(link)link.classList.add('active');
+    }
+  });
+});
+</script>
+</body>
+</html>
