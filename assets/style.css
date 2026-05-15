@@ -236,6 +236,49 @@ canvas#neuronCanvas{display:block;width:100%;height:280px}
 .glossary-term span.letter-badge{background:var(--primary);color:#fff;width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;flex-shrink:0}
 .glossary-def{font-size:0.85rem;color:var(--muted);line-height:1.6}
 
+/* CTA SECTION */
+.cta-section {
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  background: url('cta-bg.png') center/cover no-repeat;
+  position: relative;
+  margin-top: 4rem;
+}
+.cta-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(270deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.1) 100%);
+}
+.cta-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.cta-content {
+  max-width: 500px;
+  text-align: right;
+  color: #fff;
+}
+.cta-content h2 {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 2.2rem;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+.cta-content p {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  color: #e0e0e0;
+}
+
 /* FOOTER */
 footer{background:#F8F9FA;color:var(--text);padding:3rem 2rem; border-top:1px solid var(--border);}
 .footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem}
