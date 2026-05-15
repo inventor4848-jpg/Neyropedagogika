@@ -10,6 +10,45 @@ function showTopic(id,btn){
   btn.classList.add('active');
 }
 
+// Auth Flow & Protection
+const protectedPages = ['topics.html', 'demo.html', 'quiz.html', 'glossary.html'];
+
+document.addEventListener('DOMContentLoaded', () => {
+    const token = localStorage.getItem('token');
+    const authMenu = document.getElementById('authMenu');
+    
+    // Check path
+    const path = window.location.pathname;
+    const pageName = path.split('/').pop() || 'index.html';
+    
+    // Protection
+    if (protectedPages.includes(pageName) && !token) {
+        window.location.href = 'login.html?redirect=' + pageName;
+    }
+    
+    // Render Auth Menu
+    if(authMenu) {
+        if(token) {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            authMenu.innerHTML = `
+                <span style="font-size:0.85rem; font-weight:600; color:var(--primary); margin-right:10px;">${user.name}</span>
+                <button onclick="logout()" class="btn-primary" style="padding:0.4rem 1rem; font-size:0.8rem; background:transparent; border:1px solid var(--primary); color:var(--primary);">Chiqish</button>
+            `;
+        } else {
+            authMenu.innerHTML = `
+              <a href="login.html" style="text-decoration:none; color:var(--text); font-weight:600; font-size:0.9rem; align-self:center;">Kirish</a>
+              <a href="register.html" class="btn-primary" style="padding:0.4rem 1rem; font-size:0.8rem;">Ro'yxatdan o'tish</a>
+            `;
+        }
+    }
+});
+
+function logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.href = 'index.html';
+}
+
 // Slider
 function updateSlider(){
   var strengthEl = document.getElementById('strength');
