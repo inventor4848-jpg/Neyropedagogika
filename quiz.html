@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>NeuroPed — Neyropedagogika Elektron Darsligi</title>
+<title>Test | NeuroPed</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
@@ -23,10 +23,10 @@
       </div>
     </a>
     <ul class="nav-links">
-      <li><a href="index.html" class="active">Bosh sahifa</a></li>
+      <li><a href="index.html">Bosh sahifa</a></li>
       <li><a href="topics.html">Mavzular</a></li>
       <li><a href="demo.html">Interaktiv</a></li>
-      <li><a href="quiz.html">Test</a></li>
+      <li><a href="quiz.html" class="active">Test</a></li>
       <li><a href="glossary.html">Lug'at</a></li>
     </ul>
     <button class="nav-mobile-btn" onclick="toggleMobileMenu()" aria-label="Menyu">
@@ -42,45 +42,23 @@
   <a href="glossary.html">Lug'at</a>
 </div>
 
-<section class="hero">
-  <div class="hero-inner">
-    <h1 class="hero-title">Miya va ta'lim:<br/><em>Neyropedagogika</em></h1>
-    <p class="hero-desc">Zamonaviy neyrofan asosida qurilgan interaktiv elektron darslik — miya ishlash mexanizmlari, xotira, e'tibor va ta'lim samaradorligini ilmiy yondashuv bilan o'rganing.</p>
-    <a href="topics.html" class="btn-outline-white">Darslarni o'rganish</a>
-  </div>
-</section>
-
-<div class="stats-row">
-  <p>Platformamizdagi darslar <strong>1.8 milliard</strong>dan ortiq foydalanuvchilar tomonidan o'rganilmoqda</p>
+<div class="page-header">
+  <h1>Interaktiv Test</h1>
+  <p>Neyropedagogika bo'yicha bilimlaringizni tekshiring va mustahkamlang.</p>
 </div>
 
-<section id="modules">
+<section id="quiz">
   <div class="section-inner">
-    <div class="modules-grid">
-      <a href="topics.html" class="module-card">
-        <div class="module-icon">🧬</div>
-        <div class="module-title">Neyrofan asoslari</div>
-      </a>
-      <a href="topics.html" class="module-card">
-        <div class="module-icon">🧩</div>
-        <div class="module-title">Xotira va o'rganish</div>
-      </a>
-      <a href="topics.html" class="module-card">
-        <div class="module-icon">🎯</div>
-        <div class="module-title">E'tibor va konsentratsiya</div>
-      </a>
-      <a href="topics.html" class="module-card">
-        <div class="module-icon">💭</div>
-        <div class="module-title">His-tuyg'u va motivatsiya</div>
-      </a>
-      <a href="topics.html" class="module-card">
-        <div class="module-icon">🔄</div>
-        <div class="module-title">Neyroplastiklik</div>
-      </a>
-      <a href="topics.html" class="module-card">
-        <div class="module-icon">🏫</div>
-        <div class="module-title">Pedagogik amaliyot</div>
-      </a>
+    <div class="quiz-card">
+      <div class="quiz-progress"><div class="quiz-bar" id="quizBar" style="width:14%"></div></div>
+      <div class="quiz-q-num" id="quizNum">Savol 1 / 7</div>
+      <div class="quiz-question" id="quizQ">Miyaning qaysi hududi xotira jarayonida asosiy rol o'ynaydi?</div>
+      <div class="quiz-options" id="quizOpts"></div>
+      <div class="quiz-feedback" id="quizFeedback"></div>
+      <div class="quiz-nav">
+        <span class="quiz-score" id="quizScore">To'g'ri: 0</span>
+        <button class="btn-quiz" id="nextBtn" onclick="nextQuestion()" disabled>Keyingi →</button>
+      </div>
     </div>
   </div>
 </section>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Lug'at | NeuroPed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="index.html">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2C8 2 5 5 5 9c0 2.5 1.2 4.7 3 6l1 5h6l1-5c1.8-1.3 3-3.5 3-6 0-4-3-7-7-7z"/><line x1="9" y1="17" x2="15" y2="17"/><line x1="12" y1="2" x2="12" y2="9"/></svg>
+      </div>
+      <div>
+        <div class="logo-text">NeuroPed</div>
+        <div class="logo-sub">Elektron Darslik</div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Bosh sahifa</a></li>
+      <li><a href="topics.html">Mavzular</a></li>
+      <li><a href="demo.html">Interaktiv</a></li>
+      <li><a href="quiz.html">Test</a></li>
+      <li><a href="glossary.html" class="active">Lug'at</a></li>
+    </ul>
+    <button class="nav-mobile-btn" onclick="toggleMobileMenu()" aria-label="Menyu">
+      <div class="hamburger"><span></span><span></span><span></span></div>
+    </button>
+  </div>
+</nav>
+<div class="mobile-nav-menu" id="mobileMenu">
+  <a href="index.html">Bosh sahifa</a>
+  <a href="topics.html">Mavzular</a>
+  <a href="demo.html">Interaktiv</a>
+  <a href="quiz.html">Test</a>
+  <a href="glossary.html">Lug'at</a>
+</div>
+
+<div class="page-header">
+  <h1>Neyropedagogika lug'ati</h1>
+  <p>Asosiy atamalar va tushunchalar ro'yxati.</p>
+</div>
+
+<section id="glossary">
+  <div class="section-inner">
+    <div class="glossary-search">
+      <div class="search-icon">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </div>
+      <input type="text" placeholder="Atama qidiring..." id="glossarySearch" oninput="filterGlossary()"/>
+    </div>
+    <div class="glossary-grid" id="glossaryGrid">
+      <div class="glossary-item" data-term="neyron"><div class="glossary-term"><span class="letter-badge">N</span>Neyron</div><div class="glossary-def">Asab tizimining asosiy funktsional birligi; elektr va kimyoviy signallarni qabul qiladi va uzatadi.</div></div>
+      <div class="glossary-item" data-term="sinaps"><div class="glossary-term"><span class="letter-badge">S</span>Sinaps</div><div class="glossary-def">Ikki neyron o'rtasidagi aloqa nuqtasi; neyrotransmitterlar orqali signal uzatiladi.</div></div>
+      <div class="glossary-item" data-term="gippokamp"><div class="glossary-term"><span class="letter-badge">G</span>Gippokamp</div><div class="glossary-def">Miyaning temporal lobida joylashgan xotira va makon orientatsiyasi uchun mas'ul hudud.</div></div>
+      <div class="glossary-item" data-term="amigdala"><div class="glossary-term"><span class="letter-badge">A</span>Amigdala</div><div class="glossary-def">His-tuyg'ularni, ayniqsa qo'rquv va xavotirni qayta ishlovchi bodom shaklidagi miya tuzilishi.</div></div>
+      <div class="glossary-item" data-term="neyroplastiklik"><div class="glossary-term"><span class="letter-badge">N</span>Neyroplastiklik</div><div class="glossary-def">Miyaning o'zgaruvchi sharoitlarga moslashib, yangi neyron ulanishlarini shakllantirish qobiliyati.</div></div>
+      <div class="glossary-item" data-term="dopamin"><div class="glossary-term"><span class="letter-badge">D</span>Dopamin</div><div class="glossary-def">Mukofot, motivatsiya va harakatlantiruvchi xulq-atvorda ishtirok etuvchi neyrotransmitter.</div></div>
+      <div class="glossary-item" data-term="korteks"><div class="glossary-term"><span class="letter-badge">K</span>Korteks</div><div class="glossary-def">Miya po'stlog'i; fikrlash, til, sezgi va harakat kabi yuqori kognitiv funksiyalar markazi.</div></div>
+      <div class="glossary-item" data-term="mielinizatsiya"><div class="glossary-term"><span class="letter-badge">M</span>Mielinizatsiya</div><div class="glossary-def">Akson atrofida miya qobig'i hosil bo'lish jarayoni; neyron impulsini tezlashtiradi.</div></div>
+      <div class="glossary-item" data-term="konsolidatsiya"><div class="glossary-term"><span class="letter-badge">K</span>Konsolidatsiya</div><div class="glossary-def">Qisqa muddatli xotirani uzoq muddatli xotiraga aylantirish biologik jarayoni.</div></div>
+      <div class="glossary-item" data-term="kognitiv"><div class="glossary-term"><span class="letter-badge">K</span>Kognitiv yuklanish</div><div class="glossary-def">Ishchi xotiraning ishlash quvvati chegarasi; haddan ortiq ma'lumot o'rganishga xalal beradi.</div></div>
+      <div class="glossary-item" data-term="neyrotransmitter"><div class="glossary-term"><span class="letter-badge">N</span>Neyrotransmitter</div><div class="glossary-def">Sinaptik yoriqdan signal uzatuvchi kimyoviy moddalar: dopamin, serotonin, GABA va boshqalar.</div></div>
+      <div class="glossary-item" data-term="serotonin"><div class="glossary-term"><span class="letter-badge">S</span>Serotonin</div><div class="glossary-def">Kayfiyat, uyqu, ishtaha va kognitiv funksiyalarga ta'sir etuvchi neyrotransmitter.</div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h3>NeuroPed</h3>
+      <p>Neyropedagogika fanidan zamonaviy elektron darslik. Miya va ta'lim ilmini birlashtirgan ilmiy platforma.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Kurs</h4>
+      <a href="index.html">Modullar</a>
+      <a href="topics.html">Darslar</a>
+      <a href="demo.html">Laboratoriya</a>
+      <a href="quiz.html">Test</a>
+    </div>
+    <div class="footer-col">
+      <h4>Ma'lumot</h4>
+      <a href="glossary.html">Lug'at</a>
+      <a href="#">Adabiyotlar</a>
+      <a href="#">Mualliflar</a>
+    </div>
+    <div class="footer-col">
+      <h4>Aloqa</h4>
+      <a href="#">Yordam markazi</a>
+      <a href="#">Bog'lanish</a>
+      <a href="#">Fikr-mulohaza</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 NeuroPed Elektron Darslik. Barcha huquqlar himoyalangan.</p>
+    <p>Neyrofan • Pedagogika • Ta'lim</p>
+  </div>
+</footer>
+
+<script src="assets/script.js"></script>
+</body>
+</html>
