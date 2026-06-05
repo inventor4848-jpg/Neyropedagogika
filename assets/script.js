@@ -11,7 +11,7 @@ function showTopic(id,btn){
 }
 
 // Auth Flow & Protection
-const protectedPages = ['topics.html', 'demo.html', 'quiz.html', 'glossary.html'];
+const protectedPages = ['topics.html', 'demo.html', 'glossary.html'];
 
 document.addEventListener('DOMContentLoaded', () => {
     const token = localStorage.getItem('token');
