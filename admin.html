@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Admin Panel | NeuroPed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  body { background: #f8f9fa; }
+  .admin-layout { display: flex; min-height: 100vh; }
+  .sidebar { width: 250px; background: var(--primary); color: #fff; padding: 2rem 0; flex-shrink: 0; }
+  .sidebar .logo { padding: 0 2rem; margin-bottom: 2rem; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+  .sidebar .logo svg { fill: #fff; width: 24px; height: 24px; }
+  .nav-menu { display: flex; flex-direction: column; gap: 5px; }
+  .nav-item { padding: 1rem 2rem; color: rgba(255,255,255,0.8); text-decoration: none; font-weight: 500; transition: 0.2s; cursor: pointer; border: none; background: none; text-align: left; width: 100%; font-size: 1rem; font-family: inherit; }
+  .nav-item:hover, .nav-item.active { background: rgba(255,255,255,0.1); color: #fff; border-left: 4px solid var(--accent); }
+  
+  .main-content { flex: 1; padding: 2rem 3rem; overflow-y: auto; }
+  .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+  .header-top h2 { font-family: 'Playfair Display', serif; color: var(--primary); font-size: 2rem; }
+  
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
+  .stat-card { background: #fff; padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+  .stat-title { color: var(--muted); font-size: 0.9rem; font-weight: 500; margin-bottom: 0.5rem; }
+  .stat-value { font-size: 2rem; font-weight: 700; color: var(--primary); font-family: 'Playfair Display', serif; }
+  
+  .data-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+  .data-table th, .data-table td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--border); }
+  .data-table th { background: #f1f3f5; font-weight: 600; color: var(--text); }
+  .data-table tr:last-child td { border-bottom: none; }
+  
+  .btn-sm { padding: 0.4rem 0.8rem; font-size: 0.85rem; border-radius: 6px; border: none; cursor: pointer; font-weight: 500; transition: 0.2s; }
+  .btn-edit { background: #E8F4FD; color: #1A73E8; }
+  .btn-delete { background: #FDEEEE; color: #D93025; }
+  .btn-primary { background: var(--primary); color: #fff; padding: 0.6rem 1.2rem; border-radius: 8px; border: none; cursor: pointer; font-weight: 500; }
+  
+  .form-group { margin-bottom: 1rem; }
+  .form-group label { display: block; margin-bottom: 0.4rem; font-size: 0.9rem; font-weight: 500; color: var(--text); }
+  .form-control { width: 100%; padding: 0.8rem; border: 1.5px solid var(--border); border-radius: 8px; font-family: inherit; font-size: 0.95rem; }
+  .form-control:focus { outline: none; border-color: var(--primary); }
+  textarea.form-control { resize: vertical; min-height: 100px; }
+  
+  .modal-overlay { position: fixed; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 1000; }
+  .modal-overlay.active { display: flex; }
+  .modal { background: #fff; padding: 2rem; border-radius: 12px; width: 100%; max-width: 500px; }
+  .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+  .modal-header h3 { margin:0; font-family: 'Playfair Display', serif; color: var(--primary); font-size: 1.5rem; }
+  .modal-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="admin-layout">
+  <div class="sidebar">
+    <a href="index.html" class="logo">
+      <svg viewBox="0 0 24 24"><path d="M12 2C8 2 5 5 5 9c0 2.5 1.2 4.7 3 6l1 5h6l1-5c1.8-1.3 3-3.5 3-6 0-4-3-7-7-7z"/><line x1="9" y1="17" x2="15" y2="17"/><line x1="12" y1="2" x2="12" y2="9"/></svg>
+      <h2>NeuroPed</h2>
+    </a>
+    <div class="nav-menu">
+      <button class="nav-item active" onclick="switchTab('dashboard')">Boshqaruv paneli</button>
+      <button class="nav-item" onclick="switchTab('users')">Foydalanuvchilar</button>
+      <button class="nav-item" onclick="switchTab('topics')">Mavzular</button>
+      <button class="nav-item" onclick="logoutAdmin()" style="margin-top: 2rem; color: #ffcccc;">Chiqish</button>
+    </div>
+  </div>
+  
+  <div class="main-content">
+    <div id="dashboard" class="tab-content active">
+      <div class="header-top">
+        <h2>Boshqaruv paneli</h2>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-title">Jami foydalanuvchilar</div>
+          <div class="stat-value" id="statUsers">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-title">Qo'shilgan mavzular</div>
+          <div class="stat-value" id="statTopics">0</div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="users" class="tab-content">
+      <div class="header-top">
+        <h2>Foydalanuvchilar ro'yxati</h2>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Ism sharifi</th>
+            <th>Email manzili</th>
+          </tr>
+        </thead>
+        <tbody id="usersTableBody">
+          <!-- Users will be rendered here -->
+        </tbody>
+      </table>
+    </div>
+    
+    <div id="topics" class="tab-content">
+      <div class="header-top">
+        <h2>Mavzular</h2>
+        <button class="btn-primary" onclick="openModal()">+ Yangi mavzu</button>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Mavzu nomi</th>
+            <th>Video havolasi</th>
+            <th width="200">Amallar</th>
+          </tr>
+        </thead>
+        <tbody id="topicsTableBody">
+          <!-- Topics will be rendered here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="topicModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modalTitle">Yangi mavzu qo'shish</h3>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+    </div>
+    <form id="topicForm">
+      <input type="hidden" id="topicId">
+      <div class="form-group">
+        <label>Mavzu nomi</label>
+        <input type="text" id="topicName" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label>YouTube video havolasi (link)</label>
+        <input type="url" id="topicVideo" class="form-control" placeholder="https://www.youtube.com/watch?v=..." required>
+      </div>
+      <div class="form-group">
+        <label>Ma'ruza matni</label>
+        <textarea id="topicText" class="form-control" rows="5" required></textarea>
+      </div>
+      <button type="submit" class="btn-primary" style="width:100%">Saqlash</button>
+    </form>
+  </div>
+</div>
+
+<script>
+// Auth check
+if(localStorage.getItem('token') !== 'admin-token') {
+    window.location.href = 'login.html';
+}
+
+function logoutAdmin() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.href = 'login.html';
+}
+
+function switchTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(t => t.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    event.currentTarget.classList.add('active');
+    loadData();
+}
+
+function getTopics() {
+    return JSON.parse(localStorage.getItem('custom_topics')) || [];
+}
+
+function saveTopics(topics) {
+    localStorage.setItem('custom_topics', JSON.stringify(topics));
+}
+
+function loadData() {
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const topics = getTopics();
+    
+    // Stats
+    document.getElementById('statUsers').textContent = users.length;
+    document.getElementById('statTopics').textContent = topics.length;
+    
+    // Users table
+    const tbodyUsers = document.getElementById('usersTableBody');
+    tbodyUsers.innerHTML = '';
+    users.forEach((u, index) => {
+        tbodyUsers.innerHTML += `<tr>
+            <td>${index + 1}</td>
+            <td>${u.name}</td>
+            <td>${u.email}</td>
+        </tr>`;
+    });
+    
+    // Topics table
+    const tbodyTopics = document.getElementById('topicsTableBody');
+    tbodyTopics.innerHTML = '';
+    topics.forEach((t) => {
+        tbodyTopics.innerHTML += `<tr>
+            <td>${t.name}</td>
+            <td><a href="${t.video}" target="_blank" style="color:var(--accent)">Ko'rish</a></td>
+            <td>
+                <button class="btn-sm btn-edit" onclick="editTopic(${t.id})">Tahrirlash</button>
+                <button class="btn-sm btn-delete" onclick="deleteTopic(${t.id})">O'chirish</button>
+            </td>
+        </tr>`;
+    });
+}
+
+function openModal() {
+    document.getElementById('topicForm').reset();
+    document.getElementById('topicId').value = '';
+    document.getElementById('modalTitle').textContent = "Yangi mavzu qo'shish";
+    document.getElementById('topicModal').classList.add('active');
+}
+
+function closeModal() {
+    document.getElementById('topicModal').classList.remove('active');
+}
+
+function editTopic(id) {
+    const topics = getTopics();
+    const topic = topics.find(t => t.id === id);
+    if(topic) {
+        document.getElementById('topicId').value = topic.id;
+        document.getElementById('topicName').value = topic.name;
+        document.getElementById('topicVideo').value = topic.video;
+        document.getElementById('topicText').value = topic.text;
+        document.getElementById('modalTitle').textContent = "Mavzuni tahrirlash";
+        document.getElementById('topicModal').classList.add('active');
+    }
+}
+
+function deleteTopic(id) {
+    if(confirm("Haqiqatan ham bu mavzuni o'chirmoqchimisiz?")) {
+        let topics = getTopics();
+        topics = topics.filter(t => t.id !== id);
+        saveTopics(topics);
+        loadData();
+    }
+}
+
+document.getElementById('topicForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const id = document.getElementById('topicId').value;
+    const name = document.getElementById('topicName').value;
+    const video = document.getElementById('topicVideo').value;
+    const text = document.getElementById('topicText').value;
+    
+    let topics = getTopics();
+    
+    if(id) {
+        // Edit
+        const index = topics.findIndex(t => t.id == id);
+        if(index !== -1) {
+            topics[index] = { ...topics[index], name, video, text };
+        }
+    } else {
+        // Add
+        topics.push({ id: Date.now(), name, video, text });
+    }
+    
+    saveTopics(topics);
+    closeModal();
+    loadData();
+});
+
+// Init
+loadData();
+</script>
+</body>
+</html>

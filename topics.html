@@ -70,6 +70,9 @@
         <button class="topic-btn" onclick="showTopic('t6',this)">
           <span class="topic-icon" style="background:#E8FDF0">🏫</span>Amaliyot
         </button>
+        <button class="topic-btn" id="customTopicBtn" style="display:none;" onclick="showTopic('t-custom',this)">
+          <span class="topic-icon" style="background:#FFF3CD">⭐</span>Qo'shimcha
+        </button>
       </div>
       <div>
         <div id="t1" class="topic-content active">
@@ -141,10 +144,47 @@
             <div class="lesson-item"><div class="lesson-num">03</div><div class="lesson-info"><div class="lesson-name">Formativ baholash va xatolar</div><div class="lesson-meta">⏱ 24 daqiqa · Matn + Test</div></div><div class="lesson-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
           </div>
         </div>
+        <div id="t-custom" class="topic-content">
+          <div class="topic-header">
+            <h3 class="topic-title">Qo'shimcha mavzular</h3>
+            <p class="topic-intro">Platforma adminlari tomonidan qo'shilgan maxsus darslar va ma'ruzalar.</p>
+          </div>
+          <div class="lessons-list" id="customLessonsList">
+            <!-- Custom topics will be loaded here via JS -->
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const customTopics = JSON.parse(localStorage.getItem('custom_topics')) || [];
+    if (customTopics.length > 0) {
+        document.getElementById('customTopicBtn').style.display = 'inline-flex';
+        const list = document.getElementById('customLessonsList');
+        
+        customTopics.forEach((t, index) => {
+            const num = (index + 1).toString().padStart(2, '0');
+            list.innerHTML += `
+            <div class="lesson-item" style="display:flex; flex-direction:column; align-items:flex-start; gap:10px; cursor:default;">
+              <div style="display:flex; width:100%; align-items:center; gap:15px;">
+                <div class="lesson-num">${num}</div>
+                <div class="lesson-info" style="flex:1;">
+                  <div class="lesson-name">${t.name}</div>
+                  <div class="lesson-meta">Qo'shimcha dars</div>
+                </div>
+                <a href="${t.video}" target="_blank" class="btn-primary" style="padding:0.4rem 1rem; font-size:0.8rem; text-decoration:none;">Videoni ko'rish</a>
+              </div>
+              <div style="background:#f8f9fa; padding:15px; border-radius:8px; width:100%; font-size:0.9rem; color:var(--text); line-height:1.6;">
+                ${t.text.replace(/\n/g, '<br>')}
+              </div>
+            </div>`;
+        });
+    }
+});
+</script>
 
 <footer>
   <div class="footer-inner">
