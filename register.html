@@ -72,24 +72,22 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
   const msg = document.getElementById('message');
 
   try {
-    const res = await fetch('/api/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, email, password })
-    });
-    const data = await res.json();
-    if (res.ok) {
-      msg.textContent = data.message;
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const exists = users.find(u => u.email === email);
+    if (exists) {
+      msg.textContent = "Bu elektron pochta allaqachon ro'yxatdan o'tgan";
+      msg.className = "msg-error";
+      msg.style.display = "block";
+    } else {
+      users.push({ id: Date.now(), name, email, password });
+      localStorage.setItem('users', JSON.stringify(users));
+      msg.textContent = "Muvaffaqiyatli ro'yxatdan o'tdingiz!";
       msg.className = "msg-success";
       msg.style.display = "block";
       setTimeout(() => { window.location.href = 'login.html'; }, 1500);
-    } else {
-      msg.textContent = data.message;
-      msg.className = "msg-error";
-      msg.style.display = "block";
     }
   } catch (err) {
-    msg.textContent = "Ulanishda xatolik yuz berdi";
+    msg.textContent = "Kutilmagan xatolik yuz berdi";
     msg.className = "msg-error";
     msg.style.display = "block";
   }

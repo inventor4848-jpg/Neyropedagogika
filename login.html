@@ -67,15 +67,12 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
   const msg = document.getElementById('message');
 
   try {
-    const res = await fetch('/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
-    });
-    const data = await res.json();
-    if (res.ok) {
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('user', JSON.stringify(data.user));
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const user = users.find(u => u.email === email && u.password === password);
+    
+    if (user) {
+      localStorage.setItem('token', 'local-demo-token-12345');
+      localStorage.setItem('user', JSON.stringify({ id: user.id, name: user.name, email: user.email }));
       msg.textContent = "Kirish muvaffaqiyatli!";
       msg.className = "msg-success";
       msg.style.display = "block";
@@ -85,12 +82,12 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         window.location.href = redirect;
       }, 1000);
     } else {
-      msg.textContent = data.message;
+      msg.textContent = "Email yoki parol noto'g'ri";
       msg.className = "msg-error";
       msg.style.display = "block";
     }
   } catch (err) {
-    msg.textContent = "Ulanishda xatolik yuz berdi";
+    msg.textContent = "Kutilmagan xatolik yuz berdi";
     msg.className = "msg-error";
     msg.style.display = "block";
   }
