@@ -8,6 +8,85 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="assets/style.css">
+<style>
+  .topic-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid transparent;
+    text-align: left;
+    transition: all 0.2s;
+  }
+  .topic-nav-item:hover {
+    background: #f8f9fa;
+  }
+  .topic-nav-item.active {
+    background: #eef2ff;
+    border-color: #c7d2fe;
+  }
+  .topic-nav-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #fff;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: var(--primary);
+    font-family: 'Playfair Display', serif;
+  }
+  .topic-nav-item.active .topic-nav-num {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+  .topic-nav-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text);
+    flex: 1;
+    line-height: 1.4;
+  }
+  
+  .quiz-option-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: 0.2s;
+  }
+  .quiz-option-btn:hover:not(:disabled) {
+    border-color: var(--accent);
+    background: #f8f9fa;
+  }
+  .quiz-option-btn.selected {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+  .quiz-option-btn.correct {
+    background: #10b981;
+    color: #fff;
+    border-color: #10b981;
+  }
+  .quiz-option-btn.wrong {
+    background: #ef4444;
+    color: #fff;
+    border-color: #ef4444;
+  }
+</style>
 </head>
 <body>
 
@@ -46,19 +125,67 @@
   <p>Har bir mavzu bo'yicha video darslar, ma'ruzalar va testlar.</p>
 </div>
 
-<section id="topics">
-  <div class="section-inner">
-    <div class="topics-layout" style="display: block;">
-        <div id="t-custom" class="topic-content active" style="width: 100%;">
-          <div class="lessons-list" id="customLessonsList">
-            <!-- Custom topics will be loaded here via JS -->
-            <div id="emptyState" style="text-align:center; padding: 3rem; color: var(--muted); display:none;">
-              <div style="font-size:3rem; margin-bottom:1rem;">📚</div>
-              <h3>Hali mavzular qo'shilmagan</h3>
-              <p>Admin paneli orqali yangi darslar qo'shilganda shu yerda ko'rinadi.</p>
-            </div>
+<section id="topics" style="background: #fafafa; padding: 3rem 0;">
+  <div class="section-inner" style="display: flex; gap: 2rem; align-items: flex-start;">
+    
+    <!-- Sidebar -->
+    <div class="topics-sidebar" style="width: 350px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border);">
+      <h3 style="margin-bottom: 1.5rem; font-size: 1.2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);">Barcha mavzular</h3>
+      <div id="topicsNavList" style="display: flex; flex-direction: column; gap: 0.5rem;">
+        <!-- Buttons injected here via JS -->
+      </div>
+      <div id="sidebarEmpty" style="display:none; color: var(--muted); text-align: center; padding: 2rem 0;">
+        Hozircha mavzular qo'shilmagan.
+      </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="topic-main-content" style="flex: 1; background: #fff; border-radius: 12px; border: 1px solid var(--border); min-height: 500px; position: relative;">
+      
+      <!-- Empty State -->
+      <div id="emptyState" style="text-align:center; padding: 8rem 2rem; color: var(--muted);">
+        <div style="font-size:4rem; margin-bottom:1rem;">📚</div>
+        <h3>Mavzu tanlang</h3>
+        <p>Chap tomondagi ro'yxatdan o'zingizga kerakli darsni tanlang va o'rganishni boshlang.</p>
+      </div>
+      
+      <!-- Active Topic Area -->
+      <div id="activeTopicArea" style="display: none;">
+        <div style="padding: 2.5rem; border-bottom: 1px solid var(--border);">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: 1.5rem;">
+             <div style="display: flex; gap: 15px; align-items: center;">
+                <div id="activeTopicNum" style="font-size: 2rem; font-weight: 700; color: #ccc; font-family: 'Playfair Display', serif;"></div>
+                <div>
+                  <h2 id="activeTopicTitle" style="font-size: 1.6rem; color: var(--primary); margin-bottom: 0.3rem;"></h2>
+                  <div style="color: #666; font-size: 0.9rem;">Asosiy dars • Video va Ma'ruza matni</div>
+                </div>
+             </div>
+             <a id="activeTopicVideoBtn" href="#" target="_blank" class="btn-primary" style="text-decoration: none; padding: 0.7rem 1.5rem; border-radius: 8px; font-weight: 500;">Videoni ko'rish</a>
+          </div>
+          <div id="activeTopicText" style="line-height: 1.8; color: #333; margin-top: 2rem; background: #f8f9fa; padding: 25px; border-radius: 8px; font-size: 1.05rem;">
           </div>
         </div>
+        
+        <!-- Quiz Area -->
+        <div style="padding: 2.5rem; background: #fff; border-radius: 0 0 12px 12px;">
+           <h3 style="margin-bottom: 1.5rem; font-size: 1.3rem; border-left: 4px solid var(--accent); padding-left: 10px;">Mavzuni mustahkamlash uchun test</h3>
+           <div id="quizStatus" style="display:none; background: #eef2ff; border: 1px solid #c7d2fe; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; text-align: center;">
+             <h4 style="font-size: 1.2rem; color: var(--primary); margin-bottom: 0.5rem;">Siz bu testni ishlagansiz!</h4>
+             <div style="font-size: 2rem; font-weight: 700; color: var(--accent);" id="quizScoreText"></div>
+             <button onclick="resetQuiz()" class="btn-primary" style="margin-top: 1rem;">Qayta ishlash</button>
+           </div>
+           
+           <div id="quizContainer">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; font-weight: 600; color: #555;">
+                <span id="quizQNum">1-savol / 10</span>
+              </div>
+              <h4 id="quizQuestion" style="font-size: 1.15rem; margin-bottom: 1.5rem; line-height: 1.5;"></h4>
+              <div id="quizOptions"></div>
+              <button id="quizNextBtn" class="btn-primary" style="margin-top: 1.5rem; display: none;" onclick="nextQuestion()">Keyingi savol</button>
+           </div>
+        </div>
+      </div>
+      
     </div>
   </div>
 </section>
@@ -96,33 +223,146 @@
 
 <script src="assets/script.js"></script>
 <script>
+// Mock 10 Questions for ANY topic
+const quizQuestions = [
+  { q: "Ushbu mavzuda ko'tarilgan asosiy muammo nima edi?", opts: ["Diqqat yetishmasligi", "Miya va o'rganish aloqadorligi", "Xotira buzilishi", "O'qitish metodikasi"], ans: 1 },
+  { q: "Mavzu davomida tushuntirilgan miya qismi asosan nima uchun javob beradi?", opts: ["Ko'rish va eshitish", "Axborotni qayta ishlash va saqlash", "Harakat koordinatsiyasi", "Nafas olish mexanizmi"], ans: 1 },
+  { q: "Qaysi omil o'quv jarayonini eng ko'p sekinlashtiradi deyilgan?", opts: ["Doimiy takrorlash", "Kognitiv ortiqcha yuklanish (stres)", "Katta yosh", "Sog'lom ovqatlanish"], ans: 1 },
+  { q: "O'rganilgan ma'lumotni uzoq muddatli xotiraga o'tkazishda eng muhimi nima?", opts: ["Ertalab o'qish", "His-tuyg'ular va bog'liqlik", "Matnni yodlash", "Tez o'qish texnikasi"], ans: 1 },
+  { q: "Ushbu yondashuv o'qituvchiga qanday yordam beradi?", opts: ["Darslikni tezroq tugatishga", "Talabaning individual qabul qilishini hisobga olishga", "Faqat iqtidorli bolalarni ajratishga", "Ko'proq vazifa berishga"], ans: 1 },
+  { q: "Neyroplastiklik bu mavzuga qanday aloqador?", opts: ["Bu miya hujayralarining nobud bo'lishi", "Miyaning yangi bilimlarga moslashib ulanishlar hosil qilishi", "Bolaning tez o'sishi", "Uyquning buzilishi"], ans: 1 },
+  { q: "Motivatsiyani oshiruvchi asosiy neyrotransmitter qaysi?", opts: ["Serotonin", "GABA", "Dopamin", "Adrenalin"], ans: 2 },
+  { q: "Sinfda qulay emotsional muhit yaratish nimaga olib keladi?", opts: ["Amigdalaning tinchlanishi va korteks faollashuviga", "O'quvchilarning uxlab qolishiga", "Darsni buzilishiga", "O'qituvchining charchashiga"], ans: 0 },
+  { q: "Qaysi usul orqali mavzuni yaxshiroq tushunish mumkin?", opts: ["Ko'p marotaba bir xil o'qish", "Amaliyot va vizualizatsiya bilan uyg'unlashtirish", "Faqat tinglash", "Faqat yozib olish"], ans: 1 },
+  { q: "Xulosa qilib aytganda, neyropedagogika darsda qanday qo'llaniladi?", opts: ["Qoidalarni qat'iy joriy etish orqali", "Miya ishlash prinsiplariga mos dars dizayni orqali", "Faqat test olish orqali", "Texnologiyadan umuman foydalanmaslik orqali"], ans: 1 }
+];
+
+let activeTopicId = null;
+let currentQIndex = 0;
+let correctCount = 0;
+let selectedOption = null;
+
 document.addEventListener('DOMContentLoaded', () => {
     const customTopics = JSON.parse(localStorage.getItem('custom_topics')) || [];
-    const list = document.getElementById('customLessonsList');
-    const emptyState = document.getElementById('emptyState');
-
-    if (customTopics.length > 0) {
+    const topicsNavList = document.getElementById('topicsNavList');
+    
+    if (customTopics.length === 0) {
+        document.getElementById('sidebarEmpty').style.display = 'block';
+    } else {
         customTopics.forEach((t, index) => {
             const num = (index + 1).toString().padStart(2, '0');
-            list.innerHTML += `
-            <div class="lesson-item" style="display:flex; flex-direction:column; align-items:flex-start; gap:10px; cursor:default; background:#fff; padding: 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid var(--border);">
-              <div style="display:flex; width:100%; align-items:center; gap:15px; border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 5px;">
-                <div class="lesson-num" style="font-size:1.5rem; font-weight:700; color:var(--primary); font-family:'Playfair Display',serif;">${num}</div>
-                <div class="lesson-info" style="flex:1;">
-                  <div class="lesson-name" style="font-size:1.2rem; font-weight:600; color:var(--text);">${t.name}</div>
-                  <div class="lesson-meta" style="color:var(--muted); font-size:0.85rem; margin-top:4px;">Asosiy dars • Video va Ma'ruza matni</div>
-                </div>
-                <a href="${t.video}" target="_blank" class="btn-primary" style="padding:0.6rem 1.2rem; font-size:0.9rem; text-decoration:none; border-radius:8px;">Videoni ko'rish</a>
-              </div>
-              <div style="background:#f8f9fa; padding:20px; border-radius:8px; width:100%; font-size:0.95rem; color:#444; line-height:1.7;">
-                ${t.text.replace(/\n/g, '<br>')}
-              </div>
-            </div>`;
+            const btn = document.createElement('div');
+            btn.className = 'topic-nav-item';
+            btn.innerHTML = `
+              <div class="topic-nav-num">${num}</div>
+              <div class="topic-nav-title">${t.name}</div>
+            `;
+            btn.onclick = () => selectTopic(t, num, btn);
+            topicsNavList.appendChild(btn);
         });
-    } else {
-        emptyState.style.display = 'block';
     }
 });
+
+function selectTopic(topic, numStr, btnElement) {
+    document.querySelectorAll('.topic-nav-item').forEach(b => b.classList.remove('active'));
+    if(btnElement) btnElement.classList.add('active');
+    
+    document.getElementById('emptyState').style.display = 'none';
+    document.getElementById('activeTopicArea').style.display = 'block';
+    
+    document.getElementById('activeTopicNum').textContent = numStr;
+    document.getElementById('activeTopicTitle').textContent = topic.name;
+    document.getElementById('activeTopicVideoBtn').href = topic.video;
+    document.getElementById('activeTopicText').innerHTML = topic.text.replace(/\n/g, '<br>');
+    
+    activeTopicId = topic.id;
+    checkQuizStatus();
+}
+
+function checkQuizStatus() {
+    const scores = JSON.parse(localStorage.getItem('quiz_scores')) || {};
+    const quizContainer = document.getElementById('quizContainer');
+    const quizStatus = document.getElementById('quizStatus');
+    
+    if (scores[activeTopicId] !== undefined) {
+        quizContainer.style.display = 'none';
+        quizStatus.style.display = 'block';
+        document.getElementById('quizScoreText').textContent = scores[activeTopicId] + '% O\'zlashtirish';
+    } else {
+        quizContainer.style.display = 'block';
+        quizStatus.style.display = 'none';
+        currentQIndex = 0;
+        correctCount = 0;
+        renderQuestion();
+    }
+}
+
+function resetQuiz() {
+    const scores = JSON.parse(localStorage.getItem('quiz_scores')) || {};
+    delete scores[activeTopicId];
+    localStorage.setItem('quiz_scores', JSON.stringify(scores));
+    checkQuizStatus();
+}
+
+function renderQuestion() {
+    const q = quizQuestions[currentQIndex];
+    document.getElementById('quizQNum').textContent = `${currentQIndex + 1}-savol / 10`;
+    document.getElementById('quizQuestion').textContent = q.q;
+    
+    const optsDiv = document.getElementById('quizOptions');
+    optsDiv.innerHTML = '';
+    selectedOption = null;
+    document.getElementById('quizNextBtn').style.display = 'none';
+    
+    q.opts.forEach((optText, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-option-btn';
+        btn.textContent = optText;
+        btn.onclick = () => handleAnswer(i, btn);
+        optsDiv.appendChild(btn);
+    });
+}
+
+function handleAnswer(index, btnElement) {
+    if (selectedOption !== null) return; // Already answered
+    
+    selectedOption = index;
+    const q = quizQuestions[currentQIndex];
+    const allBtns = document.getElementById('quizOptions').querySelectorAll('button');
+    
+    if (index === q.ans) {
+        btnElement.classList.add('correct');
+        correctCount++;
+    } else {
+        btnElement.classList.add('wrong');
+        allBtns[q.ans].classList.add('correct');
+    }
+    
+    allBtns.forEach(b => b.disabled = true);
+    
+    const nextBtn = document.getElementById('quizNextBtn');
+    nextBtn.style.display = 'inline-block';
+    if (currentQIndex === 9) nextBtn.textContent = "Natijani ko'rish";
+    else nextBtn.textContent = "Keyingi savol";
+}
+
+function nextQuestion() {
+    currentQIndex++;
+    if (currentQIndex < 10) {
+        renderQuestion();
+    } else {
+        finishQuiz();
+    }
+}
+
+function finishQuiz() {
+    const percentage = Math.round((correctCount / 10) * 100);
+    const scores = JSON.parse(localStorage.getItem('quiz_scores')) || {};
+    scores[activeTopicId] = percentage;
+    localStorage.setItem('quiz_scores', JSON.stringify(scores));
+    checkQuizStatus();
+}
+
 </script>
 </body>
 </html>
