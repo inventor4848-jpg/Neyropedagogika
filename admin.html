@@ -101,7 +101,9 @@
   /* Modal */
   .modal-overlay { position: fixed; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.4); display: none; align-items: center; justify-content: center; z-index: 1000; }
   .modal-overlay.active { display: flex; }
-  .modal { background: #fff; padding: 2rem; border-radius: 12px; width: 100%; max-width: 500px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+  .modal { background: #fff; padding: 2rem; border-radius: 12px; width: 100%; max-width: 620px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+  .q-item { background: #f9fafb; padding: 1rem; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 0.75rem; }
+  .q-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; margin: 0.5rem 0; }
   .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
   .modal-header h3 { margin:0; font-weight: 600; font-size: 1.25rem; }
   .modal-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-secondary); }
@@ -282,12 +284,17 @@
         <input type="text" id="topicName" class="form-control" placeholder="Mavzuni kiriting" required>
       </div>
       <div class="form-group">
-        <label>YouTube video havolasi (link)</label>
-        <input type="url" id="topicVideo" class="form-control" placeholder="https://www.youtube.com/watch?v=..." required>
+        <label>YouTube video havolasi <span style="font-weight:400; color:var(--text-secondary);">(ixtiyoriy)</span></label>
+        <input type="url" id="topicVideo" class="form-control" placeholder="https://www.youtube.com/watch?v=...">
       </div>
       <div class="form-group">
         <label>Ma'ruza matni</label>
         <textarea id="topicText" class="form-control" placeholder="Mavzu bo'yicha matn kiriting..." required></textarea>
+      </div>
+      <div class="form-group" style="border-top:1px solid var(--border); padding-top:1.25rem; margin-top:0.5rem;">
+        <label style="font-size:0.95rem; font-weight:600;">Test savollari <span style="font-size:0.8rem; font-weight:400; color:var(--text-secondary);">(ixtiyoriy, max 10 ta)</span></label>
+        <div id="questionsContainer" style="margin-top:0.5rem;"></div>
+        <button type="button" id="addQuestionBtn" onclick="addQuestion(null)" style="margin-top:0.5rem; background:none; border:1px dashed var(--border); border-radius:6px; padding:0.5rem 1rem; width:100%; cursor:pointer; color:var(--text-secondary); font-size:0.85rem; font-family:inherit;">+ Savol qo'shish</button>
       </div>
       <button type="submit" class="btn-primary" style="width:100%; padding: 0.75rem;">Saqlash</button>
     </form>
@@ -322,73 +329,53 @@ async function loadData() {
             db.collection('users').get(),
             db.collection('topics').orderBy('createdAt').get()
         ]);
-
         const users = usersSnap.docs.map(doc => ({ ...doc.data(), docId: doc.id }));
         const topics = topicsSnap.docs.map(doc => ({ ...doc.data(), docId: doc.id }));
 
         document.getElementById('dashUsersCount').textContent = users.length;
         document.getElementById('dashTopicsCount').textContent = topics.length;
 
-        // Dashboard: so'nggi 3 talaba
         const topUsersTbody = document.getElementById('dashTopUsers');
         topUsersTbody.innerHTML = '';
         const recent = users.slice(-3).reverse();
         if (recent.length === 0) {
             topUsersTbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--text-secondary);">Hali talabalar yo\'q</td></tr>';
         } else {
-            const grades = ['A', 'B', 'A'];
-            const scores = ['96%', '88%', '92%'];
+            const grades = ['A', 'B', 'A'], scores = ['96%', '88%', '92%'];
             recent.forEach((u, i) => {
-                topUsersTbody.innerHTML += `<tr>
-                    <td>${i + 1}</td>
-                    <td style="font-weight:500; color:var(--text-primary);">${u.name}</td>
-                    <td style="color:var(--text-secondary);">${u.email}</td>
-                    <td style="font-weight:600;">${scores[i % 3]}</td>
-                    <td style="color:var(--info); font-weight:700;">${grades[i % 3]}</td>
-                </tr>`;
+                topUsersTbody.innerHTML += `<tr><td>${i+1}</td><td style="font-weight:500;">${u.name}</td><td style="color:var(--text-secondary);">${u.email}</td><td style="font-weight:600;">${scores[i%3]}</td><td style="color:var(--info);font-weight:700;">${grades[i%3]}</td></tr>`;
             });
         }
 
-        // Talabalar jadvali
         const tbodyUsers = document.getElementById('usersTableBody');
-        tbodyUsers.innerHTML = '';
-        if (users.length === 0) {
-            tbodyUsers.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--text-secondary);">Hali talabalar yo\'q</td></tr>';
-        }
+        tbodyUsers.innerHTML = users.length === 0 ? '<tr><td colspan="4" style="text-align:center; color:var(--text-secondary);">Hali talabalar yo\'q</td></tr>' : '';
         users.forEach((u, i) => {
-            tbodyUsers.innerHTML += `<tr>
-                <td>${i + 1}</td>
-                <td style="font-weight:500;">${u.name}</td>
-                <td style="color:var(--text-secondary);">${u.email}</td>
-                <td style="color:var(--text-secondary);">${u.createdAt ? new Date(u.createdAt).toLocaleDateString('uz-UZ') : '-'}</td>
-            </tr>`;
+            tbodyUsers.innerHTML += `<tr><td>${i+1}</td><td style="font-weight:500;">${u.name}</td><td style="color:var(--text-secondary);">${u.email}</td><td style="color:var(--text-secondary);">${u.createdAt ? new Date(u.createdAt).toLocaleDateString('uz-UZ') : '-'}</td></tr>`;
         });
 
-        // Mavzular jadvali
         const tbodyTopics = document.getElementById('topicsTableBody');
-        tbodyTopics.innerHTML = '';
-        if (topics.length === 0) {
-            tbodyTopics.innerHTML = '<tr><td colspan="3" style="text-align:center; color:var(--text-secondary);">Hali mavzular qo\'shilmagan</td></tr>';
-        }
+        tbodyTopics.innerHTML = topics.length === 0 ? '<tr><td colspan="3" style="text-align:center; color:var(--text-secondary);">Hali mavzular qo\'shilmagan</td></tr>' : '';
         topics.forEach((t) => {
+            const qCount = t.questions ? t.questions.length : 0;
             tbodyTopics.innerHTML += `<tr>
-                <td style="font-weight:500;">${t.name}</td>
-                <td><a href="${t.video}" target="_blank" style="color:var(--info); text-decoration:none;">Video Havola &nearr;</a></td>
+                <td style="font-weight:500;">${t.name} <span style="font-size:0.78rem;color:var(--text-secondary);">(${qCount} savol)</span></td>
+                <td>${t.video ? `<a href="${t.video}" target="_blank" style="color:var(--info);text-decoration:none;">Video &nearr;</a>` : '<span style="color:var(--text-secondary);">Yo\'q</span>'}</td>
                 <td>
                     <button class="btn-action" onclick="editTopic('${t.docId}')">Tahrirlash</button>
                     <button class="btn-action btn-delete" onclick="deleteTopic('${t.docId}')">O'chirish</button>
                 </td>
             </tr>`;
         });
-    } catch (err) {
-        console.error('Ma\'lumotlarni yuklashda xatolik:', err);
-    }
+    } catch (err) { console.error('Yuklashda xatolik:', err); }
 }
 
 function openModal() {
     document.getElementById('topicForm').reset();
     document.getElementById('topicId').value = '';
     document.getElementById('modalTitle').textContent = "Yangi mavzu qo'shish";
+    document.getElementById('questionsContainer').innerHTML = '';
+    questionCount = 0;
+    updateAddBtn();
     document.getElementById('topicModal').classList.add('active');
 }
 
@@ -402,9 +389,13 @@ async function editTopic(docId) {
         const t = doc.data();
         document.getElementById('topicId').value = docId;
         document.getElementById('topicName').value = t.name;
-        document.getElementById('topicVideo').value = t.video;
+        document.getElementById('topicVideo').value = t.video || '';
         document.getElementById('topicText').value = t.text;
         document.getElementById('modalTitle').textContent = "Mavzuni tahrirlash";
+        document.getElementById('questionsContainer').innerHTML = '';
+        questionCount = 0;
+        if (t.questions && t.questions.length > 0) t.questions.forEach(q => addQuestion(q));
+        updateAddBtn();
         document.getElementById('topicModal').classList.add('active');
     }
 }
@@ -416,22 +407,75 @@ async function deleteTopic(docId) {
     }
 }
 
+let questionCount = 0;
+
+function addQuestion(data) {
+    if (questionCount >= 10) return;
+    const container = document.getElementById('questionsContainer');
+    const div = document.createElement('div');
+    div.className = 'q-item';
+    div.innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.6rem;">
+            <strong style="font-size:0.85rem;">${questionCount + 1}-savol</strong>
+            <button type="button" onclick="removeQuestion(this)" style="background:none;border:none;color:var(--danger);cursor:pointer;font-size:1.2rem;line-height:1;">&times;</button>
+        </div>
+        <input type="text" placeholder="Savol matni" class="form-control q-text" style="margin-bottom:0.4rem;" value="${data ? data.q.replace(/"/g,'&quot;') : ''}">
+        <div class="q-grid">
+            <input type="text" placeholder="A javob" class="form-control q-opt-0" value="${data ? (data.opts[0]||'').replace(/"/g,'&quot;') : ''}">
+            <input type="text" placeholder="B javob" class="form-control q-opt-1" value="${data ? (data.opts[1]||'').replace(/"/g,'&quot;') : ''}">
+            <input type="text" placeholder="C javob" class="form-control q-opt-2" value="${data ? (data.opts[2]||'').replace(/"/g,'&quot;') : ''}">
+            <input type="text" placeholder="D javob" class="form-control q-opt-3" value="${data ? (data.opts[3]||'').replace(/"/g,'&quot;') : ''}">
+        </div>
+        <select class="form-control q-ans" style="margin-top:0.4rem;">
+            <option value="0" ${data&&data.ans===0?'selected':''}>✓ To'g'ri javob: A</option>
+            <option value="1" ${data&&data.ans===1?'selected':''}>✓ To'g'ri javob: B</option>
+            <option value="2" ${data&&data.ans===2?'selected':''}>✓ To'g'ri javob: C</option>
+            <option value="3" ${data&&data.ans===3?'selected':''}>✓ To'g'ri javob: D</option>
+        </select>`;
+    container.appendChild(div);
+    questionCount++;
+    updateAddBtn();
+}
+
+function removeQuestion(btn) {
+    btn.closest('.q-item').remove();
+    questionCount--;
+    document.querySelectorAll('.q-item strong').forEach((el, i) => { el.textContent = `${i+1}-savol`; });
+    updateAddBtn();
+}
+
+function updateAddBtn() {
+    const btn = document.getElementById('addQuestionBtn');
+    if (btn) btn.style.display = questionCount >= 10 ? 'none' : 'block';
+}
+
+function getQuestionsFromForm() {
+    const questions = [];
+    document.querySelectorAll('.q-item').forEach(item => {
+        const q = item.querySelector('.q-text').value.trim();
+        const opts = [0,1,2,3].map(i => item.querySelector(`.q-opt-${i}`).value.trim());
+        const ans = parseInt(item.querySelector('.q-ans').value);
+        if (q) questions.push({ q, opts, ans });
+    });
+    return questions;
+}
+
 document.getElementById('topicForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const docId = document.getElementById('topicId').value;
     const name = document.getElementById('topicName').value;
     const video = document.getElementById('topicVideo').value;
     const text = document.getElementById('topicText').value;
-
+    const questions = getQuestionsFromForm();
     const submitBtn = this.querySelector('button[type="submit"]');
     submitBtn.disabled = true;
     submitBtn.textContent = "Saqlanmoqda...";
-
     try {
+        const data = { name, video, text, questions };
         if (docId) {
-            await db.collection('topics').doc(docId).update({ name, video, text });
+            await db.collection('topics').doc(docId).update(data);
         } else {
-            await db.collection('topics').add({ name, video, text, createdAt: Date.now() });
+            await db.collection('topics').add({ ...data, createdAt: Date.now() });
         }
         closeModal();
         loadData();
@@ -451,16 +495,9 @@ new Chart(pieCtx, {
     type: 'doughnut',
     data: {
         labels: ["A'lo", 'Yaxshi', 'Qoniqarli', 'Yomon'],
-        datasets: [{
-            data: [45, 30, 15, 10],
-            backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#ef4444'],
-            borderWidth: 1
-        }]
+        datasets: [{ data: [45,30,15,10], backgroundColor: ['#10b981','#3b82f6','#f59e0b','#ef4444'], borderWidth: 1 }]
     },
-    options: {
-        responsive: true,
-        plugins: { legend: { position: 'bottom', labels: { boxWidth: 12 } } }
-    }
+    options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12 } } } }
 });
 </script>
 </body>
