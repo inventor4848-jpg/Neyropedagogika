@@ -292,9 +292,15 @@
         <textarea id="topicText" class="form-control" placeholder="Mavzu bo'yicha matn kiriting..." required></textarea>
       </div>
       <div class="form-group" style="border-top:1px solid var(--border); padding-top:1.25rem; margin-top:0.5rem;">
-        <label style="font-size:0.95rem; font-weight:600;">Test savollari <span style="font-size:0.8rem; font-weight:400; color:var(--text-secondary);">(ixtiyoriy, max 10 ta)</span></label>
-        <div id="questionsContainer" style="margin-top:0.5rem;"></div>
-        <button type="button" id="addQuestionBtn" onclick="addQuestion(null)" style="margin-top:0.5rem; background:none; border:1px dashed var(--border); border-radius:6px; padding:0.5rem 1rem; width:100%; cursor:pointer; color:var(--text-secondary); font-size:0.85rem; font-family:inherit;">+ Savol qo'shish</button>
+        <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.75rem; flex-wrap:wrap;">
+          <label style="font-size:0.95rem; font-weight:600; flex:1; margin:0;">Test savollari <span style="font-size:0.8rem; font-weight:400; color:var(--text-secondary);">(max 10 ta)</span></label>
+          <div style="display:flex; align-items:center; gap:0.4rem;">
+            <input type="number" id="aiQCount" min="1" max="10" value="5" class="form-control" style="width:60px; padding:0.4rem 0.5rem; text-align:center;">
+            <button type="button" id="aiGenBtn" onclick="generateQuestionsAI()" style="background:linear-gradient(135deg,#6366f1,#8b5cf6); color:#fff; border:none; border-radius:6px; padding:0.5rem 0.85rem; cursor:pointer; font-size:0.82rem; font-family:inherit; white-space:nowrap; font-weight:500;">🤖 AI savollar</button>
+          </div>
+        </div>
+        <div id="questionsContainer"></div>
+        <button type="button" id="addQuestionBtn" onclick="addQuestion(null)" style="margin-top:0.5rem; background:none; border:1px dashed var(--border); border-radius:6px; padding:0.5rem 1rem; width:100%; cursor:pointer; color:var(--text-secondary); font-size:0.85rem; font-family:inherit;">+ Qo'lda savol qo'shish</button>
       </div>
       <button type="submit" class="btn-primary" style="width:100%; padding: 0.75rem;">Saqlash</button>
     </form>
@@ -404,6 +410,45 @@ async function deleteTopic(docId) {
     if (confirm("Haqiqatan ham bu mavzuni o'chirmoqchimisiz?")) {
         await db.collection('topics').doc(docId).delete();
         loadData();
+    }
+}
+
+async function generateQuestionsAI() {
+    const text = document.getElementById('topicText').value.trim();
+    if (!text) {
+        alert("Avval ma'ruza matnini kiriting, keyin AI savollar tugmasini bosing!");
+        return;
+    }
+    const count = parseInt(document.getElementById('aiQCount').value) || 5;
+    const btn = document.getElementById('aiGenBtn');
+    btn.disabled = true;
+    btn.textContent = '⏳ Tuzilmoqda...';
+
+    try {
+        const response = await fetch('/api/generate-questions', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text, count })
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || 'Server xatolik');
+
+        document.getElementById('questionsContainer').innerHTML = '';
+        questionCount = 0;
+        data.questions.forEach(q => addQuestion(q));
+
+        btn.style.background = 'linear-gradient(135deg,#10b981,#059669)';
+        btn.textContent = `✅ ${data.questions.length} ta savol tuzildi`;
+        setTimeout(() => {
+            btn.style.background = 'linear-gradient(135deg,#6366f1,#8b5cf6)';
+            btn.textContent = '🤖 AI savollar';
+            btn.disabled = false;
+        }, 2500);
+    } catch (err) {
+        console.error(err);
+        alert('AI xatolik: ' + err.message);
+        btn.textContent = '🤖 AI savollar';
+        btn.disabled = false;
     }
 }
 
