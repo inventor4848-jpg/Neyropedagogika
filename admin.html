@@ -170,14 +170,14 @@
           <div class="stat-icon" style="background: #f3e8ff; color: #a855f7;">
             <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
           </div>
-          <div class="stat-value">5</div>
+          <div class="stat-value" id="dashActiveCount">0</div>
           <div class="stat-label">Faol (7 kun)</div>
         </div>
         <div class="stat-card">
           <div class="stat-icon" style="background: var(--success-light); color: var(--success);">
             <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
           </div>
-          <div class="stat-value">75</div>
+          <div class="stat-value" id="dashLessonsCount">0</div>
           <div class="stat-label">O'rganilgan darslar</div>
         </div>
         <div class="stat-card">
@@ -331,15 +331,21 @@ function switchTab(tabId) {
 
 async function loadData() {
     try {
-        const [usersSnap, topicsSnap] = await Promise.all([
+        const [usersSnap, topicsSnap, completionsSnap] = await Promise.all([
             db.collection('users').get(),
-            db.collection('topics').orderBy('createdAt').get()
+            db.collection('topics').orderBy('createdAt').get(),
+            db.collection('quiz_completions').get()
         ]);
         const users = usersSnap.docs.map(doc => ({ ...doc.data(), docId: doc.id }));
         const topics = topicsSnap.docs.map(doc => ({ ...doc.data(), docId: doc.id }));
 
         document.getElementById('dashUsersCount').textContent = users.length;
         document.getElementById('dashTopicsCount').textContent = topics.length;
+
+        const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+        const activeCount = users.filter(u => u.lastLogin && new Date(u.lastLogin) > sevenDaysAgo).length;
+        document.getElementById('dashActiveCount').textContent = activeCount;
+        document.getElementById('dashLessonsCount').textContent = completionsSnap.size;
 
         const topUsersTbody = document.getElementById('dashTopUsers');
         topUsersTbody.innerHTML = '';

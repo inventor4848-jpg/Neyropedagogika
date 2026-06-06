@@ -394,11 +394,24 @@ function nextQuestion() {
     }
 }
 
-function finishQuiz() {
+async function finishQuiz() {
     const percentage = Math.round((correctCount / topicQuestions.length) * 100);
     const scores = JSON.parse(localStorage.getItem('quiz_scores')) || {};
     scores[activeTopicId] = percentage;
     localStorage.setItem('quiz_scores', JSON.stringify(scores));
+
+    try {
+        const userId = JSON.parse(localStorage.getItem('user') || '{}').id;
+        if (userId && activeTopicId) {
+            await db.collection('quiz_completions').doc(`${userId}_${activeTopicId}`).set({
+                userId,
+                topicId: activeTopicId,
+                score: percentage,
+                completedAt: new Date().toISOString()
+            });
+        }
+    } catch (e) { console.warn('Quiz natija saqlashda xatolik:', e); }
+
     checkQuizStatus();
 }
 
