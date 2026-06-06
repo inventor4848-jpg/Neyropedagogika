@@ -59,12 +59,19 @@
   </div>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+<script src="assets/firebase.js"></script>
 <script>
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
   const msg = document.getElementById('message');
+  const submitBtn = e.target.querySelector('button[type="submit"]');
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Tekshirilmoqda...";
 
   try {
     if (email === 'admin' && password === 'admin') {
@@ -77,12 +84,19 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
       return;
     }
 
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    const user = users.find(u => u.email === email && u.password === password);
-    
-    if (user) {
+    const snapshot = await db.collection('users')
+      .where('email', '==', email)
+      .where('password', '==', password)
+      .get();
+
+    if (!snapshot.empty) {
+      const userData = snapshot.docs[0].data();
       localStorage.setItem('token', 'local-demo-token-12345');
-      localStorage.setItem('user', JSON.stringify({ id: user.id, name: user.name, email: user.email }));
+      localStorage.setItem('user', JSON.stringify({
+        id: snapshot.docs[0].id,
+        name: userData.name,
+        email: userData.email
+      }));
       msg.textContent = "Kirish muvaffaqiyatli!";
       msg.className = "msg-success";
       msg.style.display = "block";
@@ -97,9 +111,13 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
       msg.style.display = "block";
     }
   } catch (err) {
-    msg.textContent = "Kutilmagan xatolik yuz berdi";
+    console.error(err);
+    msg.textContent = "Xatolik: " + err.message;
     msg.className = "msg-error";
     msg.style.display = "block";
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Kirish";
   }
 });
 </script>

@@ -63,6 +63,9 @@
   </div>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+<script src="assets/firebase.js"></script>
 <script>
 document.getElementById('registerForm').addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -70,26 +73,37 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
   const msg = document.getElementById('message');
+  const submitBtn = e.target.querySelector('button[type="submit"]');
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Tekshirilmoqda...";
 
   try {
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    const exists = users.find(u => u.email === email);
-    if (exists) {
+    const snapshot = await db.collection('users').where('email', '==', email).get();
+    if (!snapshot.empty) {
       msg.textContent = "Bu elektron pochta allaqachon ro'yxatdan o'tgan";
       msg.className = "msg-error";
       msg.style.display = "block";
     } else {
-      users.push({ id: Date.now(), name, email, password });
-      localStorage.setItem('users', JSON.stringify(users));
+      await db.collection('users').add({
+        name,
+        email,
+        password,
+        createdAt: new Date().toISOString()
+      });
       msg.textContent = "Muvaffaqiyatli ro'yxatdan o'tdingiz!";
       msg.className = "msg-success";
       msg.style.display = "block";
       setTimeout(() => { window.location.href = 'login.html'; }, 1500);
     }
   } catch (err) {
-    msg.textContent = "Kutilmagan xatolik yuz berdi";
+    console.error(err);
+    msg.textContent = "Xatolik: " + err.message;
     msg.className = "msg-error";
     msg.style.display = "block";
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Hisob yaratish";
   }
 });
 </script>

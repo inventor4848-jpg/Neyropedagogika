@@ -294,8 +294,10 @@
   </div>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+<script src="assets/firebase.js"></script>
 <script>
-// Auth check
 if(localStorage.getItem('token') !== 'admin-token') {
     window.location.href = 'login.html';
 }
@@ -314,70 +316,75 @@ function switchTab(tabId) {
     loadData();
 }
 
-function getTopics() {
-    return JSON.parse(localStorage.getItem('custom_topics')) || [];
-}
+async function loadData() {
+    try {
+        const [usersSnap, topicsSnap] = await Promise.all([
+            db.collection('users').get(),
+            db.collection('topics').orderBy('createdAt').get()
+        ]);
 
-function saveTopics(topics) {
-    localStorage.setItem('custom_topics', JSON.stringify(topics));
-}
+        const users = usersSnap.docs.map(doc => ({ ...doc.data(), docId: doc.id }));
+        const topics = topicsSnap.docs.map(doc => ({ ...doc.data(), docId: doc.id }));
 
-function loadData() {
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    const topics = getTopics();
-    
-    // Stats Update
-    document.getElementById('dashUsersCount').textContent = users.length;
-    document.getElementById('dashTopicsCount').textContent = topics.length;
-    
-    // Best Users Mock Data for Dashboard Table
-    const topUsersTbody = document.getElementById('dashTopUsers');
-    topUsersTbody.innerHTML = '';
-    const topUsersMock = users.slice(-3).reverse(); // Just take latest 3
-    if(topUsersMock.length === 0) {
-      topUsersTbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--text-secondary);">Hali talabalar yo\'q</td></tr>';
-    } else {
-      const grades = ['A', 'B', 'A'];
-      const scores = ['96%', '88%', '92%'];
-      topUsersMock.forEach((u, index) => {
-          topUsersTbody.innerHTML += `<tr>
-              <td>${index + 1}</td>
-              <td style="font-weight:500; color:var(--text-primary);">${u.name}</td>
-              <td style="color:var(--text-secondary);">${u.email}</td>
-              <td style="font-weight:600;">${scores[index%3]}</td>
-              <td style="color:var(--info); font-weight:700;">${grades[index%3]}</td>
-          </tr>`;
-      });
+        document.getElementById('dashUsersCount').textContent = users.length;
+        document.getElementById('dashTopicsCount').textContent = topics.length;
+
+        // Dashboard: so'nggi 3 talaba
+        const topUsersTbody = document.getElementById('dashTopUsers');
+        topUsersTbody.innerHTML = '';
+        const recent = users.slice(-3).reverse();
+        if (recent.length === 0) {
+            topUsersTbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--text-secondary);">Hali talabalar yo\'q</td></tr>';
+        } else {
+            const grades = ['A', 'B', 'A'];
+            const scores = ['96%', '88%', '92%'];
+            recent.forEach((u, i) => {
+                topUsersTbody.innerHTML += `<tr>
+                    <td>${i + 1}</td>
+                    <td style="font-weight:500; color:var(--text-primary);">${u.name}</td>
+                    <td style="color:var(--text-secondary);">${u.email}</td>
+                    <td style="font-weight:600;">${scores[i % 3]}</td>
+                    <td style="color:var(--info); font-weight:700;">${grades[i % 3]}</td>
+                </tr>`;
+            });
+        }
+
+        // Talabalar jadvali
+        const tbodyUsers = document.getElementById('usersTableBody');
+        tbodyUsers.innerHTML = '';
+        if (users.length === 0) {
+            tbodyUsers.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--text-secondary);">Hali talabalar yo\'q</td></tr>';
+        }
+        users.forEach((u, i) => {
+            tbodyUsers.innerHTML += `<tr>
+                <td>${i + 1}</td>
+                <td style="font-weight:500;">${u.name}</td>
+                <td style="color:var(--text-secondary);">${u.email}</td>
+                <td style="color:var(--text-secondary);">${u.createdAt ? new Date(u.createdAt).toLocaleDateString('uz-UZ') : '-'}</td>
+            </tr>`;
+        });
+
+        // Mavzular jadvali
+        const tbodyTopics = document.getElementById('topicsTableBody');
+        tbodyTopics.innerHTML = '';
+        if (topics.length === 0) {
+            tbodyTopics.innerHTML = '<tr><td colspan="3" style="text-align:center; color:var(--text-secondary);">Hali mavzular qo\'shilmagan</td></tr>';
+        }
+        topics.forEach((t) => {
+            tbodyTopics.innerHTML += `<tr>
+                <td style="font-weight:500;">${t.name}</td>
+                <td><a href="${t.video}" target="_blank" style="color:var(--info); text-decoration:none;">Video Havola &nearr;</a></td>
+                <td>
+                    <button class="btn-action" onclick="editTopic('${t.docId}')">Tahrirlash</button>
+                    <button class="btn-action btn-delete" onclick="deleteTopic('${t.docId}')">O'chirish</button>
+                </td>
+            </tr>`;
+        });
+    } catch (err) {
+        console.error('Ma\'lumotlarni yuklashda xatolik:', err);
     }
-    
-    // Users Table
-    const tbodyUsers = document.getElementById('usersTableBody');
-    tbodyUsers.innerHTML = '';
-    users.forEach((u, index) => {
-        tbodyUsers.innerHTML += `<tr>
-            <td>${index + 1}</td>
-            <td style="font-weight:500;">${u.name}</td>
-            <td style="color:var(--text-secondary);">${u.email}</td>
-            <td style="color:var(--text-secondary);">${new Date(u.id || Date.now()).toLocaleDateString('uz-UZ')}</td>
-        </tr>`;
-    });
-    
-    // Topics Table
-    const tbodyTopics = document.getElementById('topicsTableBody');
-    tbodyTopics.innerHTML = '';
-    topics.forEach((t) => {
-        tbodyTopics.innerHTML += `<tr>
-            <td style="font-weight:500;">${t.name}</td>
-            <td><a href="${t.video}" target="_blank" style="color:var(--info); text-decoration:none;">Video Havola &nearr;</a></td>
-            <td>
-                <button class="btn-action" onclick="editTopic(${t.id})">Tahrirlash</button>
-                <button class="btn-action btn-delete" onclick="deleteTopic(${t.id})">O'chirish</button>
-            </td>
-        </tr>`;
-    });
 }
 
-// Modal Logic
 function openModal() {
     document.getElementById('topicForm').reset();
     document.getElementById('topicId').value = '';
@@ -389,57 +396,56 @@ function closeModal() {
     document.getElementById('topicModal').classList.remove('active');
 }
 
-function editTopic(id) {
-    const topics = getTopics();
-    const topic = topics.find(t => t.id === id);
-    if(topic) {
-        document.getElementById('topicId').value = topic.id;
-        document.getElementById('topicName').value = topic.name;
-        document.getElementById('topicVideo').value = topic.video;
-        document.getElementById('topicText').value = topic.text;
+async function editTopic(docId) {
+    const doc = await db.collection('topics').doc(docId).get();
+    if (doc.exists) {
+        const t = doc.data();
+        document.getElementById('topicId').value = docId;
+        document.getElementById('topicName').value = t.name;
+        document.getElementById('topicVideo').value = t.video;
+        document.getElementById('topicText').value = t.text;
         document.getElementById('modalTitle').textContent = "Mavzuni tahrirlash";
         document.getElementById('topicModal').classList.add('active');
     }
 }
 
-function deleteTopic(id) {
-    if(confirm("Haqiqatan ham bu mavzuni o'chirmoqchimisiz?")) {
-        let topics = getTopics();
-        topics = topics.filter(t => t.id !== id);
-        saveTopics(topics);
+async function deleteTopic(docId) {
+    if (confirm("Haqiqatan ham bu mavzuni o'chirmoqchimisiz?")) {
+        await db.collection('topics').doc(docId).delete();
         loadData();
     }
 }
 
-document.getElementById('topicForm').addEventListener('submit', function(e) {
+document.getElementById('topicForm').addEventListener('submit', async function(e) {
     e.preventDefault();
-    const id = document.getElementById('topicId').value;
+    const docId = document.getElementById('topicId').value;
     const name = document.getElementById('topicName').value;
     const video = document.getElementById('topicVideo').value;
     const text = document.getElementById('topicText').value;
-    
-    let topics = getTopics();
-    
-    if(id) {
-        // Edit
-        const index = topics.findIndex(t => t.id == id);
-        if(index !== -1) {
-            topics[index] = { ...topics[index], name, video, text };
+
+    const submitBtn = this.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Saqlanmoqda...";
+
+    try {
+        if (docId) {
+            await db.collection('topics').doc(docId).update({ name, video, text });
+        } else {
+            await db.collection('topics').add({ name, video, text, createdAt: Date.now() });
         }
-    } else {
-        // Add
-        topics.push({ id: Date.now(), name, video, text });
+        closeModal();
+        loadData();
+    } catch (err) {
+        console.error(err);
+        alert('Saqlashda xatolik: ' + err.message);
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Saqlash";
     }
-    
-    saveTopics(topics);
-    closeModal();
-    loadData();
 });
 
-// Initialize Data
 loadData();
 
-// Initialize Charts (Mock data for visuals)
 const pieCtx = document.getElementById('pieChart').getContext('2d');
 new Chart(pieCtx, {
     type: 'doughnut',
@@ -453,9 +459,7 @@ new Chart(pieCtx, {
     },
     options: {
         responsive: true,
-        plugins: {
-            legend: { position: 'bottom', labels: { boxWidth: 12 } }
-        }
+        plugins: { legend: { position: 'bottom', labels: { boxWidth: 12 } } }
     }
 });
 </script>
