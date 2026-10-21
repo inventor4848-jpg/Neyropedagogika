@@ -77,8 +77,8 @@
 <script>renderSiteNav('topics.html');</script>
 
 <div class="page-header">
-  <h1>Mavzular bo’yicha darslar</h1>
-  <p>Har bir mavzu bo’yicha video darslar, ma’ruzalar, mustaqil ish topshiriqlari va testlar.</p>
+  <h1>Mavzular boʻyicha darslar</h1>
+  <p>Har bir mavzu boʻyicha video darslar, ma’ruzalar, mustaqil ish topshiriqlari va testlar.</p>
 </div>
 
 <section id="topics" style="background: var(--bg); padding: 3rem 0;">
@@ -89,7 +89,7 @@
       <h3 style="margin-bottom: 1.5rem; font-size: 1.2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);">Barcha mavzular</h3>
       <div id="topicsNavList" style="display: flex; flex-direction: column; gap: 0.5rem;"></div>
       <div id="sidebarEmpty" style="display:none; color: var(--muted); text-align: center; padding: 2rem 0;">
-        Hozircha mavzular qo’shilmagan.
+        Hozircha mavzular qoʻshilmagan.
       </div>
     </div>
 
@@ -99,7 +99,7 @@
       <div id="emptyState" style="text-align:center; padding: 8rem 2rem; color: var(--muted);">
         <div style="font-size:4rem; margin-bottom:1rem;">📚</div>
         <h3>Mavzu tanlang</h3>
-        <p>Chap tomondagi ro’yxatdan o’zingizga kerakli darsni tanlang va o’rganishni boshlang.</p>
+        <p>Chap tomondagi roʻyxatdan oʻzingizga kerakli darsni tanlang va oʻrganishni boshlang.</p>
       </div>
 
       <div id="activeTopicArea" style="display: none;">
@@ -110,12 +110,12 @@
             <h2 id="activeTopicTitle" style="font-size: 1.4rem; color: var(--primary); margin-bottom: 0.2rem;"></h2>
             <div style="color: var(--muted); font-size: 0.85rem;">Asosiy dars</div>
           </div>
-          <a id="activeTopicVideoBtn" href="#" target="_blank" class="btn-primary" style="text-decoration:none; padding:0.6rem 1.2rem; border-radius:8px; font-weight:500; font-size:0.9rem; white-space:nowrap; display:none;">▶ Videoni ko’rish</a>
+          <a id="activeTopicVideoBtn" href="#" target="_blank" class="btn-primary" style="text-decoration:none; padding:0.6rem 1.2rem; border-radius:8px; font-weight:500; font-size:0.9rem; white-space:nowrap; display:none;">▶ Videoni koʻrish</a>
         </div>
 
         <div class="topic-actions">
           <button type="button" class="topic-action-btn" onclick="window.print()">⬇ PDF yuklab olish</button>
-          <a id="activeTopicAmaliyBtn" href="#" class="topic-action-btn" style="display:none;">🛠 Amaliy mashg’ulot</a>
+          <a id="activeTopicAmaliyBtn" href="#" class="topic-action-btn" style="display:none;">🛠 Amaliy mashgʻulot</a>
           <button type="button" class="topic-action-btn" id="completeBtn" onclick="toggleTopicCompleted()">✓ Mavzuni tugatdim</button>
         </div>
 
@@ -169,19 +169,19 @@
 <script src="assets/neuron-demo.js"></script>
 <script>
 const genericQuizQuestions = [
-  { q: "Ushbu mavzuda ko’tarilgan asosiy muammo nima edi?", opts: ["Diqqat yetishmasligi", "Miya va o’rganish aloqadorligi", "Xotira buzilishi", "O’qitish metodikasi"], ans: 1 },
-  { q: "Mavzu davomida tushuntirilgan miya qismi asosan nima uchun javob beradi?", opts: ["Ko’rish va eshitish", "Axborotni qayta ishlash va saqlash", "Harakat koordinatsiyasi", "Nafas olish mexanizmi"], ans: 1 },
-  { q: "Qaysi omil o’quv jarayonini eng ko’p sekinlashtiradi deyilgan?", opts: ["Doimiy takrorlash", "Kognitiv ortiqcha yuklanish (stres)", "Katta yosh", "Sog’lom ovqatlanish"], ans: 1 },
-  { q: "O’rganilgan ma’lumotni uzoq muddatli xotiraga o’tkazishda eng muhimi nima?", opts: ["Ertalab o’qish", "His-tuyg’ular va bog’liqlik", "Matnni yodlash", "Tez o’qish texnikasi"], ans: 1 },
-  { q: "Ushbu yondashuv o’qituvchiga qanday yordam beradi?", opts: ["Darslikni tezroq tugatishga", "Talabaning individual qabul qilishini hisobga olishga", "Faqat iqtidorli bolalarni ajratishga", "Ko’proq vazifa berishga"], ans: 1 },
-  { q: "Neyroplastiklik bu mavzuga qanday aloqador?", opts: ["Bu miya hujayralarining nobud bo’lishi", "Miyaning yangi bilimlarga moslashib ulanishlar hosil qilishi", "Bolaning tez o’sishi", "Uyquning buzilishi"], ans: 1 },
+  { q: "Ushbu mavzuda koʻtarilgan asosiy muammo nima edi?", opts: ["Diqqat yetishmasligi", "Miya va oʻrganish aloqadorligi", "Xotira buzilishi", "Oʻqitish metodikasi"], ans: 1 },
+  { q: "Mavzu davomida tushuntirilgan miya qismi asosan nima uchun javob beradi?", opts: ["Koʻrish va eshitish", "Axborotni qayta ishlash va saqlash", "Harakat koordinatsiyasi", "Nafas olish mexanizmi"], ans: 1 },
+  { q: "Qaysi omil oʻquv jarayonini eng koʻp sekinlashtiradi deyilgan?", opts: ["Doimiy takrorlash", "Kognitiv ortiqcha yuklanish (stres)", "Katta yosh", "Sogʻlom ovqatlanish"], ans: 1 },
+  { q: "Oʻrganilgan ma’lumotni uzoq muddatli xotiraga oʻtkazishda eng muhimi nima?", opts: ["Ertalab oʻqish", "His-tuygʻular va bogʻliqlik", "Matnni yodlash", "Tez oʻqish texnikasi"], ans: 1 },
+  { q: "Ushbu yondashuv oʻqituvchiga qanday yordam beradi?", opts: ["Darslikni tezroq tugatishga", "Talabaning individual qabul qilishini hisobga olishga", "Faqat iqtidorli bolalarni ajratishga", "Koʻproq vazifa berishga"], ans: 1 },
+  { q: "Neyroplastiklik bu mavzuga qanday aloqador?", opts: ["Bu miya hujayralarining nobud boʻlishi", "Miyaning yangi bilimlarga moslashib ulanishlar hosil qilishi", "Bolaning tez oʻsishi", "Uyquning buzilishi"], ans: 1 },
   { q: "Motivatsiyani oshiruvchi asosiy neyrotransmitter qaysi?", opts: ["Serotonin", "GABA", "Dopamin", "Adrenalin"], ans: 2 },
-  { q: "Sinfda qulay emotsional muhit yaratish nimaga olib keladi?", opts: ["Amigdalaning tinchlanishi va korteks faollashuviga", "O’quvchilarning uxlab qolishiga", "Darsni buzilishiga", "O’qituvchining charchashiga"], ans: 0 },
-  { q: "Qaysi usul orqali mavzuni yaxshiroq tushunish mumkin?", opts: ["Ko’p marotaba bir xil o’qish", "Amaliyot va vizualizatsiya bilan uyg’unlashtirish", "Faqat tinglash", "Faqat yozib olish"], ans: 1 },
-  { q: "Xulosa qilib aytganda, neyropedagogika darsda qanday qo’llaniladi?", opts: ["Qoidalarni qat’iy joriy etish orqali", "Miya ishlash prinsiplariga mos dars dizayni orqali", "Faqat test olish orqali", "Texnologiyadan umuman foydalanmaslik orqali"], ans: 1 }
+  { q: "Sinfda qulay emotsional muhit yaratish nimaga olib keladi?", opts: ["Amigdalaning tinchlanishi va korteks faollashuviga", "Oʻquvchilarning uxlab qolishiga", "Darsni buzilishiga", "Oʻqituvchining charchashiga"], ans: 0 },
+  { q: "Qaysi usul orqali mavzuni yaxshiroq tushunish mumkin?", opts: ["Koʻp marotaba bir xil oʻqish", "Amaliyot va vizualizatsiya bilan uygʻunlashtirish", "Faqat tinglash", "Faqat yozib olish"], ans: 1 },
+  { q: "Xulosa qilib aytganda, neyropedagogika darsda qanday qoʻllaniladi?", opts: ["Qoidalarni qat’iy joriy etish orqali", "Miya ishlash prinsiplariga mos dars dizayni orqali", "Faqat test olish orqali", "Texnologiyadan umuman foydalanmaslik orqali"], ans: 1 }
 ];
 
-// Topic docId -> related "Amaliy mashg’ulot" anchor(s) in amaliy.html
+// Topic docId -> related "Amaliy mashgʻulot" anchor(s) in amaliy.html
 const TOPIC_TO_AMALIY = {
   'N8uDK8PzXzUGED9bvOqd': ['A1'],
   'iodQdE0cOBiSZDPto3el': ['A3'],
@@ -330,11 +330,11 @@ function selectTopic(topic, numStr, btnElement) {
 
     const iwList = document.getElementById('independentWorkList');
     const iw = topic.independentWork || [];
-    iwList.innerHTML = iw.length ? iw.map(t => `<li>${t}</li>`).join('') : '<li class="mustaqil-empty" style="list-style:none;margin-left:-1.3rem;">Hozircha mustaqil ish topshiriqlari qo’shilmagan.</li>';
+    iwList.innerHTML = iw.length ? iw.map(t => `<li>${t}</li>`).join('') : '<li class="mustaqil-empty" style="list-style:none;margin-left:-1.3rem;">Hozircha mustaqil ish topshiriqlari qoʻshilmagan.</li>';
 
     const cqList = document.getElementById('controlQuestionsList');
     const cq = topic.controlQuestions || [];
-    cqList.innerHTML = cq.length ? cq.map(q => `<li>${q}</li>`).join('') : '<li class="mustaqil-empty" style="list-style:none;margin-left:-1.3rem;">Hozircha nazorat savollari qo’shilmagan.</li>';
+    cqList.innerHTML = cq.length ? cq.map(q => `<li>${q}</li>`).join('') : '<li class="mustaqil-empty" style="list-style:none;margin-left:-1.3rem;">Hozircha nazorat savollari qoʻshilmagan.</li>';
 
     const demoSlot = document.getElementById('interactiveDemoSlot');
     if (topic.docId === 'ZYsQocudozSLaU0lYfsG') {
@@ -360,7 +360,7 @@ function checkQuizStatus() {
     if (scores[activeTopicId] !== undefined) {
         quizContainer.style.display = 'none';
         quizStatus.style.display = 'block';
-        document.getElementById('quizScoreText').textContent = scores[activeTopicId] + "% O’zlashtirish";
+        document.getElementById('quizScoreText').textContent = scores[activeTopicId] + "% Oʻzlashtirish";
     } else {
         quizContainer.style.display = 'block';
         quizStatus.style.display = 'none';
@@ -409,7 +409,7 @@ function handleAnswer(index, btnElement) {
     allBtns.forEach(b => b.disabled = true);
     const nextBtn = document.getElementById('quizNextBtn');
     nextBtn.style.display = 'inline-block';
-    nextBtn.textContent = currentQIndex === topicQuestions.length - 1 ? "Natijani ko’rish" : "Keyingi savol";
+    nextBtn.textContent = currentQIndex === topicQuestions.length - 1 ? "Natijani koʻrish" : "Keyingi savol";
 }
 
 function nextQuestion() {

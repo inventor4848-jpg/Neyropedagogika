@@ -2,7 +2,7 @@ var NAV_LINKS = [
   { href: 'index.html', label: 'Bosh sahifa' },
   { href: 'about.html', label: 'Darslik haqida' },
   { href: 'topics.html', label: 'Mavzular' },
-  { href: 'amaliy.html', label: "Amaliy mashg’ulotlar" },
+  { href: 'amaliy.html', label: "Amaliy mashgʻulotlar" },
   { href: 'final-test.html', label: 'Yakuniy test' },
   { href: 'literature.html', label: 'Adabiyotlar' }
 ];
@@ -69,7 +69,7 @@ function renderSiteFooter() {
   footer.innerHTML =
     '<div class="footer-inner">' +
     '<div class="footer-brand"><h3>NeuroPed</h3><p>Neyropedagogika fanidan zamonaviy elektron darslik. Miya va ta’lim ilmini birlashtirgan ilmiy platforma.</p></div>' +
-    '<div class="footer-col"><h4>Kurs</h4><a href="about.html">Darslik haqida</a><a href="topics.html">Mavzular</a><a href="amaliy.html">Amaliy mashg’ulotlar</a></div>' +
+    '<div class="footer-col"><h4>Kurs</h4><a href="about.html">Darslik haqida</a><a href="topics.html">Mavzular</a><a href="amaliy.html">Amaliy mashgʻulotlar</a></div>' +
     '<div class="footer-col"><h4>Ma’lumot</h4><a href="final-test.html">Yakuniy test</a><a href="literature.html">Adabiyotlar</a><a href="about.html#mualliflar">Mualliflar</a></div>' +
     '<div class="footer-col"><h4>Aloqa</h4><p class="footer-contact">Aloqa: [EMAIL]</p></div>' +
     '</div>' +
