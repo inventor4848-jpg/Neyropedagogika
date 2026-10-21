@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Amaliy mashg'ulotlar | NeuroPed</title>
+<meta name="description" content="Neyropedagogika fanining 15 ta amaliy mashg'uloti — SWOT, mental xarita, klaster va boshqa interaktiv shablonlar bilan."/>
+<script src="assets/theme-init.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .group-heading{max-width:900px;margin:2.5rem auto 1rem;padding:0 0.5rem}
+  .group-heading h2{font-family:'Times New Roman',Times,serif;color:var(--primary);font-size:1.25rem}
+  .group-heading span{color:var(--muted);font-size:0.85rem}
+  .session-card{max-width:900px;margin:0 auto 1.5rem;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.75rem 2rem;scroll-margin-top:calc(var(--nav-h) + 1rem)}
+  .session-top{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap;margin-bottom:0.75rem}
+  .session-badge{display:inline-block;background:var(--primary);color:#fff;font-weight:700;font-size:0.8rem;border-radius:20px;padding:0.2rem 0.75rem;margin-bottom:0.5rem}
+  .session-title{font-family:'Times New Roman',Times,serif;font-size:1.3rem;color:var(--text)}
+  .session-meta{display:flex;gap:0.5rem;flex-wrap:wrap;font-size:0.78rem;color:var(--muted)}
+  .session-meta span{background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:0.2rem 0.7rem}
+  .session-field{margin-bottom:0.6rem;font-size:0.95rem;line-height:1.65}
+  .session-field strong{color:var(--primary)}
+  .tpl-wrap{margin:1.25rem 0;border:1px dashed var(--border);border-radius:10px;padding:1.25rem;background:var(--bg)}
+  .session-footer{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);font-size:0.85rem;color:var(--muted)}
+  .session-footer a{color:var(--accent);text-decoration:none;font-weight:600}
+  .session-footer a:hover{text-decoration:underline}
+
+  /* SWOT */
+  .tpl-swot-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem}
+  .tpl-swot-cell{border-radius:10px;padding:0.85rem;border:1px solid var(--border)}
+  .tpl-swot-cell h5{font-size:0.82rem;margin-bottom:0.4rem;color:var(--primary)}
+  .tpl-swot-cell textarea{width:100%;min-height:90px;border:1px solid var(--border);border-radius:8px;padding:0.5rem;font-family:'Times New Roman',Times,serif;font-size:0.9rem;resize:vertical;background:var(--card);color:var(--text)}
+  .tpl-swot-strengths{background:rgba(39,174,96,0.08)}
+  .tpl-swot-weaknesses{background:rgba(231,76,60,0.08)}
+  .tpl-swot-opportunities{background:rgba(52,152,219,0.08)}
+  .tpl-swot-threats{background:rgba(241,196,15,0.1)}
+
+  /* Mind map / cluster */
+  .tpl-mindmap-center input{width:100%;padding:0.7rem 1rem;border-radius:10px;border:1.5px solid var(--primary);font-weight:700;font-size:1rem;margin-bottom:0.75rem;background:var(--card);color:var(--text);font-family:'Times New Roman',Times,serif}
+  .tpl-branch-row{display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem}
+  .tpl-branch-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0}
+  .tpl-branch-row input{flex:1;padding:0.55rem 0.75rem;border:1px solid var(--border);border-radius:8px;font-family:'Times New Roman',Times,serif;background:var(--card);color:var(--text)}
+  .tpl-branch-remove{background:none;border:none;color:var(--muted);font-size:1.1rem;cursor:pointer;padding:0 0.4rem}
+  .tpl-branch-remove:hover{color:#E74C3C}
+
+  /* Concept table */
+  .tpl-concept-table{width:100%;border-collapse:collapse;margin-bottom:0.75rem}
+  .tpl-concept-table th{text-align:left;font-size:0.78rem;color:var(--muted);padding:0.4rem}
+  .tpl-concept-table td{padding:0.3rem}
+  .tpl-concept-table input{width:100%;padding:0.5rem 0.7rem;border:1px solid var(--border);border-radius:8px;font-family:'Times New Roman',Times,serif;background:var(--card);color:var(--text)}
+
+  /* Lesson plan */
+  .tpl-lesson-plan{display:flex;flex-direction:column;gap:0.75rem}
+  .tpl-field label{display:block;font-size:0.8rem;font-weight:700;color:var(--primary);margin-bottom:0.3rem}
+  .tpl-field input,.tpl-field textarea{width:100%;padding:0.6rem 0.8rem;border:1px solid var(--border);border-radius:8px;font-family:'Times New Roman',Times,serif;background:var(--card);color:var(--text)}
+  .tpl-field textarea{min-height:70px;resize:vertical}
+
+  .tpl-toolbar{display:flex;gap:0.5rem;margin-top:0.75rem}
+  .tpl-btn{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:0.45rem 0.9rem;font-size:0.82rem;cursor:pointer;color:var(--text);font-family:'Times New Roman',Times,serif}
+  .tpl-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .tpl-btn-clear:hover{border-color:#E74C3C;color:#E74C3C}
+  .tpl-add-branch{margin-top:0.25rem}
+
+  @media print{
+    nav,.mobile-nav-menu,footer,.group-heading,.session-footer,.tpl-toolbar{display:none !important}
+    .session-card{break-inside:avoid;border:none;box-shadow:none;margin-bottom:2rem}
+  }
+  @media(max-width:600px){
+    .tpl-swot-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<nav id="siteNav"></nav>
+<div class="mobile-nav-menu" id="mobileMenu"></div>
+<script src="assets/layout.js"></script>
+<script>renderSiteNav('amaliy.html');</script>
+
+<div class="page-header">
+  <h1>Amaliy mashg'ulotlar</h1>
+  <p>15 ta amaliy mashg'ulot — har biri interaktiv shablon bilan. Kiritgan javoblaringiz shu brauzerda avtomatik saqlanadi.</p>
+</div>
+
+<section style="background:var(--bg);padding:1rem 2rem 3rem;">
+  <div id="sessionsContainer"></div>
+</section>
+
+<footer id="siteFooter"></footer>
+<script>renderSiteFooter();</script>
+<script src="assets/amaliy-data.js"></script>
+<script src="assets/amaliy-templates.js"></script>
+<script>
+(function () {
+  var container = document.getElementById('sessionsContainer');
+  var groupLabels = {
+    1: 'Topshiriq 1 — A1-A3 (6 ball)',
+    2: 'Topshiriq 2 — A4-A6 (6 ball)',
+    3: 'Topshiriq 3 — A7-A9 (6 ball)',
+    4: 'Topshiriq 4 — A10-A12 (6 ball)',
+    5: 'Topshiriq 5 — A13-A15 (6 ball)'
+  };
+  var lastGroup = null;
+  var html = '';
+  AMALIY_SESSIONS.forEach(function (s) {
+    if (s.group !== lastGroup) {
+      html += '<div class="group-heading"><h2>' + groupLabels[s.group] + '</h2></div>';
+      lastGroup = s.group;
+    }
+    html +=
+      '<article class="session-card" id="' + s.id + '">' +
+      '<div class="session-top">' +
+      '<div><span class="session-badge">' + s.id + '</span><div class="session-title">' + s.title + '</div></div>' +
+      '<div class="session-meta"><span>' + s.methodLabel + '</span><span>' + s.hours + ' soat</span></div>' +
+      '</div>' +
+      '<div class="session-field"><strong>Maqsad:</strong> ' + s.goal + '</div>' +
+      '<div class="session-field"><strong>Topshiriq:</strong> ' + s.task + '</div>' +
+      '<div class="session-field"><strong>Yo\'riqnoma:</strong> ' + s.guidance + '</div>' +
+      '<div class="tpl-wrap" id="tpl-' + s.id + '"></div>' +
+      '<div class="session-footer">' +
+      '<span>Baholash: ' + groupLabels[s.group] + ' tarkibiga kiradi</span>' +
+      '<a href="topics.html?id=' + s.lectureId + '">' + s.lectureLabel + ' &rarr;</a>' +
+      '</div>' +
+      '</article>';
+  });
+  container.innerHTML = html;
+  AMALIY_SESSIONS.forEach(function (s) {
+    initAmaliyTemplate(s.method, 'tpl-' + s.id, s.id);
+  });
+
+  if (window.location.hash) {
+    var target = document.querySelector(window.location.hash);
+    if (target) setTimeout(function () { target.scrollIntoView({ behavior: 'smooth' }); }, 150);
+  }
+})();
+</script>
+</body>
+</html>
