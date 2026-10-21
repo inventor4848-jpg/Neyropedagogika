@@ -59,9 +59,6 @@
   </div>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-<script src="assets/firebase.js"></script>
 <script>
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -84,34 +81,24 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
       return;
     }
 
-    const snapshot = await db.collection('users')
-      .where('email', '==', email)
-      .where('password', '==', password)
-      .get();
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || "Email yoki parol noto'g'ri");
 
-    if (!snapshot.empty) {
-      const userData = snapshot.docs[0].data();
-      const docId = snapshot.docs[0].id;
-      await db.collection('users').doc(docId).update({ lastLogin: new Date().toISOString() });
-      localStorage.setItem('token', 'local-demo-token-12345');
-      localStorage.setItem('user', JSON.stringify({
-        id: docId,
-        name: userData.name,
-        email: userData.email
-      }));
-      msg.textContent = "Kirish muvaffaqiyatli!";
-      msg.className = "msg-success";
-      msg.style.display = "block";
-      setTimeout(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const redirect = urlParams.get('redirect') || 'index.html';
-        window.location.href = redirect;
-      }, 1000);
-    } else {
-      msg.textContent = "Email yoki parol noto'g'ri";
-      msg.className = "msg-error";
-      msg.style.display = "block";
-    }
+    localStorage.setItem('token', 'local-demo-token-12345');
+    localStorage.setItem('user', JSON.stringify(data.user));
+    msg.textContent = "Kirish muvaffaqiyatli!";
+    msg.className = "msg-success";
+    msg.style.display = "block";
+    setTimeout(() => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const redirect = urlParams.get('redirect') || 'index.html';
+      window.location.href = redirect;
+    }, 1000);
   } catch (err) {
     console.error(err);
     msg.textContent = "Xatolik: " + err.message;
