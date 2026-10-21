@@ -4,11 +4,47 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>NeuroPed — Neyropedagogika Elektron Darsligi</title>
+<meta name="description" content="Neyropedagogika (NEP1206) fanidan interaktiv elektron darslik — 15 ma'ruza, 15 amaliy mashg'ulot, testlar va video darslar."/>
 <script src="assets/theme-init.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="assets/style.css">
+<style>
+  .intro-section{background:var(--card);padding:3.5rem 2rem;border-bottom:1px solid var(--border)}
+  .intro-inner{max-width:900px;margin:0 auto;text-align:center}
+  .intro-inner p.lead{font-size:1.1rem;line-height:1.8;color:var(--text);margin-bottom:0}
+
+  .howto-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;margin-top:2.5rem}
+  .howto-step{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:1.5rem 1rem;text-align:center}
+  .howto-num{width:40px;height:40px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;margin:0 auto 0.75rem;font-family:'Times New Roman',Times,serif}
+  .howto-label{font-weight:600;font-size:0.92rem;color:var(--text)}
+
+  .search-progress-row{display:grid;grid-template-columns:1.3fr 1fr;gap:1.5rem;max-width:900px;margin:2.5rem auto 0;align-items:start}
+  .search-box{position:relative}
+  .search-box input{width:100%;padding:0.85rem 1.2rem 0.85rem 3rem;border:1.5px solid var(--border);border-radius:12px;font-size:0.95rem;font-family:'Times New Roman',Times,serif;outline:none;color:var(--text);background:var(--card)}
+  .search-box input:focus{border-color:var(--accent)}
+  .search-box .search-icon-abs{position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:var(--muted)}
+  .search-results{position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.1);max-height:320px;overflow-y:auto;z-index:20;display:none;text-align:left}
+  .search-results.open{display:block}
+  .search-result-item{display:block;padding:0.85rem 1.1rem;border-bottom:1px solid var(--border);text-decoration:none;color:var(--text)}
+  .search-result-item:last-child{border-bottom:none}
+  .search-result-item:hover{background:var(--bg)}
+  .search-result-title{font-weight:600;font-size:0.92rem;margin-bottom:2px}
+  .search-result-snippet{font-size:0.78rem;color:var(--muted)}
+  .search-empty{padding:1rem;color:var(--muted);font-size:0.85rem;text-align:center}
+
+  .progress-box{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;text-align:left}
+  .progress-box p{font-size:0.9rem;color:var(--text);margin-bottom:0.6rem;font-weight:600}
+  .progress-track{background:var(--border);border-radius:100px;height:10px;overflow:hidden}
+  .progress-fill{background:var(--accent);height:100%;border-radius:100px;transition:width 0.4s ease;width:0%}
+  .progress-pct{font-size:0.78rem;color:var(--muted);margin-top:0.5rem;text-align:right}
+
+  @media(max-width:800px){
+    .howto-grid{grid-template-columns:repeat(2,1fr)}
+    .search-progress-row{grid-template-columns:1fr}
+  }
+</style>
 </head>
 <body>
 
@@ -25,36 +61,58 @@
   </div>
 </section>
 
-<div class="stats-row">
-  <p>Platformamizdagi darslar <strong>200</strong> dan ortiq foydalanuvchilar tomonidan o'rganilmoqda</p>
-</div>
+<section class="intro-section">
+  <div class="intro-inner">
+    <p class="lead">Ushbu elektron darslik "Neyropedagogika" fani (NEP1206) bo'yicha, 70610105 — "Ta'limda axborot texnologiyalari" mutaxassisligi talabalari uchun mo'ljallangan. U <strong>15 ta ma'ruza</strong>, <strong>15 ta amaliy mashg'ulot</strong>, har bir mavzu bo'yicha testlar va video darslarni o'z ichiga oladi.</p>
+
+    <div class="howto-grid">
+      <div class="howto-step"><div class="howto-num">1</div><div class="howto-label">Ma'ruzani o'qing</div></div>
+      <div class="howto-step"><div class="howto-num">2</div><div class="howto-label">Videoni ko'ring</div></div>
+      <div class="howto-step"><div class="howto-num">3</div><div class="howto-label">Testni ishlang</div></div>
+      <div class="howto-step"><div class="howto-num">4</div><div class="howto-label">Amaliy topshiriqni bajaring</div></div>
+    </div>
+
+    <div class="search-progress-row">
+      <div class="search-box">
+        <span class="search-icon-abs">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </span>
+        <input type="text" id="homeSearch" placeholder="Mavzu yoki ma'ruza matnidan qidiring..." oninput="handleHomeSearch()" autocomplete="off"/>
+        <div class="search-results" id="homeSearchResults"></div>
+      </div>
+      <div class="progress-box">
+        <p id="progressText">Siz 15 ta mavzudan 0 tasini tugatdingiz</p>
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="progress-pct" id="progressPct">0%</div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section id="modules">
   <div class="section-inner">
+    <div class="section-tag">Modullar</div>
+    <h2 class="section-title">5 ta modul, 15 ta ma'ruza</h2>
     <div class="modules-grid">
-      <a href="topics.html?t=1" class="module-card">
-        <div class="module-icon">🧬</div>
-        <div class="module-title">Neyrofan asoslari</div>
+      <a href="topics.html?id=N8uDK8PzXzUGED9bvOqd" class="module-card">
+        <div class="module-icon">🧭</div>
+        <div class="module-title">1. Neyropedagogika va neyrofanlarga kirish</div>
       </a>
-      <a href="topics.html?t=2" class="module-card">
-        <div class="module-icon">🧩</div>
-        <div class="module-title">Xotira va o'rganish</div>
+      <a href="topics.html?id=JZSxzq7G0UmZnQllW78N" class="module-card">
+        <div class="module-icon">🧠</div>
+        <div class="module-title">2. Miya, ta'lim va neyrodidaktika asoslari</div>
       </a>
-      <a href="topics.html?t=3" class="module-card">
+      <a href="topics.html?id=ZYsQocudozSLaU0lYfsG" class="module-card">
         <div class="module-icon">🎯</div>
-        <div class="module-title">E'tibor va konsentratsiya</div>
+        <div class="module-title">3. Neyrofiziologiya, diqqat, xotira va o'quv faoliyati</div>
       </a>
-      <a href="topics.html?t=4" class="module-card">
-        <div class="module-icon">💭</div>
-        <div class="module-title">His-tuyg'u va motivatsiya</div>
+      <a href="topics.html?id=5A7GZ6ScJNVJ0Cvx8Y66" class="module-card">
+        <div class="module-icon">💻</div>
+        <div class="module-title">4. Kognitiv qobiliyatlar, dasturlash va virtual haqiqat</div>
       </a>
-      <a href="topics.html?t=5" class="module-card">
-        <div class="module-icon">🔄</div>
-        <div class="module-title">Neyroplastiklik</div>
-      </a>
-      <a href="topics.html?t=6" class="module-card">
-        <div class="module-icon">🏫</div>
-        <div class="module-title">Pedagogik amaliyot</div>
+      <a href="topics.html?id=h0eg0dJn2nVJUpBY33Mc" class="module-card">
+        <div class="module-icon">🤖</div>
+        <div class="module-title">5. Mikrota'lim, AI-yo'naltirilgan ta'lim va kompetensiyalar</div>
       </a>
     </div>
   </div>
@@ -63,15 +121,77 @@
 <section class="cta-section">
   <div class="cta-inner">
     <div class="cta-content">
-      <h2>Barcha Talabalar Neyrofanni o'rganishlari kerak emasmi?</h2>
+      <h2>Nega har bir pedagog neyrofanni bilishi kerak?</h2>
       <p>Neyropedagogika, ta'lim dizayni va yordamchi texnologiyalar orqali qanday qilib o'rganish jarayonini osonlashtirishni bilib oling.</p>
-      <a href="demo.html" class="btn-outline-white">MAVJUD SIMULYATSIYALARNI SINAB KO'RISH</a>
+      <a href="about.html" class="btn-outline-white">DARSLIK HAQIDA BATAFSIL</a>
     </div>
   </div>
 </section>
 
 <footer id="siteFooter"></footer>
 <script>renderSiteFooter();</script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+<script src="assets/firebase.js"></script>
 <script src="assets/script.js"></script>
+<script>
+let homeTopicsCache = [];
+
+function getCompletedTopicsHome() {
+  try { return JSON.parse(localStorage.getItem('completedTopics')) || []; } catch (e) { return []; }
+}
+
+async function loadHomeProgressAndTopics() {
+  try {
+    const snapshot = await db.collection('topics').get();
+    homeTopicsCache = snapshot.docs.map(d => ({ ...d.data(), docId: d.id }));
+    const total = homeTopicsCache.length || 15;
+    const completed = getCompletedTopicsHome().filter(id => homeTopicsCache.some(t => t.docId === id)).length;
+    const pct = total ? Math.round((completed / total) * 100) : 0;
+    document.getElementById('progressText').textContent = `Siz ${total} ta mavzudan ${completed} tasini tugatdingiz`;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressPct').textContent = pct + '%';
+  } catch (e) {
+    console.error('Progress yuklashda xatolik:', e);
+  }
+}
+
+function handleHomeSearch() {
+  const query = document.getElementById('homeSearch').value.trim().toLowerCase();
+  const resultsEl = document.getElementById('homeSearchResults');
+  if (!query) { resultsEl.classList.remove('open'); resultsEl.innerHTML = ''; return; }
+
+  const matches = homeTopicsCache.filter(t =>
+    (t.name && t.name.toLowerCase().includes(query)) ||
+    (t.text && t.text.toLowerCase().includes(query))
+  ).slice(0, 8);
+
+  if (matches.length === 0) {
+    resultsEl.innerHTML = '<div class="search-empty">Hech narsa topilmadi.</div>';
+  } else {
+    resultsEl.innerHTML = matches.map(t => {
+      const idx = t.text ? t.text.toLowerCase().indexOf(query) : -1;
+      let snippet = '';
+      if (idx !== -1) {
+        const start = Math.max(0, idx - 40);
+        snippet = (start > 0 ? '…' : '') + t.text.substring(start, idx + 60) + '…';
+      }
+      return `<a class="search-result-item" href="topics.html?id=${t.docId}">
+        <div class="search-result-title">${t.name}</div>
+        ${snippet ? `<div class="search-result-snippet">${snippet}</div>` : ''}
+      </a>`;
+    }).join('');
+  }
+  resultsEl.classList.add('open');
+}
+
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.search-box')) {
+    document.getElementById('homeSearchResults').classList.remove('open');
+  }
+});
+
+document.addEventListener('DOMContentLoaded', loadHomeProgressAndTopics);
+</script>
 </body>
 </html>
