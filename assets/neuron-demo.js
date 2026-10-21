@@ -5,7 +5,7 @@ var neuronParticles = [];
 function neuronDemoMarkup() {
   return (
     '<div class="interactive-demo-block" style="margin-top:2rem;padding-top:2rem;border-top:1px solid var(--border);">' +
-    '<h3 style="font-family:\'Times New Roman\',Times,serif;color:var(--primary);font-size:1.3rem;margin-bottom:1rem;">🧠 Interaktiv namoyish: Neyron impulsini simulyatsiya qiling</h3>' +
+    '<h3 style="font-family:’Times New Roman’,Times,serif;color:var(--primary);font-size:1.3rem;margin-bottom:1rem;">🧠 Interaktiv namoyish: Neyron impulsini simulyatsiya qiling</h3>' +
     '<div class="demo-layout">' +
     '<div class="neuron-demo">' +
     '<div class="demo-canvas-wrap"><canvas id="neuronCanvas" width="500" height="280"></canvas></div>' +
@@ -17,11 +17,11 @@ function neuronDemoMarkup() {
     '</div></div>' +
     '<div class="demo-info">' +
     '<p>Har bir neyron dendritlar orqali signal qabul qiladi, soma (tanasi)da ishlaydi va akson orqali keyingi neyronlarga uzatadi. Bu jarayon elektrokimyoviy impuls asosida amalga oshadi.</p>' +
-    '<p>Sinaptik aloqalar qanchalik ko\'p va kuchli bo\'lsa, xotira va o\'rganish shunchalik samarali bo\'ladi — bu Hebb qonunining asosi.</p>' +
+    '<p>Sinaptik aloqalar qanchalik ko’p va kuchli bo’lsa, xotira va o’rganish shunchalik samarali bo’ladi — bu Hebb qonunining asosi.</p>' +
     '<div class="fact-cards">' +
-    '<div class="fact-card"><span class="fact-icon">⚡</span><div class="fact-text"><strong>Impuls tezligi:</strong> Neyron signali 1–120 m/s tezlikda uzatiladi — miyelin qobig\'i bu tezlikni oshiradi.</div></div>' +
-    '<div class="fact-card"><span class="fact-icon">🔗</span><div class="fact-text"><strong>Hebb qonuni:</strong> "Birga faollashadigan neyronlar o\'zaro bog\'lanadi" — takrorlash orqali ulanishlar kuchayadi.</div></div>' +
-    '<div class="fact-card"><span class="fact-icon">🧠</span><div class="fact-text"><strong>Neyron soni:</strong> Inson miyasida ~86 milliard neyron, ular o\'rtasida yuz trillion sinaptik aloqa mavjud.</div></div>' +
+    '<div class="fact-card"><span class="fact-icon">⚡</span><div class="fact-text"><strong>Impuls tezligi:</strong> Neyron signali 1–120 m/s tezlikda uzatiladi — miyelin qobig’i bu tezlikni oshiradi.</div></div>' +
+    '<div class="fact-card"><span class="fact-icon">🔗</span><div class="fact-text"><strong>Hebb qonuni:</strong> "Birga faollashadigan neyronlar o’zaro bog’lanadi" — takrorlash orqali ulanishlar kuchayadi.</div></div>' +
+    '<div class="fact-card"><span class="fact-icon">🧠</span><div class="fact-text"><strong>Neyron soni:</strong> Inson miyasida ~86 milliard neyron, ular o’rtasida yuz trillion sinaptik aloqa mavjud.</div></div>' +
     '</div></div>' +
     '</div></div>'
   );

@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             authMenu.innerHTML = `
               <a href="login.html" style="text-decoration:none; color:var(--text); font-weight:600; font-size:0.9rem; align-self:center;">Kirish</a>
-              <a href="register.html" class="btn-primary" style="padding:0.4rem 1rem; font-size:0.8rem;">Ro'yxatdan o'tish</a>
+              <a href="register.html" class="btn-primary" style="padding:0.4rem 1rem; font-size:0.8rem;">Ro’yxatdan o’tish</a>
             `;
         }
     }

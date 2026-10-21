@@ -48,7 +48,7 @@
     <button type="submit" class="auth-btn">Kirish</button>
   </form>
   <div class="auth-switch">
-    Hisobingiz yo'qmi? <a href="register.html">Ro'yxatdan o'tish</a>
+    Hisobingiz yo’qmi? <a href="register.html">Ro’yxatdan o’tish</a>
   </div>
 </div>
 
@@ -80,7 +80,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
       body: JSON.stringify({ email, password })
     });
     const data = await response.json();
-    if (!response.ok) throw new Error(data.message || "Email yoki parol noto'g'ri");
+    if (!response.ok) throw new Error(data.message || "Email yoki parol noto’g'ri");
 
     localStorage.setItem('token', 'local-demo-token-12345');
     localStorage.setItem('user', JSON.stringify(data.user));

@@ -42,7 +42,7 @@ async function startFinalTest() {
   try {
     ftQuestions = await ftBuildQuestionPool();
     if (ftQuestions.length === 0) {
-      alert("Savollar topilmadi. Birozdan so'ng qayta urinib ko'ring.");
+      alert("Savollar topilmadi. Birozdan so’ng qayta urinib ko’ring.");
       startBtn.disabled = false;
       startBtn.textContent = 'Boshlash';
       return;
@@ -134,7 +134,7 @@ function confirmFinishFinalTest() {
 }
 
 function gradeLabel(pct) {
-  if (pct >= 90) return "a'lo";
+  if (pct >= 90) return "a’lo";
   if (pct >= 70) return 'yaxshi';
   if (pct >= 60) return 'qoniqarli';
   return 'qoniqarsiz';
@@ -160,7 +160,7 @@ function finishFinalTest(timedOut) {
   document.getElementById('ftResultSummary').innerHTML =
     (timedOut ? '<p class="ft-timeout-note">⏰ Vaqt tugadi — test avtomatik yakunlandi.</p>' : '') +
     `<div class="ft-score-big">${pct}%</div>` +
-    `<p>${correct} / ${ftQuestions.length} ta to'g'ri javob</p>` +
+    `<p>${correct} / ${ftQuestions.length} ta to’g'ri javob</p>` +
     `<p><strong>${ball} / 50 ball</strong> (yakuniy nazorat)</p>` +
     `<p class="ft-grade-badge ft-grade-${grade.replace("'", '')}">Baho: ${grade}</p>`;
 
@@ -171,7 +171,7 @@ function finishFinalTest(timedOut) {
     return `<div class="ft-review-item ${isCorrect ? 'ft-review-correct' : 'ft-review-wrong'}">
       <div class="ft-review-q">${i + 1}. ${q.q} <span class="ft-review-topic">(${q.topicName})</span></div>
       <div class="ft-review-a">Sizning javobingiz: ${userAns !== null ? q.opts[userAns] : '— javob berilmagan —'}</div>
-      ${!isCorrect ? `<div class="ft-review-correct-a">To'g'ri javob: ${q.opts[q.ans]}</div>` : ''}
+      ${!isCorrect ? `<div class="ft-review-correct-a">To’g'ri javob: ${q.opts[q.ans]}</div>` : ''}
     </div>`;
   }).join('');
 }

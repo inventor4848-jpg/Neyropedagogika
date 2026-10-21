@@ -13,7 +13,7 @@ function amaliySave(key, data) {
 }
 
 function amaliyClear(key, containerId, renderFn) {
-  if (!confirm("Kiritilgan ma'lumotlarni tozalashni tasdiqlaysizmi?")) return;
+  if (!confirm("Kiritilgan ma’lumotlarni tozalashni tasdiqlaysizmi?")) return;
   try { localStorage.removeItem('amaliy_' + key); } catch (e) {}
   renderFn(containerId, key);
 }
@@ -21,7 +21,7 @@ function amaliyClear(key, containerId, renderFn) {
 function amaliyToolbar(key, containerId, renderFn) {
   return (
     '<div class="tpl-toolbar">' +
-    '<button type="button" class="tpl-btn tpl-btn-clear" onclick="amaliyClear(\'' + key + '\',\'' + containerId + '\',' + renderFn + ')">Tozalash</button>' +
+    '<button type="button" class="tpl-btn tpl-btn-clear" onclick="amaliyClear(’' + key + '’,’' + containerId + '’,' + renderFn + ')">Tozalash</button>' +
     '<button type="button" class="tpl-btn" onclick="window.print()">Chop etish / PDF</button>' +
     '</div>'
   );
@@ -66,10 +66,10 @@ function renderMindMap(containerId, key) {
       '<div class="tpl-mindmap-branches">' +
       branches.map(function (b, i) {
         return '<div class="tpl-branch-row"><span class="tpl-branch-dot"></span><input type="text" placeholder="Tarmoq ' + (i + 1) + '" value="' + String(b).replace(/"/g, '&quot;') + '" data-branch="' + i + '">' +
-          '<button type="button" class="tpl-branch-remove" aria-label="O\'chirish" data-remove="' + i + '">&times;</button></div>';
+          '<button type="button" class="tpl-branch-remove" aria-label="O’chirish" data-remove="' + i + '">&times;</button></div>';
       }).join('') +
       '</div>' +
-      '<button type="button" class="tpl-btn tpl-add-branch">+ Tarmoq qo\'shish</button>' +
+      '<button type="button" class="tpl-btn tpl-add-branch">+ Tarmoq qo’shish</button>' +
       '</div>' + amaliyToolbar(key, containerId, 'renderMindMap');
 
     el.querySelector('[data-center]').addEventListener('input', function (e) {
@@ -115,7 +115,7 @@ function renderConceptTable(containerId, key) {
           '<td><button type="button" class="tpl-branch-remove" data-removerow="' + i + '">&times;</button></td></tr>';
       }).join('') +
       '</tbody></table>' +
-      '<button type="button" class="tpl-btn tpl-add-branch">+ Qator qo\'shish</button>' +
+      '<button type="button" class="tpl-btn tpl-add-branch">+ Qator qo’shish</button>' +
       amaliyToolbar(key, containerId, 'renderConceptTable');
 
     el.querySelectorAll('input[data-r]').forEach(function (inp) {
@@ -150,14 +150,14 @@ function renderCluster(containerId, key) {
   function paint() {
     el.innerHTML =
       '<div class="tpl-mindmap">' +
-      '<div class="tpl-mindmap-center"><input type="text" placeholder="Markaziy so\'z" value="' + (data.center || '').replace(/"/g, '&quot;') + '" data-center></div>' +
+      '<div class="tpl-mindmap-center"><input type="text" placeholder="Markaziy so’z" value="' + (data.center || '').replace(/"/g, '&quot;') + '" data-center></div>' +
       '<div class="tpl-cluster-tags">' +
       tags.map(function (t, i) {
         return '<div class="tpl-branch-row"><span class="tpl-branch-dot"></span><input type="text" placeholder="Tushuncha ' + (i + 1) + '" value="' + String(t).replace(/"/g, '&quot;') + '" data-tag="' + i + '">' +
           '<button type="button" class="tpl-branch-remove" data-remove="' + i + '">&times;</button></div>';
       }).join('') +
       '</div>' +
-      '<button type="button" class="tpl-btn tpl-add-branch">+ Tushuncha qo\'shish</button>' +
+      '<button type="button" class="tpl-btn tpl-add-branch">+ Tushuncha qo’shish</button>' +
       '</div>' + amaliyToolbar(key, containerId, 'renderCluster');
 
     el.querySelector('[data-center]').addEventListener('input', function (e) {
@@ -188,7 +188,7 @@ function renderCluster(containerId, key) {
   paint();
 }
 
-/* ---------- Mashg'ulotni loyihalash ---------- */
+/* ---------- Mashg’ulotni loyihalash ---------- */
 function renderLessonPlan(containerId, key) {
   var el = document.getElementById(containerId);
   var data = amaliyLoad(key);
