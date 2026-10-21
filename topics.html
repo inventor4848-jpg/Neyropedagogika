@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Mavzular | NeuroPed</title>
-<meta name="description" content="Neyropedagogika fanining 15 ta ma'ruza mavzusi — matn, video va testlar bilan."/>
+<meta name="description" content="Neyropedagogika fanining 15 ta ma'ruza mavzusi — matn, video, mustaqil ish va testlar bilan."/>
 <script src="assets/theme-init.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -22,86 +22,50 @@
     border: 1px solid transparent;
     text-align: left;
     transition: all 0.2s;
+    width: 100%;
   }
-  .topic-nav-item:hover {
-    background: #f8f9fa;
-  }
-  .topic-nav-item.active {
-    background: #eef2ff;
-    border-color: #c7d2fe;
-  }
+  .topic-nav-item:hover { background: var(--bg); }
+  .topic-nav-item.active { background: rgba(47,184,172,0.1); border-color: var(--accent); }
   .topic-nav-num {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: #fff;
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    color: var(--primary);
-    font-family: 'Playfair Display', serif;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--card); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; color: var(--primary); font-family: 'Playfair Display', serif;
+    flex-shrink: 0; position: relative;
   }
-  .topic-nav-item.active .topic-nav-num {
-    background: var(--accent);
-    color: #fff;
-    border-color: var(--accent);
-  }
-  .topic-nav-title {
-    font-weight: 600;
-    font-size: 0.95rem;
-    color: var(--text);
-    flex: 1;
-    line-height: 1.4;
-  }
-  
-  .topic-tab {
-    padding: 0.85rem 1.5rem;
-    border: none;
-    background: none;
-    cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: #6b7280;
-    border-bottom: 3px solid transparent;
-    font-family: inherit;
-    transition: all 0.2s;
-  }
+  .topic-nav-item.active .topic-nav-num { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .topic-nav-title { font-weight: 600; font-size: 0.95rem; color: var(--text); flex: 1; line-height: 1.4; }
+  .topic-nav-check { color: #10b981; font-size: 1.1rem; flex-shrink: 0; }
+
+  .topic-tab { padding: 0.85rem 1.5rem; border: none; background: none; cursor: pointer; font-size: 0.9rem; font-weight: 500; color: var(--muted); border-bottom: 3px solid transparent; font-family: inherit; transition: all 0.2s; }
   .topic-tab:hover { color: var(--primary); }
   .topic-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
 
-  .quiz-option-btn {
-    display: block;
-    width: 100%;
-    text-align: left;
-    padding: 1rem;
-    margin-bottom: 0.5rem;
-    border: 1.5px solid var(--border);
-    border-radius: 8px;
-    background: #fff;
-    cursor: pointer;
-    font-size: 0.95rem;
-    transition: 0.2s;
+  .quiz-option-btn { display: block; width: 100%; text-align: left; padding: 1rem; margin-bottom: 0.5rem; border: 1.5px solid var(--border); border-radius: 8px; background: var(--card); color: var(--text); cursor: pointer; font-size: 0.95rem; transition: 0.2s; font-family: 'Times New Roman',Times,serif; }
+  .quiz-option-btn:hover:not(:disabled) { border-color: var(--accent); background: var(--bg); }
+  .quiz-option-btn.selected { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .quiz-option-btn.correct { background: #10b981; color: #fff; border-color: #10b981; }
+  .quiz-option-btn.wrong { background: #ef4444; color: #fff; border-color: #ef4444; }
+
+  .topic-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; padding: 0 2rem 1.25rem; }
+  .topic-action-btn { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 0.5rem 0.9rem; font-size: 0.85rem; cursor: pointer; color: var(--text); font-family: 'Times New Roman',Times,serif; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+  .topic-action-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .topic-action-btn.done { background: #10b981; border-color: #10b981; color: #fff; }
+
+  .iw-list, .cq-list { margin: 0 0 1.5rem 1.3rem; line-height: 1.9; }
+  .iw-list li, .cq-list li { margin-bottom: 0.5rem; }
+  .mustaqil-heading { font-family: 'Times New Roman',Times,serif; color: var(--primary); font-size: 1.1rem; margin-bottom: 0.75rem; }
+  .mustaqil-empty { color: var(--muted); padding: 1rem 0; }
+
+  @media print {
+    nav, .mobile-nav-menu, footer, .page-header, .topics-sidebar, .topic-tab, .topic-actions, #activeTopicVideoBtn { display: none !important; }
+    #tabTestContent, #tabMustaqilContent { display: none !important; }
+    .topic-main-content { border: none !important; }
+    .section-inner { display: block !important; }
   }
-  .quiz-option-btn:hover:not(:disabled) {
-    border-color: var(--accent);
-    background: #f8f9fa;
-  }
-  .quiz-option-btn.selected {
-    background: var(--accent);
-    color: #fff;
-    border-color: var(--accent);
-  }
-  .quiz-option-btn.correct {
-    background: #10b981;
-    color: #fff;
-    border-color: #10b981;
-  }
-  .quiz-option-btn.wrong {
-    background: #ef4444;
-    color: #fff;
-    border-color: #ef4444;
+  @media(max-width:900px){
+    #topics .section-inner{ flex-direction: column; }
+    .topics-sidebar{ width: 100% !important; }
   }
 </style>
 </head>
@@ -114,66 +78,73 @@
 
 <div class="page-header">
   <h1>Mavzular bo'yicha darslar</h1>
-  <p>Har bir mavzu bo'yicha video darslar, ma'ruzalar va testlar.</p>
+  <p>Har bir mavzu bo'yicha video darslar, ma'ruzalar, mustaqil ish topshiriqlari va testlar.</p>
 </div>
 
-<section id="topics" style="background: #fafafa; padding: 3rem 0;">
+<section id="topics" style="background: var(--bg); padding: 3rem 0;">
   <div class="section-inner" style="display: flex; gap: 2rem; align-items: flex-start;">
-    
+
     <!-- Sidebar -->
-    <div class="topics-sidebar" style="width: 350px; flex-shrink: 0; background: #fff; padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border);">
+    <div class="topics-sidebar" style="width: 350px; flex-shrink: 0; background: var(--card); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border);">
       <h3 style="margin-bottom: 1.5rem; font-size: 1.2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);">Barcha mavzular</h3>
-      <div id="topicsNavList" style="display: flex; flex-direction: column; gap: 0.5rem;">
-        <!-- Buttons injected here via JS -->
-      </div>
+      <div id="topicsNavList" style="display: flex; flex-direction: column; gap: 0.5rem;"></div>
       <div id="sidebarEmpty" style="display:none; color: var(--muted); text-align: center; padding: 2rem 0;">
         Hozircha mavzular qo'shilmagan.
       </div>
     </div>
-    
+
     <!-- Main Content -->
-    <div class="topic-main-content" style="flex: 1; background: #fff; border-radius: 12px; border: 1px solid var(--border); min-height: 500px; position: relative;">
-      
-      <!-- Empty State -->
+    <div class="topic-main-content" style="flex: 1; min-width:0; background: var(--card); border-radius: 12px; border: 1px solid var(--border); min-height: 500px; position: relative;">
+
       <div id="emptyState" style="text-align:center; padding: 8rem 2rem; color: var(--muted);">
         <div style="font-size:4rem; margin-bottom:1rem;">📚</div>
         <h3>Mavzu tanlang</h3>
         <p>Chap tomondagi ro'yxatdan o'zingizga kerakli darsni tanlang va o'rganishni boshlang.</p>
       </div>
-      
-      <!-- Active Topic Area -->
+
       <div id="activeTopicArea" style="display: none;">
 
-        <!-- Sarlavha -->
         <div style="padding: 1.5rem 2rem; border-bottom: 1px solid var(--border); display:flex; align-items:center; gap:15px;">
-          <div id="activeTopicNum" style="font-size: 2rem; font-weight: 700; color: #ccc; font-family: 'Playfair Display', serif; flex-shrink:0;"></div>
+          <div id="activeTopicNum" style="font-size: 2rem; font-weight: 700; color: var(--border); font-family: 'Playfair Display', serif; flex-shrink:0;"></div>
           <div style="flex:1; min-width:0;">
             <h2 id="activeTopicTitle" style="font-size: 1.4rem; color: var(--primary); margin-bottom: 0.2rem;"></h2>
-            <div style="color: #666; font-size: 0.85rem;">Asosiy dars</div>
+            <div style="color: var(--muted); font-size: 0.85rem;">Asosiy dars</div>
           </div>
           <a id="activeTopicVideoBtn" href="#" target="_blank" class="btn-primary" style="text-decoration:none; padding:0.6rem 1.2rem; border-radius:8px; font-weight:500; font-size:0.9rem; white-space:nowrap; display:none;">▶ Videoni ko'rish</a>
         </div>
 
-        <!-- Tablar -->
-        <div style="display:flex; border-bottom: 1px solid var(--border); background:#fff;">
+        <div class="topic-actions">
+          <button type="button" class="topic-action-btn" onclick="window.print()">⬇ PDF yuklab olish</button>
+          <a id="activeTopicAmaliyBtn" href="#" class="topic-action-btn" style="display:none;">🛠 Amaliy mashg'ulot</a>
+          <button type="button" class="topic-action-btn" id="completeBtn" onclick="toggleTopicCompleted()">✓ Mavzuni tugatdim</button>
+        </div>
+
+        <div style="display:flex; border-bottom: 1px solid var(--border); background:var(--card);">
           <button class="topic-tab active" id="tabMaruza" onclick="showTopicTab('maruza')">📖 Ma'ruza matni</button>
+          <button class="topic-tab" id="tabMustaqil" onclick="showTopicTab('mustaqil')">📝 Mustaqil ish</button>
           <button class="topic-tab" id="tabTest" onclick="showTopicTab('test')">✏️ Test</button>
         </div>
 
-        <!-- Ma'ruza Tab -->
         <div id="tabMaruzaContent" style="padding: 2rem;">
-          <div id="activeTopicText" style="line-height: 1.9; color: #333; background: #f8f9fa; padding: 25px; border-radius: 8px; font-size: 1.05rem; text-align: justify;"></div>
+          <div id="activeTopicText" style="line-height: 1.9; color: var(--text); background: var(--bg); padding: 25px; border-radius: 8px; font-size: 1.05rem; text-align: justify;"></div>
+          <div id="interactiveDemoSlot"></div>
         </div>
 
-        <!-- Test Tab -->
+        <div id="tabMustaqilContent" style="display:none; padding: 2rem;">
+          <h4 class="mustaqil-heading">Mustaqil ish mavzulari</h4>
+          <ul class="iw-list" id="independentWorkList"></ul>
+          <h4 class="mustaqil-heading">Nazorat savollari</h4>
+          <ul class="cq-list" id="controlQuestionsList"></ul>
+        </div>
+
         <div id="tabTestContent" style="display:none; padding: 2rem;">
-          <div id="quizStatus" style="display:none; background: #eef2ff; border: 1px solid #c7d2fe; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; text-align: center;">
+          <div id="quizStatus" style="display:none; background: rgba(47,184,172,0.08); border: 1px solid var(--border); padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; text-align: center;">
             <h4 style="font-size: 1.2rem; color: var(--primary); margin-bottom: 0.5rem;">Siz bu testni ishlagansiz!</h4>
             <div style="font-size: 2rem; font-weight: 700; color: var(--accent);" id="quizScoreText"></div>
             <button onclick="resetQuiz()" class="btn-primary" style="margin-top: 1rem;">Qayta ishlash</button>
           </div>
           <div id="quizContainer">
-            <div style="display:flex; justify-content:space-between; margin-bottom:1rem; font-weight:600; color:#555;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:1rem; font-weight:600; color:var(--text);">
               <span id="quizQNum">1-savol / 10</span>
             </div>
             <h4 id="quizQuestion" style="font-size: 1.15rem; margin-bottom: 1.5rem; line-height: 1.5;"></h4>
@@ -183,7 +154,7 @@
         </div>
 
       </div>
-      
+
     </div>
   </div>
 </section>
@@ -195,6 +166,7 @@
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
 <script src="assets/firebase.js"></script>
 <script src="assets/script.js"></script>
+<script src="assets/neuron-demo.js"></script>
 <script>
 const genericQuizQuestions = [
   { q: "Ushbu mavzuda ko'tarilgan asosiy muammo nima edi?", opts: ["Diqqat yetishmasligi", "Miya va o'rganish aloqadorligi", "Xotira buzilishi", "O'qitish metodikasi"], ans: 1 },
@@ -209,16 +181,83 @@ const genericQuizQuestions = [
   { q: "Xulosa qilib aytganda, neyropedagogika darsda qanday qo'llaniladi?", opts: ["Qoidalarni qat'iy joriy etish orqali", "Miya ishlash prinsiplariga mos dars dizayni orqali", "Faqat test olish orqali", "Texnologiyadan umuman foydalanmaslik orqali"], ans: 1 }
 ];
 
+// Topic docId -> related "Amaliy mashg'ulot" anchor(s) in amaliy.html
+const TOPIC_TO_AMALIY = {
+  'N8uDK8PzXzUGED9bvOqd': ['A1'],
+  'iodQdE0cOBiSZDPto3el': ['A3'],
+  'JZSxzq7G0UmZnQllW78N': ['A2'],
+  'DFzJeC8DLDGFgZ6v3SUe': ['A4'],
+  'uNmDMoVzVNWGT3uW1pjT': ['A5'],
+  'yKtCQLs4Kqs0xUhjAFUU': ['A6', 'A7'],
+  '3YlK51bUt15BbTCBSSua': ['A8', 'A9'],
+  '5A7GZ6ScJNVJ0Cvx8Y66': ['A10'],
+  'RUv0JieNO2HwSMhpzzDm': ['A11'],
+  'h0eg0dJn2nVJUpBY33Mc': ['A12'],
+  'k9xVGo1kjqeyjlIvSa8R': ['A13', 'A14'],
+  'DDsEoQNwDI2LdeWIvQSz': ['A15']
+};
+
 let topicQuestions = [];
 let activeTopicId = null;
 let currentQIndex = 0;
 let correctCount = 0;
 let selectedOption = null;
+let allTopics = [];
+
+function getCompletedTopics() {
+  try { return JSON.parse(localStorage.getItem('completedTopics')) || []; } catch (e) { return []; }
+}
+
+function setCompletedTopics(arr) {
+  try { localStorage.setItem('completedTopics', JSON.stringify(arr)); } catch (e) {}
+}
+
+function isTopicCompleted(id) {
+  return getCompletedTopics().indexOf(id) !== -1;
+}
+
+function markTopicCompleted(id) {
+  const arr = getCompletedTopics();
+  if (arr.indexOf(id) === -1) {
+    arr.push(id);
+    setCompletedTopics(arr);
+  }
+}
+
+function toggleTopicCompleted() {
+  if (!activeTopicId) return;
+  let arr = getCompletedTopics();
+  if (arr.indexOf(activeTopicId) === -1) {
+    arr.push(activeTopicId);
+  } else {
+    arr = arr.filter(id => id !== activeTopicId);
+  }
+  setCompletedTopics(arr);
+  updateCompleteBtn();
+  renderSidebarChecks();
+}
+
+function updateCompleteBtn() {
+  const btn = document.getElementById('completeBtn');
+  if (!btn) return;
+  const done = isTopicCompleted(activeTopicId);
+  btn.classList.toggle('done', done);
+  btn.textContent = done ? "✓ Tugatilgan" : "✓ Mavzuni tugatdim";
+}
+
+function renderSidebarChecks() {
+  document.querySelectorAll('.topic-nav-item').forEach(el => {
+    const check = el.querySelector('.topic-nav-check');
+    if (check) check.style.display = isTopicCompleted(el.dataset.topicId) ? 'inline' : 'none';
+  });
+}
 
 function showTopicTab(tab) {
     document.getElementById('tabMaruzaContent').style.display = tab === 'maruza' ? 'block' : 'none';
+    document.getElementById('tabMustaqilContent').style.display = tab === 'mustaqil' ? 'block' : 'none';
     document.getElementById('tabTestContent').style.display = tab === 'test' ? 'block' : 'none';
     document.getElementById('tabMaruza').classList.toggle('active', tab === 'maruza');
+    document.getElementById('tabMustaqil').classList.toggle('active', tab === 'mustaqil');
     document.getElementById('tabTest').classList.toggle('active', tab === 'test');
     if (tab === 'test') checkQuizStatus();
 }
@@ -227,18 +266,32 @@ document.addEventListener('DOMContentLoaded', async () => {
     const topicsNavList = document.getElementById('topicsNavList');
     try {
         const snapshot = await db.collection('topics').orderBy('createdAt').get();
-        const customTopics = snapshot.docs.map(doc => ({ ...doc.data(), docId: doc.id }));
-        if (customTopics.length === 0) {
+        allTopics = snapshot.docs.map(doc => ({ ...doc.data(), docId: doc.id }));
+        if (allTopics.length === 0) {
             document.getElementById('sidebarEmpty').style.display = 'block';
         } else {
-            customTopics.forEach((t, index) => {
+            allTopics.forEach((t, index) => {
                 const num = (index + 1).toString().padStart(2, '0');
                 const btn = document.createElement('div');
                 btn.className = 'topic-nav-item';
-                btn.innerHTML = `<div class="topic-nav-num">${num}</div><div class="topic-nav-title">${t.name}</div>`;
+                btn.dataset.topicId = t.docId;
+                btn.innerHTML = `<div class="topic-nav-num">${num}</div><div class="topic-nav-title">${t.name}</div><span class="topic-nav-check" style="display:none;">✓</span>`;
                 btn.onclick = () => selectTopic(t, num, btn);
                 topicsNavList.appendChild(btn);
             });
+            renderSidebarChecks();
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const wantedId = urlParams.get('id');
+            if (wantedId) {
+                const idx = allTopics.findIndex(t => t.docId === wantedId);
+                if (idx !== -1) {
+                    const num = (idx + 1).toString().padStart(2, '0');
+                    const btnEl = topicsNavList.children[idx];
+                    selectTopic(allTopics[idx], num, btnEl);
+                    setTimeout(() => btnEl.scrollIntoView({ block: 'center' }), 100);
+                }
+            }
         }
     } catch (err) {
         console.error('Mavzularni yuklashda xatolik:', err);
@@ -266,12 +319,37 @@ function selectTopic(topic, numStr, btnElement) {
         videoBtn.style.display = 'none';
     }
 
+    const amaliyBtn = document.getElementById('activeTopicAmaliyBtn');
+    const amaliyAnchors = TOPIC_TO_AMALIY[topic.docId];
+    if (amaliyAnchors && amaliyAnchors.length) {
+        amaliyBtn.href = 'amaliy.html#' + amaliyAnchors[0];
+        amaliyBtn.style.display = 'inline-flex';
+    } else {
+        amaliyBtn.style.display = 'none';
+    }
+
+    const iwList = document.getElementById('independentWorkList');
+    const iw = topic.independentWork || [];
+    iwList.innerHTML = iw.length ? iw.map(t => `<li>${t}</li>`).join('') : '<li class="mustaqil-empty" style="list-style:none;margin-left:-1.3rem;">Hozircha mustaqil ish topshiriqlari qo\'shilmagan.</li>';
+
+    const cqList = document.getElementById('controlQuestionsList');
+    const cq = topic.controlQuestions || [];
+    cqList.innerHTML = cq.length ? cq.map(q => `<li>${q}</li>`).join('') : '<li class="mustaqil-empty" style="list-style:none;margin-left:-1.3rem;">Hozircha nazorat savollari qo\'shilmagan.</li>';
+
+    const demoSlot = document.getElementById('interactiveDemoSlot');
+    if (topic.docId === 'ZYsQocudozSLaU0lYfsG') {
+        initNeuronDemo('interactiveDemoSlot');
+    } else {
+        demoSlot.innerHTML = '';
+    }
+
     topicQuestions = (topic.questions && topic.questions.length > 0) ? topic.questions : genericQuizQuestions;
     activeTopicId = topic.docId;
     currentQIndex = 0;
     correctCount = 0;
     selectedOption = null;
 
+    updateCompleteBtn();
     showTopicTab('maruza');
 }
 
@@ -348,6 +426,9 @@ async function finishQuiz() {
     const scores = JSON.parse(localStorage.getItem('quiz_scores')) || {};
     scores[activeTopicId] = percentage;
     localStorage.setItem('quiz_scores', JSON.stringify(scores));
+    markTopicCompleted(activeTopicId);
+    updateCompleteBtn();
+    renderSidebarChecks();
 
     try {
         const userId = JSON.parse(localStorage.getItem('user') || '{}').id;

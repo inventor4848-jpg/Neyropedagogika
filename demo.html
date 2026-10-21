@@ -3,76 +3,21 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Interaktiv Laboratoriya | NeuroPed</title>
+<title>Yo'naltirilmoqda... | NeuroPed</title>
+<meta name="robots" content="noindex"/>
+<meta http-equiv="refresh" content="0; url=topics.html?id=ZYsQocudozSLaU0lYfsG"/>
 <script src="assets/theme-init.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="assets/style.css">
+<style>
+  .redirect-box{min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem}
+  .redirect-box p{color:var(--muted);margin-bottom:1rem}
+</style>
+<script>window.location.replace('topics.html?id=ZYsQocudozSLaU0lYfsG');</script>
 </head>
 <body>
-
-<nav id="siteNav"></nav>
-<div class="mobile-nav-menu" id="mobileMenu"></div>
-<script src="assets/layout.js"></script>
-<script>renderSiteNav('demo.html');</script>
-
-<div class="page-header">
-  <h1>Neyron impulsini simulyatsiya qiling</h1>
-  <p>Real vaqtda neyron ishini kuzating va parametrlarni o'zgartiring.</p>
+<div class="redirect-box">
+  <p>Interaktiv neyron namoyishi endi "Neyrofiziologiya" mavzusi ichiga ko'chirildi. Yo'naltirilmoqda...</p>
+  <a href="topics.html?id=ZYsQocudozSLaU0lYfsG" class="btn-primary">Mavzuga o'tish</a>
 </div>
-
-<section id="demo">
-  <div class="section-inner">
-    <div class="demo-layout">
-      <div class="neuron-demo">
-        <div class="demo-canvas-wrap">
-          <canvas id="neuronCanvas" width="500" height="280"></canvas>
-        </div>
-        <div class="demo-controls">
-          <div class="ctrl-row">
-            <span class="ctrl-label">Impuls kuchi</span>
-            <input type="range" class="ctrl-slider" id="strength" min="1" max="10" value="5" oninput="updateSlider()"/>
-            <span class="ctrl-val" id="strengthVal">5</span>
-          </div>
-          <div class="ctrl-row">
-            <span class="ctrl-label">Tezlik</span>
-            <input type="range" class="ctrl-slider" id="speed" min="1" max="10" value="5" oninput="updateSlider()"/>
-            <span class="ctrl-val" id="speedVal">5</span>
-          </div>
-          <div class="ctrl-row">
-            <span class="ctrl-label">Sinaps soni</span>
-            <input type="range" class="ctrl-slider" id="synapses" min="1" max="8" value="4" oninput="updateSlider()"/>
-            <span class="ctrl-val" id="synapsesVal">4</span>
-          </div>
-          <button class="fire-btn" onclick="fireNeuron()">⚡ Neyronni Faollashtirish</button>
-        </div>
-      </div>
-      <div class="demo-info">
-        <h3>Neyron qanday ishlaydi?</h3>
-        <p>Har bir neyron dendritlar orqali signal qabul qiladi, soma (tanasi) da ishlaydi va akson orqali keyingi neyronlarga uzatadi. Bu jarayon elektrokimyoviy impulse asosida amalga oshadi.</p>
-        <p>Sinaptik aloqalar qanchalik ko'p va kuchli bo'lsa, xotira va o'rganish shunchalik samarali bo'ladi — bu Hebb qonunining asosi.</p>
-        <div class="fact-cards">
-          <div class="fact-card">
-            <span class="fact-icon">⚡</span>
-            <div class="fact-text"><strong>Impuls tezligi:</strong> Neyron signali 1–120 m/s tezlikda uzatiladi — miyelin qobig'i bu tezlikni oshiradi.</div>
-          </div>
-          <div class="fact-card">
-            <span class="fact-icon">🔗</span>
-            <div class="fact-text"><strong>Hebb qonuni:</strong> "Birga otatgan neyronlar birga birikadilar" — takrorlash orqali ulanishlar kuchayadi.</div>
-          </div>
-          <div class="fact-card">
-            <span class="fact-icon">🧠</span>
-            <div class="fact-text"><strong>Neyron soni:</strong> Inson miyasida ~86 milliard neyron, ular o'rtasida yuz trillion sinaptik aloqa mavjud.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer id="siteFooter"></footer>
-<script>renderSiteFooter();</script>
-<script src="assets/script.js"></script>
 </body>
 </html>
