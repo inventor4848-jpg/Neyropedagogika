@@ -331,12 +331,12 @@ function switchTab(tabId) {
 
 async function loadData() {
     try {
-        const [usersSnap, topicsSnap, completionsSnap] = await Promise.all([
-            db.collection('users').get(),
+        const [usersRes, topicsSnap, completionsSnap] = await Promise.all([
+            fetch('/api/admin-users').then(r => r.json()),
             db.collection('topics').orderBy('createdAt').get(),
             db.collection('quiz_completions').get()
         ]);
-        const users = usersSnap.docs.map(doc => ({ ...doc.data(), docId: doc.id }));
+        const users = usersRes.users || [];
         const topics = topicsSnap.docs.map(doc => ({ ...doc.data(), docId: doc.id }));
 
         document.getElementById('dashUsersCount').textContent = users.length;

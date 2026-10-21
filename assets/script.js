@@ -19,8 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if(authMenu) {
         if(token) {
             const user = JSON.parse(localStorage.getItem('user') || '{}');
+            const isAdmin = user.email === 'admin';
             authMenu.innerHTML = `
-                <span style="font-size:0.85rem; font-weight:600; color:var(--primary); margin-right:10px;">${user.name}</span>
+                ${isAdmin
+                  ? `<a href="admin.html" style="text-decoration:none; font-size:0.8rem; font-weight:600; color:var(--primary); margin-right:10px; padding:0.4rem 1rem; border:1px solid var(--border); border-radius:8px; background:var(--bg);">Admin</a>`
+                  : `<span style="font-size:0.85rem; font-weight:600; color:var(--primary); margin-right:10px;">${user.name}</span>`}
                 <button onclick="logout()" class="btn-primary" style="padding:0.4rem 1rem; font-size:0.8rem; background:transparent; border:1px solid var(--primary); color:var(--primary);">Chiqish</button>
             `;
         } else {
