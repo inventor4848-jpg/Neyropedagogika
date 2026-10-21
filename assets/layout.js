@@ -54,7 +54,12 @@ function renderSiteNav(activePage) {
   if (mobileMenu) {
     mobileMenu.innerHTML = NAV_LINKS.map(function (link) {
       return '<a href="' + link.href + '">' + link.label + '</a>';
-    }).join('');
+    }).join('') +
+      '<div class="mobile-nav-tools">' +
+      '<button type="button" class="tool-btn" id="themeToggleBtnMobile" onclick="toggleTheme()" aria-label="Tungi rejim">' + themeButtonLabel() + ' Tungi rejim</button>' +
+      '<button type="button" class="tool-btn" onclick="changeFontSize(-1)" aria-label="Shriftni kichraytirish">A−</button>' +
+      '<button type="button" class="tool-btn" onclick="changeFontSize(1)" aria-label="Shriftni kattalashtirish">A+</button>' +
+      '</div>';
   }
 }
 
@@ -83,6 +88,8 @@ function toggleTheme() {
     }
     var btn = document.getElementById('themeToggleBtn');
     if (btn) btn.textContent = themeButtonLabel();
+    var mobileBtn = document.getElementById('themeToggleBtnMobile');
+    if (mobileBtn) mobileBtn.textContent = themeButtonLabel() + ' Tungi rejim';
   } catch (e) {}
 }
 

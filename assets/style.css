@@ -341,10 +341,11 @@ footer{background:var(--bg);color:var(--text);padding:3rem 2rem; border-top:1px 
   .nav-links{display:none}
   .nav-cta{display:none}
   .nav-mobile-btn{display:block}
-  .nav-tools{gap:0.25rem;margin-left:0.25rem}
-  .tool-btn{padding:0.3rem 0.4rem;font-size:0.75rem}
-  .auth-menu{margin-left:0.5rem;gap:8px}
+  .nav-tools{display:none}
+  .auth-menu{margin-left:auto;gap:8px}
+  .mobile-nav-tools{display:flex !important}
 }
+.mobile-nav-tools{display:none;gap:0.5rem;padding:0.75rem 1rem 0.25rem;border-top:1px solid var(--border);margin-top:0.5rem}
 @media(max-width:600px){
   .footer-inner{grid-template-columns:1fr}
 }
