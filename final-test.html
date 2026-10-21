@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Yakuniy test | NeuroPed</title>
+<meta name="description" content="Neyropedagogika fani bo'yicha 30 savoldan iborat yakuniy nazorat testi."/>
+<script src="assets/theme-init.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .ft-wrap{max-width:900px;margin:0 auto;padding:2.5rem 1.5rem}
+  .ft-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:2.5rem}
+  .ft-card h2{font-family:'Times New Roman',Times,serif;color:var(--primary);font-size:1.5rem;margin-bottom:1rem}
+  .ft-card ul{margin:0 0 1.5rem 1.3rem;line-height:1.9}
+  .ft-exam-layout{display:grid;grid-template-columns:1fr 220px;gap:1.5rem;align-items:start}
+  .ft-exam-main{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:2rem}
+  .ft-top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:0.75rem}
+  .ft-timer{font-weight:700;font-size:1.2rem;color:var(--primary);background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:0.4rem 1rem}
+  .ft-timer-warn{color:#E74C3C;border-color:#E74C3C}
+  .ft-qnum{font-size:0.85rem;color:var(--muted);font-weight:600}
+  #ftQText{font-size:1.2rem;margin-bottom:1.5rem;line-height:1.6;color:var(--text)}
+  .ft-option-btn{display:block;width:100%;text-align:left;padding:1rem;margin-bottom:0.6rem;border:1.5px solid var(--border);border-radius:10px;background:var(--card);color:var(--text);cursor:pointer;font-size:0.95rem;font-family:'Times New Roman',Times,serif;transition:0.2s}
+  .ft-option-btn:hover{border-color:var(--accent)}
+  .ft-option-btn.selected{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .ft-nav-row{display:flex;justify-content:space-between;margin-top:1.5rem}
+  .ft-panel{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.25rem;display:grid;grid-template-columns:repeat(5,1fr);gap:0.5rem;position:sticky;top:calc(var(--nav-h) + 1.5rem)}
+  .ft-panel-btn{aspect-ratio:1;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:0.82rem;cursor:pointer;font-weight:600}
+  .ft-panel-btn.ft-answered{background:rgba(47,184,172,0.18);border-color:var(--accent)}
+  .ft-panel-btn.ft-current{background:var(--primary);color:#fff;border-color:var(--primary)}
+  .ft-score-big{font-family:'Times New Roman',Times,serif;font-size:3rem;font-weight:700;color:var(--primary);text-align:center}
+  #ftResultSummary{text-align:center;margin-bottom:2rem}
+  #ftResultSummary p{margin-bottom:0.4rem}
+  .ft-timeout-note{color:#E74C3C;font-weight:600}
+  .ft-grade-badge{display:inline-block;padding:0.4rem 1.2rem;border-radius:20px;font-weight:700;margin-top:0.5rem}
+  .ft-grade-alo{background:#EAFAF1;color:#1E8449}
+  .ft-grade-yaxshi{background:#EBF5FB;color:#2471A3}
+  .ft-grade-qoniqarli{background:#FEF9E7;color:#B7950B}
+  .ft-grade-qoniqarsiz{background:#FDEDEC;color:#A93226}
+  .ft-review-item{border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:0.75rem}
+  .ft-review-correct{border-left:4px solid #27AE60}
+  .ft-review-wrong{border-left:4px solid #E74C3C}
+  .ft-review-q{font-weight:600;margin-bottom:0.4rem}
+  .ft-review-topic{font-weight:400;color:var(--muted);font-size:0.8rem}
+  .ft-review-a{font-size:0.9rem;color:var(--text)}
+  .ft-review-correct-a{font-size:0.9rem;color:#1E8449;font-weight:600;margin-top:0.2rem}
+  @media(max-width:800px){
+    .ft-exam-layout{grid-template-columns:1fr}
+    .ft-panel{position:relative;top:0;grid-template-columns:repeat(8,1fr)}
+  }
+</style>
+</head>
+<body>
+
+<nav id="siteNav"></nav>
+<div class="mobile-nav-menu" id="mobileMenu"></div>
+<script src="assets/layout.js"></script>
+<script>renderSiteNav('final-test.html');</script>
+
+<div class="page-header">
+  <h1>Yakuniy test</h1>
+  <p>Neyropedagogika fani bo'yicha yakuniy nazorat — 30 savol, 15 mavzudan teng taqsimlangan.</p>
+</div>
+
+<div class="ft-wrap">
+
+  <div id="ftStartScreen">
+    <div class="ft-card">
+      <h2>Yo'riqnoma</h2>
+      <ul>
+        <li>Test <strong>30 ta savoldan</strong> iborat — har bir mavzudan 2 tadan tasodifiy savol tanlanadi.</li>
+        <li>Javob variantlari har urinishda aralashtirib beriladi.</li>
+        <li>Testga <strong>40 daqiqa</strong> vaqt beriladi; vaqt tugasa, test avtomatik yakunlanadi.</li>
+        <li>Savollar orasida erkin oldinga/orqaga o'tishingiz mumkin — javobingizni istalgan payt o'zgartira olasiz.</li>
+        <li>Yakuniy nazorat — sillabus bo'yicha <strong>50 ballik</strong> komponent.</li>
+      </ul>
+      <button type="button" id="ftStartBtn" class="btn-primary" onclick="startFinalTest()">Boshlash</button>
+    </div>
+  </div>
+
+  <div id="ftExamScreen" style="display:none;">
+    <div class="ft-exam-layout">
+      <div class="ft-exam-main">
+        <div class="ft-top-bar">
+          <span class="ft-qnum" id="ftQNum">1-savol / 30</span>
+          <span class="ft-timer" id="ftTimer">40:00</span>
+        </div>
+        <div id="ftQText"></div>
+        <div id="ftOptions"></div>
+        <div class="ft-nav-row">
+          <button type="button" class="btn-primary" id="ftPrevBtn" onclick="ftPrev()" style="background:var(--muted);">&larr; Oldingi</button>
+          <button type="button" class="btn-primary" id="ftNextBtn" onclick="ftNext()">Keyingi &rarr;</button>
+          <button type="button" class="btn-primary" id="ftFinishBtn" onclick="confirmFinishFinalTest()" style="display:none;background:#E74C3C;">Testni yakunlash</button>
+        </div>
+      </div>
+      <div class="ft-panel" id="ftPanel"></div>
+    </div>
+  </div>
+
+  <div id="ftResultScreen" style="display:none;">
+    <div class="ft-card">
+      <div id="ftResultSummary"></div>
+      <h2 style="margin-top:1rem;">Javoblaringizni ko'rib chiqish</h2>
+      <div id="ftReview"></div>
+      <button type="button" class="btn-primary" onclick="restartFinalTest()" style="margin-top:1rem;">Qayta urinish</button>
+    </div>
+  </div>
+
+</div>
+
+<footer id="siteFooter"></footer>
+<script>renderSiteFooter();</script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+<script src="assets/firebase.js"></script>
+<script src="assets/script.js"></script>
+<script src="assets/final-test.js"></script>
+</body>
+</html>
