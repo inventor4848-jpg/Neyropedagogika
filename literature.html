@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Adabiyotlar | NeuroPed</title>
+<meta name="description" content="Neyropedagogika fani bo'yicha asosiy va qo'shimcha adabiyotlar, axborot manbalari ro'yxati."/>
+<script src="assets/theme-init.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .lit-wrap{max-width:850px;margin:0 auto;padding:2.5rem 1.5rem}
+  .lit-section{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:2rem;margin-bottom:1.5rem}
+  .lit-section h2{font-family:'Times New Roman',Times,serif;color:var(--primary);font-size:1.3rem;margin-bottom:1.25rem}
+  .lit-list{list-style:none;counter-reset:lit-counter}
+  .lit-list li{counter-increment:lit-counter;display:flex;gap:0.9rem;padding:0.8rem 0;border-bottom:1px solid var(--border);line-height:1.6}
+  .lit-list li:last-child{border-bottom:none}
+  .lit-list li::before{content:counter(lit-counter) ".";font-weight:700;color:var(--accent);flex-shrink:0;min-width:1.5rem}
+  .lit-list a{color:var(--accent);text-decoration:none}
+  .lit-list a:hover{text-decoration:underline}
+  .lit-note{text-align:center;color:var(--muted);font-size:0.9rem;margin-top:1rem}
+</style>
+</head>
+<body>
+
+<nav id="siteNav"></nav>
+<div class="mobile-nav-menu" id="mobileMenu"></div>
+<script src="assets/layout.js"></script>
+<script>renderSiteNav('literature.html');</script>
+
+<div class="page-header">
+  <h1>Adabiyotlar</h1>
+  <p>Neyropedagogika fani bo'yicha asosiy va qo'shimcha adabiyotlar hamda axborot manbalari.</p>
+</div>
+
+<div class="lit-wrap">
+
+  <div class="lit-section">
+    <h2>Asosiy adabiyotlar</h2>
+    <ol class="lit-list">
+      <li>Zaynidinov X.N., Maxkamov B.Sh., Nurmurodov J.N. Sun'iy intellekt asoslari. — Toshkent: Aloqachi, 2024. — 210 b.</li>
+      <li>Komolov S., Raxmatov S. Sun'iy intellekt asoslari. Mashinaviy o'qitish. — Toshkent, 2019.</li>
+      <li>Azimova Sh., Zaxirova N. Ta'lim psixologiyasi: o'quv qo'llanma. — Toshkent: Metodist nashriyoti, 2024. — 141 b.</li>
+      <li>Zaripova D., Yaxyayev S., Ilmurodova D., Shukurova M. Elektron pedagogika: o'quv qo'llanma. — Toshkent: Metodist nashriyoti, 2024. — 155 b.</li>
+    </ol>
+  </div>
+
+  <div class="lit-section">
+    <h2>Qo'shimcha adabiyotlar</h2>
+    <ol class="lit-list" style="counter-reset: lit-counter 4;">
+      <li>Степанов В. Нейропедагогика. Мозг и эффективное развитие детей и взрослых. Возраст, обучение, творчество. — М. — <a href="https://www.labirint.ru/books/730713/" target="_blank" rel="noopener">labirint.ru/books/730713</a></li>
+      <li>Костромина С.Н. Введение в нейродидактику: учебное пособие. — СПб.: Изд-во С.-Петерб. ун-та, 2019. — 182 с.</li>
+      <li>Цветков А.В. Нейропедагогика для учителей: как обучать по законам работы мозга.</li>
+    </ol>
+  </div>
+
+  <div class="lit-section">
+    <h2>Axborot manbalari</h2>
+    <ol class="lit-list" style="counter-reset: lit-counter 7;">
+      <li><a href="https://neuronovosti.ru/tag/istoriya-nejronauk/" target="_blank" rel="noopener">neuronovosti.ru/tag/istoriya-nejronauk</a></li>
+    </ol>
+  </div>
+
+  <p class="lit-note">Ro'yxat "Neyropedagogika" fani sillabusi asosida tuzilgan.</p>
+
+</div>
+
+<footer id="siteFooter"></footer>
+<script>renderSiteFooter();</script>
+<script src="assets/script.js"></script>
+</body>
+</html>
